@@ -1,0 +1,15 @@
+apiVersion: 1
+
+deleteDatasources:
+  - name: 'OData-Test'
+    orgId: 1
+
+datasources:
+  - name: 'OData-Test'
+    type: dvelop-odata-datasource
+    access: proxy
+    orgId: 1
+    isDefault: true
+    url: http://host.docker.internal:5000/odata
+    version: 1
+    editable: true

@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: 'OData Dashboards'
+    orgId: 1
+    folder: 'OData Dashboards'
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /etc/grafana/provisioning/dashboards

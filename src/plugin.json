@@ -1,0 +1,55 @@
+{
+  "$schema": "https://github.com/grafana/grafana/raw/main/docs/sources/developers/plugins/plugin.schema.json",
+  "type": "datasource",
+  "name": "OData",
+  "id": "dvelop-odata-datasource",
+  "metrics": true,
+  "backend": true,
+  "annotations": true,
+  "logs": true,
+  "alerting": true,
+  "streaming": false,
+  "tracing": false,
+  "executable": "gpx_odata-datasource",
+  "info": {
+    "description": "OData data source for Grafana",
+    "author": {
+      "name": "d.velop AG",
+      "url": "https://www.d-velop.de"
+    },
+    "keywords": [
+      "odata",
+      "rest",
+      "json",
+      "datasource"
+    ],
+    "logos": {
+      "small": "img/ODataLogo.svg",
+      "large": "img/ODataLogo.svg"
+    },
+    "links": [
+      {
+        "name": "Website",
+        "url": "https://github.com/d-velop/grafana-odata-datasource"
+      },
+      {
+        "name": "License",
+        "url": "https://github.com/d-velop/grafana-odata-datasource/blob/master/LICENSE"
+      },
+      {
+        "name": "Learn more on OData",
+        "url": "https://www.odata.org/"
+      }
+    ],
+    "screenshots": [
+      { "name": "Add Data Source", "path": "img/AddDataSource.png" },
+      { "name": "Create Query", "path": "img/CreateQuery.png" }
+    ],
+    "version": "%VERSION%",
+    "updated": "%TODAY%"
+  },
+  "dependencies": {
+    "grafanaDependency": ">=8.5.0",
+    "plugins": []
+  }
+}
