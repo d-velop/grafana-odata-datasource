@@ -16,7 +16,6 @@ app.use(morgan('dev'));
 
 app.get('/odata/\\$metadata',
   async (req: Request, res: Response): Promise<Response> => {
-    // TODO: req.accepts('application/xml')
     return res
       .contentType('application/xml')
       .status(200)
@@ -26,10 +25,9 @@ app.get('/odata/\\$metadata',
 
 app.get('/odata/temperatures',
   async (req: Request, res: Response): Promise<Response> => {
-    // console.log(req.query);
     const { $filter } = req.query;
-    if (typeof $filter == "string") {
-      const regex : RegExp = /Time ge ([0-9-TZ:.]+) and Time le ([0-9-TZ:.]+)/;
+    if (typeof $filter === "string") {
+      const regex= /Time ge ([0-9-TZ:.]+) and Time le ([0-9-TZ:.]+)/;
       const match = $filter.match(regex);
       if (match)
       {
