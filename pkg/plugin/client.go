@@ -1,8 +1,8 @@
 package plugin
 
 import (
-	"dvelop-grafana-odata-datasource/pkg/plugin/odata"
 	"fmt"
+	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"net/http"
 	"net/url"

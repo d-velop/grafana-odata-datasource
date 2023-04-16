@@ -1,7 +1,7 @@
 package main
 
 import (
-	"dvelop-grafana-odata-datasource/pkg/plugin"
+	"github.com/d-velop/grafana-odata-datasource/pkg/plugin"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/datasource"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/log"
 	"os"

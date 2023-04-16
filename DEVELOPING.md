@@ -1,5 +1,6 @@
 # Start Developing
-This plugin is a data source backend plugin. It consists of both frontend and backend components.
+This plugin is a data source backend plugin. It uses [Grafana Plugin Tools](https://grafana.github.io/plugin-tools/) and
+consists of both backend and frontend components.
 
 ## Prerequisites
 For this project to work you need [Node.js](https://nodejs.org/en/) and [Go](https://go.dev) installed.
@@ -15,6 +16,14 @@ Additionally, [Docker](https://www.docker.com/) is used to simplify plugin devel
 Clone this repository into your local environment
 ```bash
 git clone https://github.com/d-velop/grafana-odata-datasource.git
+```
+
+#### Backend
+Backend code is located in the `pkg` folder
+
+Build backend plugin binaries by running the mage build (`-v` stands for verbose output)
+```bash
+mage -v
 ```
 
 #### Frontend
@@ -33,14 +42,6 @@ yarn dev
 or build plugin in production mode
 ```bash
 yarn build
-```
-
-#### Backend
-Backend code is located in the `pkg` folder
-
-Run the mage build (`-v` stands for verbose output)
-```bash
-mage -v
 ```
 
 ### Using the OData mock-server
@@ -62,7 +63,7 @@ changes to be tried out and tested directly. See folder [`provisioning`](provisi
 
 To start, simply run the following command
 ```bash
-docker compose up
+yarn server
 ```
 in the projects root directory. Afterwards you can open `http://localhost:3000` in your browser and begin using Grafana
 with the preconfigured OData Data Source.

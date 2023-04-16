@@ -1,8 +1,8 @@
 package plugin
 
 import (
-	"dvelop-grafana-odata-datasource/pkg/plugin/odata"
 	"encoding/json"
+	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
 	"time"

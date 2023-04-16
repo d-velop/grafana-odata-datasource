@@ -32,7 +32,7 @@ Now you should be able to see data for the selected time frame.
 
 ## Contributing
 This project is maintained by d-velop but is looking for contributors. If you consider contributing to this project
-please read [DEVELOPMENT](DEVELOPMENT.md) for details on how to get started.
+please read [CONTRIBUTING](CONTRIBUTING.md) and [DEVELOPING](DEVELOPING.md) for details on how to get started.
 
 ## License
 Please read [LICENSE](LICENSE) for licensing information.

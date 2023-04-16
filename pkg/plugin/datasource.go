@@ -2,10 +2,10 @@ package plugin
 
 import (
 	"context"
-	"dvelop-grafana-odata-datasource/pkg/plugin/odata"
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
+	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/datasource"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/httpclient"
@@ -109,6 +109,7 @@ func (ds *ODataSource) CallResource(_ context.Context, req *backend.CallResource
 }
 
 func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery) backend.DataResponse {
+	// TODO: query.MaxDataPoints -> $limit
 	log.DefaultLogger.Debug("query", "query.JSON", fmt.Sprintf("%s", query.JSON))
 	response := backend.DataResponse{}
 	var qm queryModel

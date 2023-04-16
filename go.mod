@@ -1,4 +1,4 @@
-module dvelop-grafana-odata-datasource
+module github.com/d-velop/grafana-odata-datasource
 
 go 1.19
 
