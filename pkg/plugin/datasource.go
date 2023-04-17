@@ -109,7 +109,6 @@ func (ds *ODataSource) CallResource(_ context.Context, req *backend.CallResource
 }
 
 func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery) backend.DataResponse {
-	// TODO: query.MaxDataPoints -> $limit
 	log.DefaultLogger.Debug("query", "query.JSON", fmt.Sprintf("%s", query.JSON))
 	response := backend.DataResponse{}
 	var qm queryModel
