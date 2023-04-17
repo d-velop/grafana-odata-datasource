@@ -11,7 +11,7 @@ Open Grafana and go to Configuration / Data Sources. Click `Add data source` but
 
 Enter `OData` into the filter input field and select the OData Data Source.
 
-![Add Data Source](src/img/AddDataSource.png)
+![Add Data Source](https://raw.githubusercontent.com/d-velop/grafana-odata-datasource/master/src/img/AddDataSource.png)
 
 Provide the URL of your OData Service Root and click `Save & test` to test the connection.
 
@@ -19,7 +19,7 @@ Add other connection settings, such as auth settings, as necessary.
 
 To use the data source, create a new query and select the newly created OData data source.
 
-![CreateQuery.png](src/img/CreateQuery.png)
+![CreateQuery.png](https://raw.githubusercontent.com/d-velop/grafana-odata-datasource/master/src/img/CreateQuery.png)
 
 Choose an entity set, an appropriate time property, and the metric you want to view.
 Now you should be able to see data for the selected time frame.
@@ -32,7 +32,10 @@ Now you should be able to see data for the selected time frame.
 
 ## Contributing
 This project is maintained by d-velop but is looking for contributors. If you consider contributing to this project
-please read [CONTRIBUTING](CONTRIBUTING.md) and [DEVELOPING](DEVELOPING.md) for details on how to get started.
+please read [CONTRIBUTING](https://raw.githubusercontent.com/d-velop/grafana-odata-datasource/master/CONTRIBUTING.md)
+and [DEVELOPING](https://raw.githubusercontent.com/d-velop/grafana-odata-datasource/master/DEVELOPING.md) for details on
+how to get started.
 
 ## License
-Please read [LICENSE](LICENSE) for licensing information.
+Please read [LICENSE](https://raw.githubusercontent.com/d-velop/grafana-odata-datasource/master/LICENSE) for licensing
+information.
