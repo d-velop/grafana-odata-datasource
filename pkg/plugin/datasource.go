@@ -36,7 +36,6 @@ func newDatasourceInstance(settings backend.DataSourceInstanceSettings) (instanc
 	if err != nil {
 		return nil, err
 	}
-	log.DefaultLogger.Info("new data source instance", "clientOptions", fmt.Sprintf("%#v", clientOptions))
 	return &ODataSourceInstance{
 		&ODataClientImpl{client, settings.URL},
 	}, nil
