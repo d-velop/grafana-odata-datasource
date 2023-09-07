@@ -84,6 +84,7 @@
   },
   "resolutions": {
     "underscore": "^1.12.1",
-    "debug": "^3.1.0"
+    "debug": "^3.1.0",
+    "log4js": "^6.4.0"
   }
 }
