@@ -1,6 +1,7 @@
 package plugin
 
 import (
+	"context"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/instancemgmt"
 	"github.com/stretchr/testify/mock"
@@ -35,12 +36,12 @@ func (client *clientMock) Get(_ string, _ []property, _ string, _ backend.TimeRa
 		Body: io.NopCloser(strings.NewReader(client.body))}, nil
 }
 
-func (im *managerMock) Get(pluginContext backend.PluginContext) (instancemgmt.Instance, error) {
-	args := im.Called(pluginContext)
+func (im *managerMock) Get(ctx context.Context, pluginContext backend.PluginContext) (instancemgmt.Instance, error) {
+	args := im.Called(ctx, pluginContext)
 	return args.Get(0), args.Error(1)
 }
 
-func (im *managerMock) Do(pluginContext backend.PluginContext, fn instancemgmt.InstanceCallbackFunc) error {
-	args := im.Called(pluginContext, fn)
+func (im *managerMock) Do(ctx context.Context, pluginContext backend.PluginContext, fn instancemgmt.InstanceCallbackFunc) error {
+	args := im.Called(ctx, pluginContext, fn)
 	return args.Error(0)
 }
