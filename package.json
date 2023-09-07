@@ -81,5 +81,9 @@
     "@grafana/ui": "^9.4.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
+  },
+  "resolutions": {
+    "underscore": "^1.12.1",
+    "debug": "^3.1.0"
   }
 }
