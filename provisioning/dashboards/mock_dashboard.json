@@ -65,7 +65,7 @@
       "targets": [
         {
           "entitySet": {
-            "entityType": "TestService.Temperatures",
+            "entityType": "GrafanaMock.Temperature",
             "name": "Temperatures"
           },
           "properties": [
@@ -164,7 +164,7 @@
       "targets": [
         {
           "entitySet": {
-            "entityType": "TestService.Temperatures",
+            "entityType": "GrafanaMock.Temperature",
             "name": "Temperatures"
           },
           "properties": [
@@ -208,7 +208,7 @@
     "time_options": []
   },
   "timezone": "browser",
-  "title": "OData-Test",
-  "uid": "xAC3AEFln",
+  "title": "OData-Mock",
+  "uid": "cLV5GDCkz",
   "version": 1
 }

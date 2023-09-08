@@ -27,7 +27,7 @@
     "e2e:update": "yarn cypress install && yarn grafana-e2e run --update-screenshots",
     "server": "docker-compose up --build",
     "sign": "npx --yes @grafana/sign-plugin@latest",
-    "startMock": "ts-node --project mock/tsconfig-mock.json mock/index.ts"
+    "checkCompatibility": "npx @grafana/levitate@latest is-compatible --path src/module.ts --target @grafana/data,@grafana/ui,@grafana/runtime"
   },
   "author": "d.velop AG",
   "license": "Apache-2.0",

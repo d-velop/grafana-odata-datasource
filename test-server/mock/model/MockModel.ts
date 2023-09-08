@@ -5,14 +5,14 @@ export const MockModel = {
       entityTypes: [
         {
           name: "Temperature",
-          key: { propertyRef: { name: "Id" } },
+          key: { propertyRef: { name: "id" } },
           properties: [
-            { name: "Id", type: "Edm.Guid", nullable: "false" },
-            { name: "Time", type: "Edm.DateTimeOffset", nullable: "false" },
-            { name: "Epoch", type: "Edm.Int64", nullable: "false" },
-            { name: "Value1", type: "Edm.Double", nullable: "false" },
-            { name: "Value2", type: "Edm.Double", nullable: "false" },
-            { name: "Value3", type: "Edm.Double", nullable: "false" }
+            { name: "id", type: "Edm.Guid", nullable: "false" },
+            { name: "time", type: "Edm.DateTimeOffset", nullable: "false" },
+            { name: "epoch", type: "Edm.Int64", nullable: "false" },
+            { name: "value1", type: "Edm.Double", nullable: "false" },
+            { name: "value2", type: "Edm.Double", nullable: "false" },
+            { name: "value3", type: "Edm.Double", nullable: "false" }
           ]
         }
       ],

@@ -1,5 +1,4 @@
 import {create} from "xmlbuilder2";
-// @ts-ignore
 import {DataServices} from "../Metamodel";
 
 export function ToXml(dataServices: DataServices)

@@ -3,13 +3,25 @@ apiVersion: 1
 deleteDatasources:
   - name: 'OData-Test'
     orgId: 1
+  - name: 'OData-Mock'
+    orgId: 1
 
 datasources:
   - name: 'OData-Test'
+    uid: PD461F79B494E0A01
     type: dvelop-odata-datasource
     access: proxy
     orgId: 1
     isDefault: true
-    url: http://host.docker.internal:5000/odata
+    url: http://test-server:4004/odata/v4/test
+    version: 1
+    editable: true
+  - name: 'OData-Mock'
+    uid: PD461F79B494E0A02
+    type: dvelop-odata-datasource
+    access: proxy
+    orgId: 1
+    isDefault: false
+    url: http://test-server:4004/mock
     version: 1
     editable: true

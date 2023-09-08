@@ -37,7 +37,7 @@ func newDatasourceInstance(settings backend.DataSourceInstanceSettings) (instanc
 		return nil, err
 	}
 	return &ODataSourceInstance{
-		&ODataClientImpl{client, settings.URL},
+		&ODataClientImpl{client, settings.URL, true},
 	}, nil
 }
 

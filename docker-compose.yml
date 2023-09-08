@@ -1,4 +1,4 @@
-version: '3.0'
+version: '3.8'
 
 services:
   grafana:
@@ -12,3 +12,7 @@ services:
     volumes:
       - ./dist:/var/lib/grafana/plugins/odata
       - ./provisioning:/etc/grafana/provisioning
+  test-server:
+    build: test-server
+    ports:
+      - "4004:4004"

@@ -44,14 +44,18 @@ or build plugin in production mode
 yarn build
 ```
 
-### Using the OData mock-server
-If you don't have a full-fledged OData server at hand, you will find a minimal mock server based on 
-[Express](https://expressjs.com) in the [`mock`](mock) directory.
+### Using the OData test-server
+If you don't have a full-fledged OData server at hand, you will find a test server based on
+[Express](https://expressjs.com) and on the Core Data Services (CDS) of the
+[SAP Cloud Application Programming Model](https://cap.cloud.sap/) in the [`test-server`](test-server) directory.
 
 It can be started by using the command
 ```bash
-yarn startMock 
+cd test-server
+yarn start 
 ```
+
+In addition, the test server is automatically built and started using Docker Compose (see below).
 
 ### Try and test using Docker Compose
 The project includes a [`docker-compose.yml`](docker-compose.yml) file. With this, Grafana can be started quickly for

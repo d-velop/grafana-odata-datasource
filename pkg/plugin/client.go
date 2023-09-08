@@ -19,8 +19,9 @@ type ODataClient interface {
 }
 
 type ODataClientImpl struct {
-	httpClient *http.Client
-	baseUrl    string
+	httpClient           *http.Client
+	baseUrl              string
+	spacePercentEncoding bool
 }
 
 func (client *ODataClientImpl) GetServiceRoot() (*http.Response, error) {
@@ -39,7 +40,7 @@ func (client *ODataClientImpl) GetMetadata() (*http.Response, error) {
 func (client *ODataClientImpl) Get(entitySet string, properties []property, timeProperty string,
 	timeRange backend.TimeRange, filterConditions []filterCondition) (*http.Response, error) {
 	requestUrl, err := buildQueryUrl(client.baseUrl, entitySet, properties, timeProperty, timeRange,
-		filterConditions)
+		filterConditions, client.spacePercentEncoding)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +48,7 @@ func (client *ODataClientImpl) Get(entitySet string, properties []property, time
 }
 
 func buildQueryUrl(baseUrl string, entitySet string, properties []property, timeProperty string,
-	timeRange backend.TimeRange, filterConditions []filterCondition) (*url.URL, error) {
+	timeRange backend.TimeRange, filterConditions []filterCondition, spacePercentEncoding bool) (*url.URL, error) {
 	requestUrl, err := url.Parse(baseUrl)
 	if err != nil {
 		return nil, err
@@ -62,7 +63,11 @@ func buildQueryUrl(baseUrl string, entitySet string, properties []property, time
 	if len(selectParam) > 0 {
 		params.Add(odata.Select, selectParam)
 	}
-	requestUrl.RawQuery = params.Encode()
+	encodedUrl := params.Encode()
+	if spacePercentEncoding {
+		encodedUrl = strings.ReplaceAll(encodedUrl, "+", "%20")
+	}
+	requestUrl.RawQuery = encodedUrl
 	return requestUrl, nil
 }
 
@@ -76,7 +81,7 @@ func mapSelect(properties []property, timeProperty string) string {
 	if len(timeProperty) > 0 {
 		result = append(result, timeProperty)
 	}
-	return strings.Join(result[:], ", ")
+	return strings.Join(result[:], ",")
 }
 
 func mapFilter(timeProperty string, timeRange backend.TimeRange, filterConditions []filterCondition) string {
