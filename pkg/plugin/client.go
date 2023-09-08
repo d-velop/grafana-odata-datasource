@@ -2,13 +2,14 @@ package plugin
 
 import (
 	"fmt"
-	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
-	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"net/http"
 	"net/url"
 	"path"
 	"strings"
 	"time"
+
+	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
+	"github.com/grafana/grafana-plugin-sdk-go/backend"
 )
 
 type ODataClient interface {
