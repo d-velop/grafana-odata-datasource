@@ -27,6 +27,10 @@ type ODataSource struct {
 	im instancemgmt.InstanceManager
 }
 
+type DatasourceSettings struct {
+	URLSpaceEncoding string `json:"urlSpaceEncoding"`
+}
+
 func newDatasourceInstance(settings backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
 	clientOptions, err := settings.HTTPClientOptions()
 	if err != nil {
@@ -36,8 +40,16 @@ func newDatasourceInstance(settings backend.DataSourceInstanceSettings) (instanc
 	if err != nil {
 		return nil, err
 	}
+
+	var dsSettings DatasourceSettings
+	if settings.JSONData != nil && len(settings.JSONData) > 1 {
+		if err := json.Unmarshal(settings.JSONData, &dsSettings); err != nil {
+			return nil, err
+		}
+	}
+
 	return &ODataSourceInstance{
-		&ODataClientImpl{client, settings.URL, true},
+		&ODataClientImpl{client, settings.URL, dsSettings.URLSpaceEncoding},
 	}, nil
 }
 

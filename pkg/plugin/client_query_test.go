@@ -79,7 +79,7 @@ func TestBuildQueryUrl(t *testing.T) {
 
 	for _, table := range tables {
 		var builtUrl, err = buildQueryUrl(table.baseUrl, table.entitySet, table.properties, table.timeProperty,
-			table.timeRange, table.filterConditions, false)
+			table.timeRange, table.filterConditions, "+")
 		assert.NoError(t, err)
 		assert.Equal(t, table.expected, builtUrl.String())
 	}

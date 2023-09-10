@@ -57,6 +57,8 @@ yarn start
 
 In addition, the test server is automatically built and started using Docker Compose (see below).
 
+For more information see [test-server/README.md](test-server/README.md).
+
 ### Try and test using Docker Compose
 The project includes a [`docker-compose.yml`](docker-compose.yml) file. With this, Grafana can be started quickly for
 development purposes. The local project directory is automatically mounted to the Grafana plugin directory.

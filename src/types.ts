@@ -9,11 +9,16 @@ export interface ODataQuery extends DataQuery {
   to: string;
 }
 
-export const defaultQuery: Partial<ODataQuery> = {};
-
 export const FilterOperators: string[] = ['eq', 'ne', 'gt', 'ge', 'lt', 'le'];
 
-export interface ODataOptions extends DataSourceJsonData {}
+export interface ODataOptions extends DataSourceJsonData {
+  urlSpaceEncoding: string;
+}
+
+export enum URLSpaceEncoding {
+  Plus = '+',
+  Percent = '%20',
+}
 
 export interface Metadata {
   entityTypes: { [name: string]: EntityType };

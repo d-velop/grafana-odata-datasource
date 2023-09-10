@@ -16,6 +16,8 @@ datasources:
     url: http://test-server:4004/odata/v4/test
     version: 1
     editable: true
+    jsonData:
+      urlSpaceEncoding: '%20'
   - name: 'OData-Mock'
     uid: PD461F79B494E0A02
     type: dvelop-odata-datasource
