@@ -64,8 +64,8 @@ The project includes a [`docker-compose.yml`](docker-compose.yml) file. With thi
 development purposes. The local project directory is automatically mounted to the Grafana plugin directory.
 
 Additionally, to keep development uncomplicated, anonymous authorization is enabled in Grafana. The project also comes
-with a predefined data source configuration (using the aforementioned mock-server) and a test dashboard that allows
-changes to be tried out and tested directly. See folder [`provisioning`](provisioning) for details.
+with predefined data source configurations (using the aforementioned test-server) and test dashboards that allow changes
+to be tried out and tested directly. See folder [`provisioning`](provisioning) for details.
 
 To start, simply run the following command
 ```bash
