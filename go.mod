@@ -1,10 +1,10 @@
 module github.com/d-velop/grafana-odata-datasource
 
-go 1.19
+go 1.20
 
 require (
 	github.com/grafana/grafana-plugin-sdk-go v0.174.0
-	github.com/stretchr/testify v1.8.3
+	github.com/stretchr/testify v1.8.4
 )
 
 require (
