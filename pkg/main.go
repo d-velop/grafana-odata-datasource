@@ -1,10 +1,11 @@
 package main
 
 import (
+	"os"
+
 	"github.com/d-velop/grafana-odata-datasource/pkg/plugin"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/datasource"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/log"
-	"os"
 )
 
 func main() {
