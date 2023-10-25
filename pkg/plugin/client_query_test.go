@@ -1,9 +1,10 @@
 package plugin
 
 import (
+	"testing"
+
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestMapFilterWithTimeRange(t *testing.T) {

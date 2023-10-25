@@ -5,6 +5,10 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
+	"io"
+	"net/http"
+	"time"
+
 	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/datasource"
@@ -12,9 +16,6 @@ import (
 	"github.com/grafana/grafana-plugin-sdk-go/backend/instancemgmt"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/log"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
-	"io"
-	"net/http"
-	"time"
 )
 
 var (
@@ -120,7 +121,7 @@ func (ds *ODataSource) CallResource(_ context.Context, req *backend.CallResource
 }
 
 func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery) backend.DataResponse {
-	log.DefaultLogger.Debug("query", "query.JSON", fmt.Sprintf("%s", query.JSON))
+	log.DefaultLogger.Debug("query", "query.JSON", string(query.JSON))
 	response := backend.DataResponse{}
 	var qm queryModel
 	err := json.Unmarshal(query.JSON, &qm)
@@ -162,7 +163,7 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 			values[0] = nil
 		}
 		for i, prop := range qm.Properties {
-			if value, ok := entry[prop.Name]; ok == true {
+			if value, ok := entry[prop.Name]; ok {
 				values[i+1] = odata.MapValue(value, prop.Type)
 			} else {
 				values[i+1] = nil

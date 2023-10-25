@@ -2,10 +2,11 @@ package plugin
 
 import (
 	"encoding/json"
+	"time"
+
 	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
-	"time"
 )
 
 func aQueryDataRequest(queryDataRequestBuilders ...func(*backend.QueryDataRequest)) backend.QueryDataRequest {
