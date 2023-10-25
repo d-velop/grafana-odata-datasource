@@ -28,8 +28,8 @@ type ODataSource struct {
 	im instancemgmt.InstanceManager
 }
 
-func newDatasourceInstance(settings backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
-	clientOptions, err := settings.HTTPClientOptions()
+func newDatasourceInstance(ctx context.Context, settings backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
+	clientOptions, err := settings.HTTPClientOptions(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ type ODataSourceInstance struct {
 	client ODataClient
 }
 
-func NewODataSource(_ backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
+func NewODataSource(ctx context.Context, _ backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
 	im := datasource.NewInstanceManager(newDatasourceInstance)
 	ds := &ODataSource{
 		im: im,
