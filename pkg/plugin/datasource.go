@@ -28,8 +28,8 @@ type ODataSource struct {
 	im instancemgmt.InstanceManager
 }
 
-func newDatasourceInstance(settings backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
-	clientOptions, err := settings.HTTPClientOptions()
+func newDatasourceInstance(ctx context.Context, settings backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
+	clientOptions, err := settings.HTTPClientOptions(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ type ODataSourceInstance struct {
 	client ODataClient
 }
 
-func NewODataSource(_ backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
+func NewODataSource(ctx context.Context, _ backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
 	im := datasource.NewInstanceManager(newDatasourceInstance)
 	ds := &ODataSource{
 		im: im,
@@ -54,15 +54,15 @@ func NewODataSource(_ backend.DataSourceInstanceSettings) (instancemgmt.Instance
 	return ds, nil
 }
 
-func (ds *ODataSource) getClientInstance(pluginContext backend.PluginContext) ODataClient {
-	instance, _ := ds.im.Get(pluginContext)
+func (ds *ODataSource) getClientInstance(ctx context.Context, pluginContext backend.PluginContext) ODataClient {
+	instance, _ := ds.im.Get(ctx, pluginContext)
 	clientInstance := instance.(*ODataSourceInstance).client
 	return clientInstance
 }
 
-func (ds *ODataSource) QueryData(_ context.Context, req *backend.QueryDataRequest) (*backend.QueryDataResponse,
+func (ds *ODataSource) QueryData(ctx context.Context, req *backend.QueryDataRequest) (*backend.QueryDataResponse,
 	error) {
-	clientInstance := ds.getClientInstance(req.PluginContext)
+	clientInstance := ds.getClientInstance(ctx, req.PluginContext)
 	response := backend.NewQueryDataResponse()
 	for _, q := range req.Queries {
 		res := ds.query(clientInstance, q)
@@ -71,11 +71,11 @@ func (ds *ODataSource) QueryData(_ context.Context, req *backend.QueryDataReques
 	return response, nil
 }
 
-func (ds *ODataSource) CheckHealth(_ context.Context, req *backend.CheckHealthRequest) (*backend.CheckHealthResult,
+func (ds *ODataSource) CheckHealth(ctx context.Context, req *backend.CheckHealthRequest) (*backend.CheckHealthResult,
 	error) {
 	var status backend.HealthStatus
 	var message string
-	clientInstance := ds.getClientInstance(req.PluginContext)
+	clientInstance := ds.getClientInstance(ctx, req.PluginContext)
 	var res, err = clientInstance.GetServiceRoot()
 	if err != nil {
 		status = backend.HealthStatusError
@@ -96,11 +96,11 @@ func (ds *ODataSource) CheckHealth(_ context.Context, req *backend.CheckHealthRe
 	}, nil
 }
 
-func (ds *ODataSource) CallResource(_ context.Context, req *backend.CallResourceRequest,
+func (ds *ODataSource) CallResource(ctx context.Context, req *backend.CallResourceRequest,
 	sender backend.CallResourceResponseSender) error {
 	switch req.Path {
 	case "metadata":
-		return ds.getMetadata(req, sender)
+		return ds.getMetadata(ctx, req, sender)
 	default:
 		return sender.Send(&backend.CallResourceResponse{
 			Status: http.StatusNotFound,
@@ -186,9 +186,9 @@ func (ds *ODataSource) getEntities(client ODataClient, entitySet string, propert
 	return result.Value, nil
 }
 
-func (ds *ODataSource) getMetadata(req *backend.CallResourceRequest,
+func (ds *ODataSource) getMetadata(ctx context.Context, req *backend.CallResourceRequest,
 	sender backend.CallResourceResponseSender) error {
-	clientInstance := ds.getClientInstance(req.PluginContext)
+	clientInstance := ds.getClientInstance(ctx, req.PluginContext)
 	resp, err := clientInstance.GetMetadata()
 	if err != nil {
 		log.DefaultLogger.Error("error in http request")

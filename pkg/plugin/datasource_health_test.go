@@ -15,7 +15,7 @@ func TestCheckHealth(t *testing.T) {
 
 	client := clientMock{statusCode: 200}
 	is := ODataSourceInstance{&client}
-	im.On("Get", mock.Anything).Return(&is, nil)
+	im.On("Get", context.TODO(), mock.Anything).Return(&is, nil)
 
 	// Result
 	result, err := ds.CheckHealth(context.TODO(), &backend.CheckHealthRequest{})
@@ -29,7 +29,7 @@ func TestCheckHealthWithError(t *testing.T) {
 
 	client := clientMock{statusCode: 404}
 	is := ODataSourceInstance{&client}
-	im.On("Get", mock.Anything).Return(&is, nil)
+	im.On("Get", context.TODO(), mock.Anything).Return(&is, nil)
 
 	// Result
 	result, err := ds.CheckHealth(context.TODO(), &backend.CheckHealthRequest{})
