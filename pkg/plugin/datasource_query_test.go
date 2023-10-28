@@ -42,7 +42,7 @@ func TestQueryData(t *testing.T) {
 	for _, table := range tables {
 		client := clientMock{statusCode: 200, body: table.mockBody}
 		is := ODataSourceInstance{&client}
-		im.On("Get", mock.Anything).Return(&is, nil)
+		im.On("Get", context.TODO(), mock.Anything).Return(&is, nil)
 
 		// Result
 		result, err := ds.QueryData(context.TODO(), &table.query)
