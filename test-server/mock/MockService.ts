@@ -3,7 +3,7 @@ import {ToXml} from "./util/XmlMetadataWriter";
 import {MockModel} from "./model/MockModel";
 import {Generate} from "./Testdata";
 
-export let addMockService = (app: Application) => {
+export let addMockService = async (app: Application) => {
   app.get('/mock/\\$metadata',
     async (_: Request, res: Response): Promise<Response> => {
       return res
@@ -15,12 +15,11 @@ export let addMockService = (app: Application) => {
 
   app.get('/mock/temperatures',
     async (req: Request, res: Response): Promise<Response> => {
-      const { $filter } = req.query;
+      const {$filter} = req.query;
       if (typeof $filter === "string") {
-        const regex= /Time ge ([0-9-TZ:.]+) and Time le ([0-9-TZ:.]+)/;
+        const regex = /Time ge ([0-9-TZ:.]+) and Time le ([0-9-TZ:.]+)/;
         const match = $filter.match(regex);
-        if (match)
-        {
+        if (match) {
           const min = match[1];
           const max = match[2];
           console.log(`${min} / ${max}`);
@@ -40,13 +39,10 @@ export let addMockService = (app: Application) => {
   app.get('/mock',
     async (_: Request, res: Response): Promise<Response> => {
       let entitySets = [];
-      for (let schema of MockModel.schemas)
-      {
+      for (let schema of MockModel.schemas) {
         let entityContainer = schema.entityContainer;
-        if (entityContainer != null)
-        {
-          for (let entitySet of entityContainer.entitySets)
-          {
+        if (entityContainer != null) {
+          for (let entitySet of entityContainer.entitySets) {
             entitySets.push({name: entitySet.name, kind: 'EntitySet', url: entitySet.name});
           }
         }
