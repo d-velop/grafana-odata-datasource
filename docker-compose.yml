@@ -1,6 +1,19 @@
 version: '3.8'
 
 services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.1.2
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./integration/keycloak/realm.json:/opt/keycloak/data/import/realm.json
+    ports:
+      - 8080:8080/tcp
+    command:
+      - start-dev
+      - --import-realm
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
   grafana:
     container_name: 'dvelop-odata-datasource'
     build:
@@ -13,6 +26,7 @@ services:
     volumes:
       - ./dist:/var/lib/grafana/plugins/odata
       - ./provisioning:/etc/grafana/provisioning
+      - ./integration/keycloak/grafana.ini:/etc/grafana/grafana.ini
   test-server:
     build: test-server
     ports:
