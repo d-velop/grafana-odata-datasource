@@ -76,3 +76,10 @@ with the preconfigured OData Data Source.
 
 > Note: If you want to access a locally running OData Service Root make sure you use the correct hostname. You can use
 > docker's special DNS name `host.docker.internal` which resolves to the internal IP address used by the docker host.
+
+## Update create-plugin versions
+To update the plugin to use a newer version of the `create-plugin` tool, follow the instructions here:
+<https://grafana.com/developers/plugin-tools/migration-guides/update-create-plugin-versions>.
+
+The source code of the `create-plugin` tool can be found here:
+<https://github.com/grafana/plugin-tools/tree/main/packages/create-plugin>.
