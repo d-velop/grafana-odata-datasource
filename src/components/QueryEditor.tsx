@@ -1,10 +1,8 @@
 import React, { PureComponent } from 'react';
-import { Button, InlineFormLabel, LegacyForms, Input } from '@grafana/ui';
+import { Button, InlineFormLabel, Input, Select } from '@grafana/ui';
 import { QueryEditorProps, SelectableValue } from '@grafana/data';
 import { ODataSource } from '../DataSource';
 import { EntitySet, FilterCondition, Metadata, ODataOptions, ODataQuery, Property, FilterOperators } from '../types';
-
-const { Select } = LegacyForms;
 
 type Props = QueryEditorProps<ODataSource, ODataQuery, ODataOptions>;
 
@@ -153,22 +151,24 @@ export class QueryEditor extends PureComponent<Props, State> {
     let property = null;
     const listProperties = this.props.query.properties?.map((selectedProperty, index) => {
       property = (
-        <div className={'gf-form'}>
-          <InlineFormLabel width={8} tooltip={'Add select'}>
-            Select
-          </InlineFormLabel>
-          <Select
-            value={allProperties.find((item) => item.value?.name === this.props.query.properties?.[index].name)}
-            isClearable={true}
-            placeholder="(Property)"
-            onChange={(item) => this.onPropertyChange(item, index)}
-            onBlur={this.props.onRunQuery}
-            options={allProperties}
-            isSearchable={false}
-          />
-          <Button variant={'secondary'} onClick={() => this.removeProperty(index)}>
-            -
-          </Button>
+        <div className="gf-form-inline">
+          <div className={'gf-form'}>
+            <InlineFormLabel width={8} tooltip={'Add select'}>
+              Select
+            </InlineFormLabel>
+            <Select
+              value={allProperties.find((item) => item.value?.name === this.props.query.properties?.[index].name)}
+              isClearable={true}
+              placeholder="(Property)"
+              onChange={(item) => this.onPropertyChange(item, index)}
+              onBlur={this.props.onRunQuery}
+              options={allProperties}
+              isSearchable={false}
+            />
+            <Button variant={'secondary'} onClick={() => this.removeProperty(index)}>
+              -
+            </Button>
+          </div>
         </div>
       );
       return property;
