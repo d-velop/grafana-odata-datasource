@@ -22,10 +22,10 @@ func aQueryDataRequest(queryDataRequestBuilders ...func(*backend.QueryDataReques
 	return *request
 }
 
-func aDataQuery(builders ...func(*backend.DataQuery)) backend.DataQuery {
+func aDataQuery(refId string, builders ...func(*backend.DataQuery)) backend.DataQuery {
 	query := backend.DataQuery{
 		// Default values
-		RefID:         "id",
+		RefID:         refId,
 		QueryType:     "",
 		MaxDataPoints: 100,
 		Interval:      10,
@@ -79,10 +79,10 @@ func aDataResponse(builders ...func(*backend.DataResponse)) backend.DataResponse
 	return *response
 }
 
-func aDataFrame(builders ...func(*data.Frame)) *data.Frame {
+func aDataFrame(frameName string, builders ...func(*data.Frame)) *data.Frame {
 	// Default values
 	frame := &data.Frame{
-		Name: "id",
+		Name: frameName,
 		Meta: &data.FrameMeta{},
 	}
 	frame.Meta.PreferredVisualization = data.VisTypeTable
@@ -97,16 +97,64 @@ func aDataFrame(builders ...func(*data.Frame)) *data.Frame {
 	return frame
 }
 
-func withDataResponse(builders ...func(*backend.DataResponse)) func(n *backend.QueryDataResponse) {
+func anOdataResponse(builders ...func(*odata.Response)) odata.Response {
+	response := odata.Response{}
+	for _, build := range builders {
+		build(&response)
+	}
+	return response
+}
+
+func anEntity(builders ...func(map[string]interface{})) map[string]interface{} {
+	var entity = map[string]interface{}{}
+	for _, build := range builders {
+		build(entity)
+	}
+	return entity
+}
+
+func withEntity(builders ...func(map[string]interface{})) func(n *odata.Response) {
+	return func(response *odata.Response) {
+		var entity = anEntity(builders...)
+		response.Value = append(response.Value, entity)
+	}
+}
+
+func withProp(name string, value interface{}) func(e map[string]interface{}) {
+	return func(e map[string]interface{}) {
+		e[name] = value
+	}
+}
+
+func withDefaultEntity(builders ...func(map[string]interface{})) func(n *odata.Response) {
+	return func(response *odata.Response) {
+		var entity = anEntity(builders...)
+
+		entity["time"] = "2022-01-02T00:00:00Z"
+		entity["int32"] = 5.0
+		entity["boolean"] = true
+		entity["string"] = "Hello World!"
+
+		response.Value = append(response.Value, entity)
+	}
+}
+
+func withDataResponse(name string, builders ...func(*backend.DataResponse)) func(n *backend.QueryDataResponse) {
 	return func(dataResponse *backend.QueryDataResponse) {
 		var response = aDataResponse(builders...)
-		dataResponse.Responses["id"] = response
+		dataResponse.Responses[name] = response
+	}
+}
+
+func withErrorResponse(err error) func(n *backend.DataResponse) {
+	return func(dataResponse *backend.DataResponse) {
+		dataResponse.Error = err
 	}
 }
 
 func withDefaultTestFrame(builders ...func(*data.Frame)) func(n *backend.DataResponse) {
 	return func(dataResponse *backend.DataResponse) {
-		var frame = aDataFrame(builders...)
+		var frame = aDataFrame("defaultTestFrame", builders...)
 		frame.Fields = append(
 			frame.Fields,
 			data.NewField("int32", nil, []*int32{}),
@@ -127,9 +175,33 @@ func withDefaultTestFrame(builders ...func(*data.Frame)) func(n *backend.DataRes
 	}
 }
 
-func withBaseFrame(builders ...func(*data.Frame)) func(n *backend.DataResponse) {
+func withBaseFrame(name string, builders ...func(*data.Frame)) func(n *backend.DataResponse) {
 	return func(dataResponse *backend.DataResponse) {
-		dataResponse.Frames = append(dataResponse.Frames, aDataFrame(builders...))
+		dataResponse.Frames = append(dataResponse.Frames, aDataFrame(name, builders...))
+	}
+}
+
+func withField(name string, values interface{}) func(n *data.Frame) {
+	return func(frame *data.Frame) {
+		frame.Fields = append(frame.Fields, data.NewField(name, nil, values))
+	}
+}
+
+func withRow(builders ...func(index int, f *data.Frame)) func(n *data.Frame) {
+	return func(frame *data.Frame) {
+		for i, build := range builders {
+			if build != nil {
+				build(i, frame)
+			} else {
+				frame.Fields[i].Append(nil)
+			}
+		}
+	}
+}
+
+func withRowValue[T string | int32 | bool | time.Time](value T) func(index int, n *data.Frame) {
+	return func(index int, frame *data.Frame) {
+		frame.Fields[index].Append(&value)
 	}
 }
 
@@ -177,17 +249,35 @@ func int32Eq5(condition *filterCondition) {
 	condition.Value = "5"
 }
 
-func withDataQuery(builders ...func(*backend.DataQuery)) func(n *backend.QueryDataRequest) {
+func withDataQuery(refId string, builders ...func(*backend.DataQuery)) func(n *backend.QueryDataRequest) {
 	return func(request *backend.QueryDataRequest) {
-		var query = aDataQuery(builders...)
+		var query = aDataQuery(refId, builders...)
 		request.Queries = append(request.Queries, query)
 	}
 }
 
 func withQueryModel(builders ...func(*queryModel)) func(n *backend.DataQuery) {
-	var model, _ = json.Marshal(aQueryModel(builders...))
 	return func(query *backend.DataQuery) {
-		query.JSON = model
+		var qm = aQueryModel(builders...)
+		model, _ := json.Marshal(qm)
+
+		// Hack to make sure the value for query.JSON contains the queryModel and all base props from DataQuery
+		// as this behavior is stated in the docs:
+		// "JSON is the raw JSON query and includes the above properties as well as custom properties."
+		base := make(map[string]interface{})
+		json.Unmarshal(model, &base)
+
+		base["refId"] = query.RefID
+		base["queryType"] = query.QueryType
+		base["maxDataPoints"] = query.MaxDataPoints
+		base["interval"] = query.Interval
+		base["timeRange"] = query.TimeRange
+
+		baseRaw, _ := json.Marshal(base)
+
+		var finalJson = baseRaw
+
+		query.JSON = finalJson
 	}
 }
 

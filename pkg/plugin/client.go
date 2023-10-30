@@ -1,7 +1,10 @@
 package plugin
 
 import (
+	"encoding/json"
+	"encoding/xml"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"path"
@@ -10,13 +13,14 @@ import (
 
 	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
+	"github.com/grafana/grafana-plugin-sdk-go/backend/log"
 )
 
 type ODataClient interface {
 	GetServiceRoot() (*http.Response, error)
-	GetMetadata() (*http.Response, error)
-	Get(entitySet string, properties []property, timeProperty string, timeRange backend.TimeRange,
-		filterConditions []filterCondition) (*http.Response, error)
+	GetMetadata() (*odata.Edmx, error)
+	GetEntities(entitySet string, properties []property, timeProperty string, timeRange backend.TimeRange,
+		filterConditions []filterCondition) (*odata.Response, error)
 }
 
 type ODataClientImpl struct {
@@ -28,23 +32,65 @@ func (client *ODataClientImpl) GetServiceRoot() (*http.Response, error) {
 	return client.httpClient.Get(client.baseUrl)
 }
 
-func (client *ODataClientImpl) GetMetadata() (*http.Response, error) {
+func (client *ODataClientImpl) GetMetadata() (*odata.Edmx, error) {
 	requestUrl, err := url.Parse(client.baseUrl)
 	if err != nil {
 		return nil, err
 	}
 	requestUrl.Path = path.Join(requestUrl.Path, odata.Metadata)
-	return client.httpClient.Get(requestUrl.String())
+	resp, err := client.httpClient.Get(requestUrl.String())
+
+	if err != nil {
+		log.DefaultLogger.Error("error in http request")
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("get metadata failed with status code %d", resp.StatusCode)
+	}
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.DefaultLogger.Error("error reading response body")
+		return nil, err
+	}
+	var edmx odata.Edmx
+	err = xml.Unmarshal(bodyBytes, &edmx)
+	if err != nil {
+		log.DefaultLogger.Error("error unmarshalling response body")
+		return nil, err
+	}
+
+	return &edmx, nil
 }
 
-func (client *ODataClientImpl) Get(entitySet string, properties []property, timeProperty string,
-	timeRange backend.TimeRange, filterConditions []filterCondition) (*http.Response, error) {
+func (client *ODataClientImpl) GetEntities(entitySet string, properties []property, timeProperty string,
+	timeRange backend.TimeRange, filterConditions []filterCondition) (*odata.Response, error) {
 	requestUrl, err := buildQueryUrl(client.baseUrl, entitySet, properties, timeProperty, timeRange,
 		filterConditions)
 	if err != nil {
 		return nil, err
 	}
-	return client.httpClient.Get(requestUrl.String())
+
+	resp, err := client.httpClient.Get(requestUrl.String())
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	log.DefaultLogger.Debug("request response status", "status", resp.Status)
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("get failed with status code %d", resp.StatusCode)
+	}
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	var result odata.Response
+	err = json.Unmarshal(bodyBytes, &result)
+	if err != nil {
+		return nil, err
+	}
+	return &result, nil
 }
 
 func buildQueryUrl(baseUrl string, entitySet string, properties []property, timeProperty string,
