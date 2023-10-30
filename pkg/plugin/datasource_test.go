@@ -27,46 +27,58 @@ func TestGetClientInstance(t *testing.T) {
 	require.Equal(t, client, odataClient)
 }
 
-func TestNewODataSourceInstance(t *testing.T) {
-	tables := []backend.DataSourceInstanceSettings{
-		{
-			URL: "http://localhost:8080",
-		},
-	}
+func TestNewODataSourceInstanceSuccess(t *testing.T) {
+	// Arrange
+	url := "http://localhost:8080"
 
-	for _, table := range tables {
-		// Arrange
-		// Act
-		dsi, err := newDatasourceInstance(context.TODO(), table)
+	// Act
+	dsi, err := newDatasourceInstance(context.TODO(), backend.DataSourceInstanceSettings{
+		URL: url,
+	})
 
-		// Assert
-		require.NoError(t, err)
+	// Assert
+	require.NoError(t, err)
 
-		odsi := dsi.(*ODataSourceInstance)
-		odsic := odsi.client.(*ODataClientImpl)
+	odsi := dsi.(*ODataSourceInstance)
+	odsic := odsi.client.(*ODataClientImpl)
 
-		require.Equal(t, table.URL, odsic.baseUrl)
-	}
+	require.Equal(t, url, odsic.baseUrl)
+}
+
+func TestNewODataSourceInstanceInvalidJSON(t *testing.T) {
+	// Act
+	dsi, err := newDatasourceInstance(context.TODO(), backend.DataSourceInstanceSettings{
+		URL:      "http://localhost:8080",
+		JSONData: []byte(`this is no json`),
+	})
+
+	// Assert
+	require.Error(t, err)
+	require.Nil(t, dsi)
 }
 
 func TestCallResource(t *testing.T) {
 	tables := []struct {
+		name        string
 		req         *backend.CallResourceRequest
 		expRespCode int
 	}{
 		{
+			name: "Call not found absolute",
 			req: &backend.CallResourceRequest{
 				Path: "http://localhost:8080/path/does/not/exist",
 			},
 			expRespCode: 404,
 		},
 		{
+			name: "Call not found",
 			req: &backend.CallResourceRequest{
 				Path: "/path/does/not/exist",
 			},
 			expRespCode: 404,
 		},
 		{
+			name: "Call metadata, success",
 			req: &backend.CallResourceRequest{
 				Path: "metadata",
 			},
@@ -75,23 +87,25 @@ func TestCallResource(t *testing.T) {
 	}
 
 	for _, table := range tables {
-		// Arrange
-		client := &clientMock{
-			metadataResponse: &odata.Edmx{},
-		}
-		im := managerMock{}
-		ds := ODataSource{&im}
+		t.Run(table.name, func(t *testing.T) {
+			// Arrange
+			client := &clientMock{
+				metadataResponse: &odata.Edmx{},
+			}
+			im := managerMock{}
+			ds := ODataSource{&im}
 
-		is := ODataSourceInstance{client}
-		im.On("Get", context.TODO(), mock.Anything).Return(&is, nil)
-		crs := callResourceResponseSenderMock{}
+			is := ODataSourceInstance{client}
+			im.On("Get", context.TODO(), mock.Anything).Return(&is, nil)
+			crs := callResourceResponseSenderMock{}
 
-		// Act
-		err := ds.CallResource(context.TODO(), table.req, &crs)
+			// Act
+			err := ds.CallResource(context.TODO(), table.req, &crs)
 
-		// Assert
-		require.NoError(t, err)
-		require.Equal(t, table.expRespCode, crs.csr.Status)
+			// Assert
+			require.NoError(t, err)
+			require.Equal(t, table.expRespCode, crs.csr.Status)
+		})
 	}
 }
 

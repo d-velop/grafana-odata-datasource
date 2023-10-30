@@ -16,43 +16,54 @@ import (
 
 func TestMapFilter(t *testing.T) {
 	tables := []struct {
+		name             string
 		timeProperty     string
 		timeRange        backend.TimeRange
 		filterConditions []filterCondition
 		expected         string
 	}{
 		{
+			name:             "Time filter only",
 			timeProperty:     "time",
 			timeRange:        aOneDayTimeRange(),
 			filterConditions: someFilterConditions(int32Eq5),
 			expected:         "time ge 2022-04-21T12:30:50Z and time le 2022-04-21T12:30:50Z and int32 eq 5",
 		},
 		{
+			name:             "Time filter and int and string filter",
 			timeProperty:     "time",
 			timeRange:        aOneDayTimeRange(),
 			filterConditions: someFilterConditions(int32Eq5, withFilterCondition(stringProp, "eq", "Hello")),
 			expected:         "time ge 2022-04-21T12:30:50Z and time le 2022-04-21T12:30:50Z and int32 eq 5 and string eq 'Hello'",
 		},
 		{
+			name:             "Time filter and string filter",
 			timeProperty:     "time",
 			timeRange:        aOneDayTimeRange(),
 			filterConditions: someFilterConditions(withFilterCondition(stringProp, "eq", "")),
 			expected:         "time ge 2022-04-21T12:30:50Z and time le 2022-04-21T12:30:50Z and string eq ''",
 		},
 		{
+			name:             "String filter only",
 			filterConditions: someFilterConditions(withFilterCondition(stringProp, "eq", "")),
 			expected:         " and string eq ''",
 		},
 	}
 
 	for _, table := range tables {
-		var filterString = mapFilter(table.timeProperty, table.timeRange, table.filterConditions)
-		assert.Equal(t, table.expected, filterString)
+		t.Run(table.name, func(t *testing.T) {
+			// Act
+			var filterString = mapFilter(table.timeProperty, table.timeRange, table.filterConditions)
+
+			// Assert
+			assert.Equal(t, table.expected, filterString)
+		})
 	}
 }
 
 func TestBuildQueryUrl(t *testing.T) {
 	tables := []struct {
+		name             string
 		baseUrl          string
 		entitySet        string
 		properties       []property
@@ -62,6 +73,7 @@ func TestBuildQueryUrl(t *testing.T) {
 		expected         string
 	}{
 		{
+			name:             "Success",
 			baseUrl:          "http://localhost:5000",
 			entitySet:        "Temperatures",
 			properties:       []property{{Name: "Value1", Type: "Edm.Double"}},
@@ -73,10 +85,15 @@ func TestBuildQueryUrl(t *testing.T) {
 	}
 
 	for _, table := range tables {
-		var builtUrl, err = buildQueryUrl(table.baseUrl, table.entitySet, table.properties, table.timeProperty,
-			table.timeRange, table.filterConditions)
-		assert.NoError(t, err)
-		assert.Equal(t, table.expected, builtUrl.String())
+		t.Run(table.name, func(t *testing.T) {
+			// Act
+			var builtUrl, err = buildQueryUrl(table.baseUrl, table.entitySet, table.properties, table.timeProperty,
+				table.timeRange, table.filterConditions)
+
+			// Assert
+			assert.NoError(t, err)
+			assert.Equal(t, table.expected, builtUrl.String())
+		})
 	}
 }
 
