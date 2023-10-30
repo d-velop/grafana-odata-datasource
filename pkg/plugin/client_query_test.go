@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"encoding/json"
+	"encoding/xml"
 	"errors"
 	"net/http"
 	"net/url"
@@ -82,13 +83,13 @@ func TestBuildQueryUrl(t *testing.T) {
 func TestGetEntities(t *testing.T) {
 	tables := []struct {
 		name            string
-		expectedResult  *odata.Response
+		expectedResult  odata.Response
 		expectedError   error
 		handlerCallback func(w http.ResponseWriter, r *http.Request)
 	}{
 		{
 			name:           "Success",
-			expectedResult: &odata.Response{Value: []map[string]interface{}{{"hello": "world"}}},
+			expectedResult: anOdataResponse(withEntity(withProp("hello", "world"))),
 			expectedError:  nil,
 			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusOK)
@@ -96,26 +97,23 @@ func TestGetEntities(t *testing.T) {
 			},
 		},
 		{
-			name:           "Invalid json",
-			expectedResult: nil,
-			expectedError:  &json.SyntaxError{},
+			name:          "Invalid json",
+			expectedError: &json.SyntaxError{},
 			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusOK)
 				w.Write([]byte("Invalid json"))
 			},
 		},
 		{
-			name:           "Server Timeout",
-			expectedResult: nil,
-			expectedError:  &url.Error{},
+			name:          "Server Timeout",
+			expectedError: &url.Error{},
 			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
 				time.Sleep(10 * time.Second)
 			},
 		},
 		{
-			name:           "Server 500 error",
-			expectedResult: nil,
-			expectedError:  errors.New("get failed with status code 500"), // Is of type "errors.errorString"
+			name:          "Server 500 error",
+			expectedError: errors.New("get failed with status code 500"), // Is of type "errors.errorString"
 			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusInternalServerError)
 			},
@@ -133,7 +131,7 @@ func TestGetEntities(t *testing.T) {
 			// Assert
 			if table.expectedError == nil {
 				assert.NoError(t, err)
-				assert.Equal(t, table.expectedResult, resp)
+				assert.Equal(t, &table.expectedResult, resp)
 			} else {
 				assert.Error(t, err)
 				assert.IsType(t, table.expectedError, err)
@@ -142,3 +140,70 @@ func TestGetEntities(t *testing.T) {
 	}
 }
 
+func TestGetMetadata(t *testing.T) {
+	tables := []struct {
+		name            string
+		expectedResult  odata.Edmx
+		expectedError   error
+		handlerCallback func(w http.ResponseWriter, r *http.Request)
+	}{
+		{
+			name:           "Success",
+			expectedResult: anOdataEdmx("4.0"),
+			expectedError:  nil,
+			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
+				w.WriteHeader(http.StatusOK)
+				w.Write([]byte("<?xml version=\"1.0\" encoding=\"utf-8\"?><edmx:Edmx Version=\"4.0\" xmlns:edmx=\"http://docs.oasis-open.org/odata/ns/edmx\"></edmx:Edmx>"))
+			},
+		},
+		{
+			name:          "Invalid xml",
+			expectedError: errors.New(""), // Is of type "errors.errorString",
+			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
+				w.WriteHeader(http.StatusOK)
+				w.Write([]byte("Invalid xml")) // Produces no syntax error but an eof error as no elements are present
+			},
+		},
+		{
+			name:          "Invalid xml, syntax error",
+			expectedError: &xml.SyntaxError{},
+			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
+				w.WriteHeader(http.StatusOK)
+				w.Write([]byte("<?xml version=\"1.0\" encoding=\"utf-8\"?><edmx:Edmx Version=\"4.0\" xmlns:edmx=\"http://docs.oasis-open.org/odata/ns/edmx\">")) // Missing closing element
+			},
+		},
+		{
+			name:          "Server Timeout",
+			expectedError: &url.Error{},
+			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
+				time.Sleep(10 * time.Second)
+			},
+		},
+		{
+			name:          "Server 500 error",
+			expectedError: errors.New("get failed with status code 500"), // Is of type "errors.errorString"
+			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
+				w.WriteHeader(http.StatusInternalServerError)
+			},
+		},
+	}
+
+	for _, table := range tables {
+		t.Run(table.name, func(t *testing.T) {
+			// Arrange
+			client := GetOC("*", table.handlerCallback)
+
+			// Act
+			resp, err := client.GetMetadata()
+
+			// Assert
+			if table.expectedError == nil {
+				assert.NoError(t, err)
+				assert.Equal(t, &table.expectedResult, resp)
+			} else {
+				assert.Error(t, err)
+				assert.IsType(t, table.expectedError, err)
+			}
+		})
+	}
+}

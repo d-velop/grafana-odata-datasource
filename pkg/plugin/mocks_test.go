@@ -13,11 +13,10 @@ import (
 )
 
 type clientMock struct {
-	httpResponse        *http.Response
+	baseUrl             string
 	statusCode          int
 	body                string
 	metadataResponse    *odata.Edmx
-	baseUrl             string
 	getEntitiesResponse *odata.Response
 	err                 error
 	mock.Mock
@@ -37,7 +36,7 @@ func (client *clientMock) GetServiceRoot() (*http.Response, error) {
 }
 
 func (client *clientMock) GetMetadata() (*odata.Edmx, error) {
-	return client.metadataResponse, nil
+	return client.metadataResponse, client.err
 }
 
 func (client *clientMock) GetEntities(_ string, _ []property, _ string, _ backend.TimeRange, _ []filterCondition) (*odata.Response, error) {

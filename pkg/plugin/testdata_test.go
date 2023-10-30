@@ -2,6 +2,8 @@ package plugin
 
 import (
 	"encoding/json"
+	"encoding/xml"
+	"fmt"
 	"time"
 
 	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
@@ -202,6 +204,214 @@ func withRow(builders ...func(index int, f *data.Frame)) func(n *data.Frame) {
 func withRowValue[T string | int32 | bool | time.Time](value T) func(index int, n *data.Frame) {
 	return func(index int, frame *data.Frame) {
 		frame.Fields[index].Append(&value)
+	}
+}
+
+// OData Metadata related
+func anOdataEdmx(version string, builders ...func(*odata.Edmx)) odata.Edmx {
+	edmx := odata.Edmx{
+		XMLName: xml.Name{
+			Space: "http://docs.oasis-open.org/odata/ns/edmx",
+			Local: "Edmx",
+		},
+		Version: version,
+		XmlNs:   "http://docs.oasis-open.org/odata/ns/edmx",
+	}
+	for _, build := range builders {
+		build(&edmx)
+	}
+	return edmx
+}
+
+func anOdataDataService(builders ...func(*odata.DataServices)) *odata.DataServices {
+	ds := &odata.DataServices{
+		XMLName: xml.Name{
+			Space: "http://docs.oasis-open.org/odata/ns/edmx",
+			Local: "DataServices",
+		},
+		Schemas: []*odata.Schema{},
+	}
+	for _, build := range builders {
+		build(ds)
+	}
+	return ds
+}
+
+func anOdataSchema(namespace string, builders ...func(*odata.Schema)) *odata.Schema {
+	schema := &odata.Schema{
+		XMLName: xml.Name{
+			Space: "http://docs.oasis-open.org/odata/ns/edm",
+			Local: "Schema",
+		},
+		Namespace: namespace,
+		XmlNs:     "http://docs.oasis-open.org/odata/ns/edm",
+	}
+	for _, build := range builders {
+		build(schema)
+	}
+	return schema
+}
+
+func anOdataEntityType(name string, builders ...func(*odata.EntityType)) *odata.EntityType {
+	et := &odata.EntityType{
+		XMLName: xml.Name{
+			Space: "http://docs.oasis-open.org/odata/ns/edm",
+			Local: "EntityType",
+		},
+		Name:       name,
+		Key:        []*odata.Key{},
+		Properties: []*odata.Property{},
+	}
+	for _, build := range builders {
+		build(et)
+	}
+	return et
+}
+
+func anOdataEntityContainer(name string, builders ...func(*odata.EntityContainer)) *odata.EntityContainer {
+	ec := &odata.EntityContainer{
+		XMLName: xml.Name{
+			Space: "http://docs.oasis-open.org/odata/ns/edm",
+			Local: "EntityContainer",
+		},
+		Name:      name,
+		EntitySet: []*odata.EntitySet{},
+	}
+	for _, build := range builders {
+		build(ec)
+	}
+	return ec
+}
+
+func anOdataEntitySet(name string, entityType string) *odata.EntitySet {
+	return &odata.EntitySet{
+		XMLName:    xml.Name{Space: "http://docs.oasis-open.org/odata/ns/edm", Local: "EntitySet"},
+		Name:       name,
+		EntityType: entityType,
+	}
+}
+
+func anOdataProperty(name string, propertyType string) *odata.Property {
+	return &odata.Property{
+		XMLName:  xml.Name{Space: "http://docs.oasis-open.org/odata/ns/edm", Local: "Property"},
+		Name:     name,
+		Type:     propertyType,
+		Nullable: "true",
+	}
+}
+
+func anOdataKey(name string, builders ...func(*odata.Key)) *odata.Key {
+	k := &odata.Key{
+		XMLName: xml.Name{Space: "http://docs.oasis-open.org/odata/ns/edm", Local: "Key"},
+		PropertyRef: []*odata.PropertyRef{{
+			XMLName: xml.Name{Space: "http://docs.oasis-open.org/odata/ns/edm", Local: "PropertyRef"},
+			Name:    name},
+		},
+	}
+	for _, build := range builders {
+		build(k)
+	}
+	return k
+}
+
+func withDataService(builders ...func(*odata.DataServices)) func(n *odata.Edmx) {
+	return func(edmx *odata.Edmx) {
+		edmx.DataServices = append(edmx.DataServices, anOdataDataService(builders...))
+	}
+}
+
+func withSchema(namespace string, builders ...func(*odata.Schema)) func(n *odata.DataServices) {
+	return func(ds *odata.DataServices) {
+		ds.Schemas = append(ds.Schemas, anOdataSchema(namespace, builders...))
+	}
+}
+
+func withEntityType(name string, builders ...func(*odata.EntityType)) func(n *odata.Schema) {
+	return func(schema *odata.Schema) {
+		schema.EntityTypes = append(schema.EntityTypes, anOdataEntityType(name, builders...))
+	}
+}
+
+func withEntityContainer(name string, builders ...func(*odata.EntityContainer)) func(n *odata.Schema) {
+	return func(schema *odata.Schema) {
+		schema.EntityContainers = append(schema.EntityContainers, anOdataEntityContainer(name, builders...))
+	}
+}
+
+func withEntitySet(name string, entityType string) func(n *odata.EntityContainer) {
+	return func(ec *odata.EntityContainer) {
+		ec.EntitySet = append(ec.EntitySet, anOdataEntitySet(name, entityType))
+	}
+}
+
+func withProperty(name string, propertyType string) func(n *odata.EntityType) {
+	return func(et *odata.EntityType) {
+		et.Properties = append(et.Properties, anOdataProperty(name, propertyType))
+	}
+}
+
+func withKey(name string, builders ...func(*odata.Key)) func(n *odata.EntityType) {
+	return func(et *odata.EntityType) {
+		et.Key = append(et.Key, anOdataKey(name, builders...))
+	}
+}
+
+func withPropertyRef(name string) func(n *odata.Key) {
+	return func(key *odata.Key) {
+		key.PropertyRef = append(key.PropertyRef, &odata.PropertyRef{Name: name})
+	}
+}
+
+// Metadata resource related
+func aMetadataResource(builders ...func(*metadataResource)) metadataResource {
+	resource := metadataResource{
+		EntityTypes: make(map[string]entityType),
+		EntitySets:  make(map[string]entitySet),
+	}
+	for _, build := range builders {
+		build(&resource)
+	}
+	return resource
+}
+
+func anEntityType(name string, namespace string, builders ...func(*entityType)) *entityType {
+	et := &entityType{
+		Name:          name,
+		QualifiedName: fmt.Sprintf("%s.%s", namespace, name),
+		Properties:    []property{},
+	}
+	for _, build := range builders {
+		build(et)
+	}
+	return et
+}
+
+func anEntitySet(name string, entityType string) *entitySet {
+	es := &entitySet{
+		Name:       name,
+		EntityType: entityType,
+	}
+	return es
+}
+
+func withEntityTypeResource(name string, namespace string, builders ...func(*entityType)) func(n *metadataResource) {
+	return func(resource *metadataResource) {
+		resource.EntityTypes[fmt.Sprintf("%s.%s", namespace, name)] = *anEntityType(name, namespace, builders...)
+	}
+}
+
+func withEntitySetResource(name string, entityType string) func(n *metadataResource) {
+	return func(resource *metadataResource) {
+		resource.EntitySets[name] = *anEntitySet(name, entityType)
+	}
+}
+
+func withPropertyResource(name string, propertyType string) func(n *entityType) {
+	return func(et *entityType) {
+		et.Properties = append(et.Properties, property{
+			Name: name,
+			Type: propertyType,
+		})
 	}
 }
 
