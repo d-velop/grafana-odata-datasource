@@ -158,23 +158,23 @@ func TestQuery(t *testing.T) {
 
 func TestInvalidQueryModels(t *testing.T) {
 	tables := []struct {
-		name          string
-		query         backend.DataQuery
-		expectedError error
+		name             string
+		query            backend.DataQuery
+		expectedErrorMsg string
 	}{
 		{
 			name: "Missing time property",
 			query: backend.DataQuery{
 				JSON: []byte(`{}`),
 			},
-			expectedError: errors.New("string error"),
+			expectedErrorMsg: "invalid label key=value pair",
 		},
 		{
 			name: "Invalid json",
 			query: backend.DataQuery{
 				JSON: []byte(`{`),
 			},
-			expectedError: errors.New("string error"),
+			expectedErrorMsg: "error unmarshalling query json",
 		},
 	}
 
@@ -193,7 +193,7 @@ func TestInvalidQueryModels(t *testing.T) {
 
 			// Assert
 			assert.NotNil(t, resp.Error)
-			assert.IsType(t, resp.Error, table.expectedError)
+			assert.Contains(t, resp.Error.Error(), table.expectedErrorMsg)
 		})
 	}
 }
