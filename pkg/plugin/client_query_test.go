@@ -1,9 +1,6 @@
 package plugin
 
 import (
-	"encoding/json"
-	"encoding/xml"
-	"errors"
 	"net/http"
 	"net/url"
 	"testing"
@@ -76,11 +73,11 @@ func TestBuildQueryUrl(t *testing.T) {
 			name:             "Success",
 			baseUrl:          "http://localhost:5000",
 			entitySet:        "Temperatures",
-			properties:       []property{{Name: "Value1", Type: "Edm.Double"}},
+			properties:       []property{aProperty(int32Prop)},
 			timeProperty:     "time",
 			timeRange:        aOneDayTimeRange(),
 			filterConditions: someFilterConditions(withFilterCondition(stringProp, "eq", "")),
-			expected:         "http://localhost:5000/Temperatures?%24filter=time+ge+2022-04-21T12%3A30%3A50Z+and+time+le+2022-04-21T12%3A30%3A50Z+and+string+eq+%27%27&%24select=Value1%2C+time",
+			expected:         "http://localhost:5000/Temperatures?%24filter=time+ge+2022-04-21T12%3A30%3A50Z+and+time+le+2022-04-21T12%3A30%3A50Z+and+string+eq+%27%27&%24select=int32%2C+time",
 		},
 	}
 
@@ -99,26 +96,17 @@ func TestBuildQueryUrl(t *testing.T) {
 
 func TestGetEntities(t *testing.T) {
 	tables := []struct {
-		name            string
-		expectedResult  odata.Response
-		expectedError   error
-		handlerCallback func(w http.ResponseWriter, r *http.Request)
+		name             string
+		expectedError    error
+		expectedRespCode int
+		handlerCallback  func(w http.ResponseWriter, r *http.Request)
 	}{
 		{
-			name:           "Success",
-			expectedResult: anOdataResponse(withEntity(withProp("hello", "world"))),
-			expectedError:  nil,
+			name:             "Success",
+			expectedRespCode: 200,
 			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusOK)
 				w.Write([]byte("{\"value\":[{\"hello\":\"world\"}]}"))
-			},
-		},
-		{
-			name:          "Invalid json",
-			expectedError: &json.SyntaxError{},
-			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
-				w.WriteHeader(http.StatusOK)
-				w.Write([]byte("Invalid json"))
 			},
 		},
 		{
@@ -129,8 +117,8 @@ func TestGetEntities(t *testing.T) {
 			},
 		},
 		{
-			name:          "Server 500 error",
-			expectedError: errors.New("get failed with status code 500"), // Is of type "errors.errorString"
+			name:             "Server 500 error",
+			expectedRespCode: 500,
 			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusInternalServerError)
 			},
@@ -143,12 +131,12 @@ func TestGetEntities(t *testing.T) {
 			client := GetOC("*", table.handlerCallback)
 
 			// Act
-			resp, err := client.GetEntities("Temperatures", []property{{Name: "Value1", Type: "Edm.Double"}}, "time", aOneDayTimeRange(), someFilterConditions(int32Eq5))
+			resp, err := client.Get("Temperatures", []property{aProperty(int32Prop)}, "time", aOneDayTimeRange(), someFilterConditions(int32Eq5))
 
 			// Assert
 			if table.expectedError == nil {
 				assert.NoError(t, err)
-				assert.Equal(t, &table.expectedResult, resp)
+				assert.Equal(t, table.expectedRespCode, resp.StatusCode)
 			} else {
 				assert.Error(t, err)
 				assert.IsType(t, table.expectedError, err)
@@ -159,34 +147,20 @@ func TestGetEntities(t *testing.T) {
 
 func TestGetMetadata(t *testing.T) {
 	tables := []struct {
-		name            string
-		expectedResult  odata.Edmx
-		expectedError   error
-		handlerCallback func(w http.ResponseWriter, r *http.Request)
+		name             string
+		expectedResult   odata.Edmx
+		expectedRespCode int
+		expectedError    error
+		handlerCallback  func(w http.ResponseWriter, r *http.Request)
 	}{
 		{
-			name:           "Success",
-			expectedResult: anOdataEdmx("4.0"),
-			expectedError:  nil,
+			name:             "Success",
+			expectedResult:   anOdataEdmx("4.0"),
+			expectedError:    nil,
+			expectedRespCode: 200,
 			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusOK)
 				w.Write([]byte("<?xml version=\"1.0\" encoding=\"utf-8\"?><edmx:Edmx Version=\"4.0\" xmlns:edmx=\"http://docs.oasis-open.org/odata/ns/edmx\"></edmx:Edmx>"))
-			},
-		},
-		{
-			name:          "Invalid xml",
-			expectedError: errors.New(""), // Is of type "errors.errorString",
-			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
-				w.WriteHeader(http.StatusOK)
-				w.Write([]byte("Invalid xml")) // Produces no syntax error but an eof error as no elements are present
-			},
-		},
-		{
-			name:          "Invalid xml, syntax error",
-			expectedError: &xml.SyntaxError{},
-			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
-				w.WriteHeader(http.StatusOK)
-				w.Write([]byte("<?xml version=\"1.0\" encoding=\"utf-8\"?><edmx:Edmx Version=\"4.0\" xmlns:edmx=\"http://docs.oasis-open.org/odata/ns/edmx\">")) // Missing closing element
 			},
 		},
 		{
@@ -197,8 +171,8 @@ func TestGetMetadata(t *testing.T) {
 			},
 		},
 		{
-			name:          "Server 500 error",
-			expectedError: errors.New("get failed with status code 500"), // Is of type "errors.errorString"
+			name:             "Server 500 error",
+			expectedRespCode: 500,
 			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusInternalServerError)
 			},
@@ -216,9 +190,8 @@ func TestGetMetadata(t *testing.T) {
 			// Assert
 			if table.expectedError == nil {
 				assert.NoError(t, err)
-				assert.Equal(t, &table.expectedResult, resp)
+				assert.Equal(t, table.expectedRespCode, resp.StatusCode)
 			} else {
-				assert.Error(t, err)
 				assert.IsType(t, table.expectedError, err)
 			}
 		})

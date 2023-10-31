@@ -1,24 +1,21 @@
 package plugin
 
 import (
+	"bytes"
 	"context"
 	"io"
 	"net/http"
-	"strings"
 
-	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/instancemgmt"
 	"github.com/stretchr/testify/mock"
 )
 
 type clientMock struct {
-	baseUrl             string
-	statusCode          int
-	body                string
-	metadataResponse    *odata.Edmx
-	getEntitiesResponse *odata.Response
-	err                 error
+	baseUrl    string
+	statusCode int
+	body       []byte
+	err        error
 	mock.Mock
 }
 
@@ -32,15 +29,17 @@ type callResourceResponseSenderMock struct {
 
 func (client *clientMock) GetServiceRoot() (*http.Response, error) {
 	return &http.Response{StatusCode: client.statusCode,
-		Body: io.NopCloser(strings.NewReader(client.body))}, client.err
+		Body: io.NopCloser(bytes.NewReader(client.body))}, client.err
 }
 
-func (client *clientMock) GetMetadata() (*odata.Edmx, error) {
-	return client.metadataResponse, client.err
+func (client *clientMock) GetMetadata() (*http.Response, error) {
+	return &http.Response{StatusCode: client.statusCode,
+		Body: io.NopCloser(bytes.NewReader(client.body))}, client.err
 }
 
-func (client *clientMock) GetEntities(_ string, _ []property, _ string, _ backend.TimeRange, _ []filterCondition) (*odata.Response, error) {
-	return client.getEntitiesResponse, client.err
+func (client *clientMock) Get(_ string, _ []property, _ string, _ backend.TimeRange, _ []filterCondition) (*http.Response, error) {
+	return &http.Response{StatusCode: client.statusCode,
+		Body: io.NopCloser(bytes.NewReader(client.body))}, client.err
 }
 
 func (im *managerMock) Get(ctx context.Context, pluginContext backend.PluginContext) (instancemgmt.Instance, error) {

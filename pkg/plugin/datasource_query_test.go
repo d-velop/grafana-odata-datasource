@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"testing"
 	"time"
@@ -40,15 +41,19 @@ func TestQueryData(t *testing.T) {
 
 	for _, table := range tables {
 		t.Run(table.name, func(t *testing.T) {
+			// Arrange
 			im := managerMock{}
 			ds := ODataSource{&im}
 
-			client := clientMock{getEntitiesResponse: &odata.Response{}}
+			body, _ := json.Marshal(odata.Response{})
+			client := clientMock{body: body}
 			is := ODataSourceInstance{&client}
 			im.On("Get", context.TODO(), mock.Anything).Return(&is, nil)
 
-			// Result
+			// Act
 			result, err := ds.QueryData(context.TODO(), &table.query)
+
+			// Assert
 			assert.NoError(t, err)
 			assert.Equal(t, len(table.expected.Responses), len(result.Responses))
 		})
@@ -133,7 +138,12 @@ func TestQuery(t *testing.T) {
 			im := managerMock{}
 			ds := ODataSource{&im}
 
-			client := clientMock{getEntitiesResponse: &table.mockODataResponse, err: table.expected.Error}
+			body, _ := json.Marshal(table.mockODataResponse)
+			client := clientMock{
+				body:       body,
+				err:        table.expected.Error,
+				statusCode: 200,
+			}
 			is := ODataSourceInstance{&client}
 			im.On("Get", context.TODO(), mock.Anything).Return(&is, nil)
 

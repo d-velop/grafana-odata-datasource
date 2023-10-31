@@ -3,7 +3,9 @@ package plugin
 import (
 	"context"
 	"encoding/json"
+	"encoding/xml"
 	"fmt"
+	"io"
 	"net/http"
 	"time"
 
@@ -111,7 +113,7 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 	response := backend.DataResponse{}
 	var qm queryModel
 	err := json.Unmarshal(query.JSON, &qm)
-	if response.Error != nil {
+	if err != nil {
 		response.Error = fmt.Errorf("error unmarshalling query json: %w", err)
 		return response
 	}
@@ -135,17 +137,35 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 		frame.Fields = append(frame.Fields, data.NewField(prop.Name, nil, odata.ToArray(prop.Type)))
 	}
 
-	resp, err := clientInstance.GetEntities(qm.EntitySet.Name, qm.Properties, timeProperty,
+	resp, err := clientInstance.Get(qm.EntitySet.Name, qm.Properties, timeProperty,
 		query.TimeRange, qm.FilterConditions)
 	if err != nil {
 		response.Error = err
 		return response
 	}
 
-	entities := resp.Value
-	log.DefaultLogger.Debug("query complete", "noOfEntities", len(entities))
+	defer resp.Body.Close()
 
-	for _, entry := range entities {
+	log.DefaultLogger.Debug("request response status", "status", resp.Status)
+	if resp.StatusCode != http.StatusOK {
+		response.Error = fmt.Errorf("get failed with status code %d", resp.StatusCode)
+		return response
+	}
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		response.Error = err
+		return response
+	}
+	var result odata.Response
+	err = json.Unmarshal(bodyBytes, &result)
+	if err != nil {
+		response.Error = err
+		return response
+	}
+
+	log.DefaultLogger.Debug("query complete", "noOfEntities", len(result.Value))
+
+	for _, entry := range result.Value {
 		values := make([]interface{}, len(qm.Properties)+1)
 		if timeValue, err := time.Parse(time.RFC3339Nano, fmt.Sprint(entry[timeProperty])); err == nil {
 			values[0] = &timeValue
@@ -168,9 +188,25 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 func (ds *ODataSource) getMetadata(ctx context.Context, req *backend.CallResourceRequest,
 	sender backend.CallResourceResponseSender) error {
 	clientInstance := ds.getClientInstance(ctx, req.PluginContext)
-	edmx, err := clientInstance.GetMetadata()
+	resp, err := clientInstance.GetMetadata()
 
 	if err != nil {
+		return err
+	}
+
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("get metadata failed with status code %d", resp.StatusCode)
+	}
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.DefaultLogger.Error("error reading response body")
+		return err
+	}
+	var edmx odata.Edmx
+	err = xml.Unmarshal(bodyBytes, &edmx)
+	if err != nil {
+		log.DefaultLogger.Error("error unmarshalling response body")
 		return err
 	}
 

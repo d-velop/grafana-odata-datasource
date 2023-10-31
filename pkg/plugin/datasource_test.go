@@ -3,6 +3,7 @@ package plugin
 import (
 	"context"
 	"encoding/json"
+	"encoding/xml"
 	"testing"
 
 	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
@@ -89,8 +90,10 @@ func TestCallResource(t *testing.T) {
 	for _, table := range tables {
 		t.Run(table.name, func(t *testing.T) {
 			// Arrange
+			body := "<?xml version=\"1.0\" encoding=\"utf-8\"?><edmx:Edmx Version=\"4.0\" xmlns:edmx=\"http://docs.oasis-open.org/odata/ns/edmx\"></edmx:Edmx>"
 			client := &clientMock{
-				metadataResponse: &odata.Edmx{},
+				statusCode: table.expRespCode,
+				body:       []byte(body),
 			}
 			im := managerMock{}
 			ds := ODataSource{&im}
@@ -147,7 +150,12 @@ func TestCallResourceMetadata(t *testing.T) {
 	for _, table := range tables {
 		t.Run(table.name, func(t *testing.T) {
 			// Arrange
-			client := &clientMock{metadataResponse: &table.respXml, err: table.respErr}
+			body, _ := xml.Marshal(table.respXml)
+			client := &clientMock{
+				body:       body,
+				err:        table.respErr,
+				statusCode: table.expRespCode,
+			}
 			im := managerMock{}
 			ds := ODataSource{&im}
 
