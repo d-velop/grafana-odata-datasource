@@ -130,11 +130,6 @@ export class QueryEditor extends PureComponent<Props, State> {
     }
     if (option?.value) {
       filterCondition.property = option.value;
-      /*
-      filterCondition.property.type = this.state.allProperties.find(
-        (p: any) => p.value?.name === filterCondition.property.name
-      )!.value!.type;
-      */
     } else {
       filterCondition.property = { name: '', type: '' };
     }
