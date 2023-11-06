@@ -84,12 +84,12 @@ export class QueryEditor extends PureComponent<Props, State> {
   }
 
   onEntitySetChange = (option: SelectableValue<EntitySet>) => {
-    if (this.props.query.entitySet?.name === option.value?.name) {
+    if (this.props.query.entitySet?.name === option?.value?.name) {
       return;
     }
     const { query } = this.props;
     const { metadata } = this.state;
-    const entitySet = option.value;
+    const entitySet = option?.value;
     query.entitySet = entitySet;
     this.resetSelection();
     this.setState(
@@ -102,21 +102,54 @@ export class QueryEditor extends PureComponent<Props, State> {
   };
 
   onTimePropertyChange = (option: SelectableValue<Property>) => {
-    if (this.props.query.timeProperty === option.value) {
+    if (this.props.query.timeProperty === option?.value) {
       return;
     }
     const { query } = this.props;
-    query.timeProperty = option.value;
+    query.timeProperty = option?.value;
     this.update();
   };
 
   onPropertyChange = (option: SelectableValue<Property>, index: number) => {
-    if (this.props.query.properties![index] === option.value) {
+    if (this.props.query.properties![index] === option?.value) {
       return;
     }
     const properties: Property[] = this.props.query.properties!;
-    if (option.value != null) {
+    if (option?.value != null) {
       properties[index] = option.value;
+    } else {
+      properties[index] = { name: '', type: '' };
+    }
+    this.update();
+  };
+
+  onFilterConditionPropertyChange = (option: SelectableValue<Property>, index: number) => {
+    const filterCondition = this.props.query.filterConditions![index];
+    if (option?.value === filterCondition.property) {
+      return;
+    }
+    if (option?.value) {
+      filterCondition.property = option.value;
+      /*
+      filterCondition.property.type = this.state.allProperties.find(
+        (p: any) => p.value?.name === filterCondition.property.name
+      )!.value!.type;
+      */
+    } else {
+      filterCondition.property = { name: '', type: '' };
+    }
+    this.update();
+  };
+
+  onFilterConditionOperatorChange = (option: SelectableValue<string>, index: number) => {
+    const filterCondition = this.props.query.filterConditions![index];
+    if (option?.value === filterCondition.operator) {
+      return;
+    }
+    if (option?.value) {
+      filterCondition.operator = option.value! as string;
+    } else {
+      filterCondition.operator = '';
     }
     this.update();
   };
@@ -187,18 +220,7 @@ export class QueryEditor extends PureComponent<Props, State> {
               )}
               isClearable={true}
               placeholder="(Property)"
-              onChange={(item) => {
-                filterCondition = this.props.query.filterConditions![index];
-                if (item.value?.name === filterCondition.property.name) {
-                  return;
-                }
-                if (item.value) {
-                  filterCondition.property.name = item.value?.name!;
-                  filterCondition.property.type = allProperties.find(
-                    (item) => item.value?.name === filterCondition.property.name
-                  )!.value!.type;
-                }
-              }}
+              onChange={(item) => this.onFilterConditionPropertyChange(item, index)}
               onBlur={this.props.onRunQuery}
               options={allProperties}
               isSearchable={false}
@@ -211,15 +233,7 @@ export class QueryEditor extends PureComponent<Props, State> {
               }
               isClearable={true}
               placeholder="(Operator)"
-              onChange={(item) => {
-                filterCondition = this.props.query.filterConditions![index];
-                if (item.value === filterCondition.operator) {
-                  return;
-                }
-                if (item.value) {
-                  filterCondition.operator = item.value! as string;
-                }
-              }}
+              onChange={(item) => this.onFilterConditionOperatorChange(item, index)}
               onBlur={this.props.onRunQuery}
               options={filterOperators}
               isSearchable={false}
