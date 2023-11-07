@@ -77,7 +77,7 @@ func mapSelect(properties []property, timeProperty string) string {
 	if len(timeProperty) > 0 {
 		result = append(result, timeProperty)
 	}
-	return strings.Join(result[:], ", ")
+	return strings.Join(result[:], ",")
 }
 
 func mapFilter(timeProperty string, timeRange backend.TimeRange, filterConditions []filterCondition) string {

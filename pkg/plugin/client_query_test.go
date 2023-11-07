@@ -77,7 +77,7 @@ func TestBuildQueryUrl(t *testing.T) {
 			timeProperty:     "time",
 			timeRange:        aOneDayTimeRange(),
 			filterConditions: someFilterConditions(withFilterCondition(stringProp, "eq", "")),
-			expected:         "http://localhost:5000/Temperatures?%24filter=time+ge+2022-04-21T12%3A30%3A50Z+and+time+le+2022-04-21T12%3A30%3A50Z+and+string+eq+%27%27&%24select=int32%2C+time",
+			expected:         "http://localhost:5000/Temperatures?%24filter=time+ge+2022-04-21T12%3A30%3A50Z+and+time+le+2022-04-21T12%3A30%3A50Z+and+string+eq+%27%27&%24select=int32%2Ctime",
 		},
 	}
 
