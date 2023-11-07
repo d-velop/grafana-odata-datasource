@@ -2,11 +2,12 @@ import React, { PureComponent } from 'react';
 import { Button, InlineFormLabel, Input, Select } from '@grafana/ui';
 import { QueryEditorProps, SelectableValue } from '@grafana/data';
 import { ODataSource } from '../DataSource';
-import { EntitySet, FilterCondition, Metadata, ODataOptions, ODataQuery, Property, FilterOperators } from '../types';
+import { EntitySet, Metadata, ODataOptions, ODataQuery, Property, FilterOperators } from '../types';
 
 type Props = QueryEditorProps<ODataSource, ODataQuery, ODataOptions>;
 
 interface State {
+  resetKey: number;
   metadata: Metadata | undefined;
   entitySets: Array<SelectableValue<EntitySet>>;
   timeProperties: Array<SelectableValue<Property>>;
@@ -26,6 +27,7 @@ export class QueryEditor extends PureComponent<Props, State> {
     super(props);
     this.dataSource = this.props.datasource;
     this.state = {
+      resetKey: 0,
       metadata: undefined,
       entitySets: [],
       timeProperties: [],
@@ -72,106 +74,78 @@ export class QueryEditor extends PureComponent<Props, State> {
       }));
   }
 
-  update = () => {
-    this.props.onChange(this.props.query);
+  update = (query: ODataQuery) => {
+    this.props.onChange(query);
     this.props.onRunQuery();
   };
 
-  resetSelection() {
-    const { query } = this.props;
-    query.timeProperty = null;
-    query.properties = [];
-  }
-
   onEntitySetChange = (option: SelectableValue<EntitySet>) => {
-    if (this.props.query.entitySet?.name === option?.value?.name) {
-      return;
-    }
-    const { query } = this.props;
+    if (this.props.query.entitySet?.name === option?.value?.name) { return };
     const { metadata } = this.state;
     const entitySet = option?.value;
-    query.entitySet = entitySet;
-    this.resetSelection();
-    this.setState(
+    const updatedQuery = { ...this.props.query, entitySet: entitySet };
+    updatedQuery.timeProperty = null;
+    updatedQuery.properties = [];
+    updatedQuery.filterConditions = [];
+    this.props.onChange(updatedQuery);
+    this.setState((prevState) => (
       {
         timeProperties: this.mapProperties(metadata, entitySet?.entityType, PropertyKind.Time),
         allProperties: this.mapProperties(metadata, entitySet?.entityType, PropertyKind.All),
-      },
-      this.update
+        resetKey: prevState.resetKey + 1
+      }),
+      this.props.onRunQuery
     );
   };
 
   onTimePropertyChange = (option: SelectableValue<Property>) => {
-    if (this.props.query.timeProperty === option?.value) {
-      return;
-    }
-    const { query } = this.props;
-    query.timeProperty = option?.value;
-    this.update();
+    if (this.props.query.timeProperty === option?.value) { return };
+    this.update({ ...this.props.query, timeProperty: option?.value, });
   };
 
   onPropertyChange = (option: SelectableValue<Property>, index: number) => {
-    if (this.props.query.properties![index] === option?.value) {
-      return;
-    }
-    const properties: Property[] = this.props.query.properties!;
-    if (option?.value != null) {
-      properties[index] = option.value;
-    } else {
-      properties[index] = { name: '', type: '' };
-    }
-    this.update();
+    if (this.props.query.properties![index] === option?.value) { return };
+    const properties = [...this.props.query.properties!];
+    properties[index] = option?.value ? { ...option.value } : { name: '', type: '' };
+    this.update({ ...this.props.query, properties: properties });
   };
 
   onFilterConditionPropertyChange = (option: SelectableValue<Property>, index: number) => {
-    const filterCondition = this.props.query.filterConditions![index];
-    if (option?.value === filterCondition.property) {
-      return;
-    }
-    if (option?.value) {
-      filterCondition.property = option.value;
-    } else {
-      filterCondition.property = { name: '', type: '' };
-    }
-    this.update();
+    if (this.props.query.filterConditions![index].property === option?.value) { return };
+    const filterConditions = [...this.props.query.filterConditions!];
+    filterConditions[index].property = option?.value ? { ...option.value } : { name: '', type: '' };
+    this.update({ ...this.props.query, filterConditions: filterConditions });
   };
 
   onFilterConditionOperatorChange = (option: SelectableValue<string>, index: number) => {
-    const filterCondition = this.props.query.filterConditions![index];
-    if (option?.value === filterCondition.operator) {
-      return;
-    }
-    if (option?.value) {
-      filterCondition.operator = option.value! as string;
-    } else {
-      filterCondition.operator = '';
-    }
-    this.update();
+    if (this.props.query.filterConditions![index].operator === option?.value) { return };
+    const filterConditions = [...this.props.query.filterConditions!];
+    filterConditions[index].operator = option?.value ? option.value : '';
+    this.update({ ...this.props.query, filterConditions: filterConditions });
   };
 
   addProperty = () => {
-    const properties: Property[] = this.props.query.properties!;
+    const properties = [...this.props.query.properties!];
     properties.push({ name: '', type: '' });
-    this.update();
+    this.update({ ...this.props.query, properties: properties });
   };
 
   removeProperty = (index: number) => {
-    const properties: Property[] = this.props.query.properties!;
+    const properties = [...this.props.query.properties!];
     properties.splice(index, 1);
-    this.update();
+    this.update({ ...this.props.query, properties: properties });
   };
 
   addFilterCondition = () => {
-    this.props.query.filterConditions = this.props.query.filterConditions ?? [];
-    const filterConditions: FilterCondition[] = this.props.query.filterConditions!;
+    const filterConditions = [...this.props.query.filterConditions!];
     filterConditions.push({ property: { name: '', type: '' }, operator: '', value: '' });
-    this.update();
+    this.update({ ...this.props.query, filterConditions: filterConditions });
   };
 
   removeFilterCondition = (index: number) => {
-    const filterConditions: FilterCondition[] = this.props.query.filterConditions!;
+    const filterConditions = [...this.props.query.filterConditions!];
     filterConditions.splice(index, 1);
-    this.update();
+    this.update({ ...this.props.query, filterConditions: filterConditions });
   };
 
   render() {
@@ -277,6 +251,7 @@ export class QueryEditor extends PureComponent<Props, State> {
               Time property
             </InlineFormLabel>
             <Select
+              key={this.state.resetKey}
               value={timeProperties.find((o) => o.value?.name === this.props.query.timeProperty?.name)}
               isClearable={true}
               placeholder="(Property)"
