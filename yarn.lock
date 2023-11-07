@@ -2675,10 +2675,10 @@
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-5.1.2.tgz#07508b45797cb81ec3f273011b054cd0755eddca"
   integrity sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==
 
-"@types/morgan@^1.9.7":
-  version "1.9.7"
-  resolved "https://registry.yarnpkg.com/@types/morgan/-/morgan-1.9.7.tgz#ba1e980841be06cd164eedfba7e3e1e2f4d0c911"
-  integrity sha512-4sJFBUBrIZkP5EvMm1L6VCXp3SQe8dnXqlVpe1jsmTjS1JQVmSjnpMNs8DosQd6omBi/K7BSKJ6z/Mc3ki0K9g==
+"@types/morgan@^1.9.8":
+  version "1.9.8"
+  resolved "https://registry.yarnpkg.com/@types/morgan/-/morgan-1.9.8.tgz#9e967ede43256722b18debed8a706ef577243b2c"
+  integrity sha512-IS65B0+LgfdI61N6pn634vGc3ePn7ttt1iCiEKVk22DpGHMVpMZ7rbUxbjyOSqXI7zYi/nUGrZRD+PpvGlamnA==
   dependencies:
     "@types/node" "*"
 
