@@ -363,8 +363,8 @@ func withPropertyRef(name string) func(n *odata.Key) {
 }
 
 // Metadata resource related
-func aMetadataResource(builders ...func(*metadataResource)) metadataResource {
-	resource := metadataResource{
+func aSchema(builders ...func(*schema)) schema {
+	resource := schema{
 		EntityTypes: make(map[string]entityType),
 		EntitySets:  make(map[string]entitySet),
 	}
@@ -394,14 +394,14 @@ func anEntitySet(name string, entityType string) *entitySet {
 	return es
 }
 
-func withEntityTypeResource(name string, namespace string, builders ...func(*entityType)) func(n *metadataResource) {
-	return func(resource *metadataResource) {
+func withEntityTypeResource(name string, namespace string, builders ...func(*entityType)) func(n *schema) {
+	return func(resource *schema) {
 		resource.EntityTypes[fmt.Sprintf("%s.%s", namespace, name)] = *anEntityType(name, namespace, builders...)
 	}
 }
 
-func withEntitySetResource(name string, entityType string) func(n *metadataResource) {
-	return func(resource *metadataResource) {
+func withEntitySetResource(name string, entityType string) func(n *schema) {
+	return func(resource *schema) {
 		resource.EntitySets[name] = *anEntitySet(name, entityType)
 	}
 }

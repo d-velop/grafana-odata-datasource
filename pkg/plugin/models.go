@@ -9,7 +9,7 @@ type queryModel struct {
 	FilterConditions []filterCondition `json:"filterConditions"`
 }
 
-type metadataResource struct {
+type schema struct {
 	EntityTypes map[string]entityType `json:"entityTypes"`
 	EntitySets  map[string]entitySet  `json:"entitySets"`
 }

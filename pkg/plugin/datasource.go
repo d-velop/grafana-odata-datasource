@@ -210,7 +210,7 @@ func (ds *ODataSource) getMetadata(ctx context.Context, req *backend.CallResourc
 		return err
 	}
 
-	metadata := metadataResource{
+	metadata := schema{
 		EntityTypes: make(map[string]entityType),
 		EntitySets:  make(map[string]entitySet),
 	}

@@ -118,14 +118,14 @@ func TestCallResourceMetadata(t *testing.T) {
 		respXml     odata.Edmx
 		respErr     error
 		expRespCode int
-		expResponse metadataResource
+		expResponse schema
 	}{
 		{
 			name:        "Minimal metadata response",
 			respXml:     anOdataEdmx("4.0"),
 			respErr:     nil,
 			expRespCode: 200,
-			expResponse: aMetadataResource(),
+			expResponse: aSchema(),
 		},
 		{
 			name: "Full metadata response",
@@ -140,7 +140,7 @@ func TestCallResourceMetadata(t *testing.T) {
 							withEntitySet("entity-set-name", "some-namespace.entity-set-name"))))),
 			respErr:     nil,
 			expRespCode: 200,
-			expResponse: aMetadataResource(
+			expResponse: aSchema(
 				withEntityTypeResource("entity-type-name", "some-namespace",
 					withPropertyResource("property-name", "property-type")),
 				withEntitySetResource("entity-set-name", "some-namespace.entity-set-name")),
@@ -171,7 +171,7 @@ func TestCallResourceMetadata(t *testing.T) {
 			require.Equal(t, table.expRespCode, crs.csr.Status)
 
 			// Parse crs.csr.Body into a metadataResponse struct
-			var resp metadataResource
+			var resp schema
 			err = json.Unmarshal(crs.csr.Body, &resp)
 
 			require.Equal(t, table.expResponse, resp)
