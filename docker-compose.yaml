@@ -1,4 +1,5 @@
-version: '3.0'
+version: '3.8'
+
 services:
   grafana:
     container_name: 'dvelop-odata-datasource'
@@ -12,3 +13,7 @@ services:
     volumes:
       - ./dist:/var/lib/grafana/plugins/dvelop-odata-datasource
       - ./provisioning:/etc/grafana/provisioning
+  test-server:
+    build: test-server
+    ports:
+      - "4004:4004"

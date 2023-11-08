@@ -36,3 +36,4 @@ e2e-results/
 # Misc
 .eslintcache
 .DS_Store
+db.sqlite

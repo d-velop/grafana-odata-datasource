@@ -85,7 +85,7 @@ func TestBuildQueryUrl(t *testing.T) {
 		t.Run(table.name, func(t *testing.T) {
 			// Act
 			var builtUrl, err = buildQueryUrl(table.baseUrl, table.entitySet, table.properties, table.timeProperty,
-				table.timeRange, table.filterConditions)
+				table.timeRange, table.filterConditions, "+")
 
 			// Assert
 			assert.NoError(t, err)

@@ -44,22 +44,28 @@ or build plugin in production mode
 yarn build
 ```
 
-### Using the OData mock-server
-If you don't have a full-fledged OData server at hand, you will find a minimal mock server based on 
-[Express](https://expressjs.com) in the [`mock`](mock) directory.
+### Using the OData test-server
+If you don't have a full-fledged OData server at hand, you will find a test server based on
+[Express](https://expressjs.com) and on the Core Data Services (CDS) of the
+[SAP Cloud Application Programming Model](https://cap.cloud.sap/) in the [`test-server`](test-server) directory.
 
 It can be started by using the command
 ```bash
-yarn startMock 
+cd test-server
+yarn start 
 ```
+
+In addition, the test server is automatically built and started using Docker Compose (see below).
+
+For more information see [test-server/README.md](test-server/README.md).
 
 ### Try and test using Docker Compose
 The project includes a [`docker-compose.yml`](docker-compose.yml) file. With this, Grafana can be started quickly for
 development purposes. The local project directory is automatically mounted to the Grafana plugin directory.
 
 Additionally, to keep development uncomplicated, anonymous authorization is enabled in Grafana. The project also comes
-with a predefined data source configuration (using the aforementioned mock-server) and a test dashboard that allows
-changes to be tried out and tested directly. See folder [`provisioning`](provisioning) for details.
+with predefined data source configurations (using the aforementioned test-server) and test dashboards that allow changes
+to be tried out and tested directly. See folder [`provisioning`](provisioning) for details.
 
 To start, simply run the following command
 ```bash
@@ -89,3 +95,9 @@ mage coverage
 
 The results are written to a `backend.html` file located in the [`./coverage`](./coverage) folder.
 
+## Update create-plugin versions
+To update the plugin to use a newer version of the `create-plugin` tool, follow the instructions here:
+<https://grafana.com/developers/plugin-tools/migration-guides/update-create-plugin-versions>.
+
+The source code of the `create-plugin` tool can be found here:
+<https://github.com/grafana/plugin-tools/tree/main/packages/create-plugin>.
