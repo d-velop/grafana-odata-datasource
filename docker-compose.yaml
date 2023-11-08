@@ -11,7 +11,7 @@ services:
     ports:
       - 3000:3000/tcp
     volumes:
-      - ./dist:/var/lib/grafana/plugins/odata
+      - ./dist:/var/lib/grafana/plugins/dvelop-odata-datasource
       - ./provisioning:/etc/grafana/provisioning
   test-server:
     build: test-server
