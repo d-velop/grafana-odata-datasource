@@ -1253,7 +1253,7 @@
   dependencies:
     tslib "^2.4.0"
 
-"@grafana/data@10.2.0", "@grafana/data@^10.2.0":
+"@grafana/data@10.2.0":
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/@grafana/data/-/data-10.2.0.tgz#116190f47f51f2eebd608bd5299d7ce278899bbe"
   integrity sha512-MPUmkokQY7AWbJKVundp9AtTZdk4HqZHUCNvM1TFkTACUW9rVCi5fmmjwJQFLfTJ9JL2fkls8Z6S1l9Hd9ViTw==
@@ -1282,6 +1282,37 @@
     tinycolor2 "1.6.0"
     tslib "2.6.0"
     uplot "1.6.26"
+    xss "^1.0.14"
+
+"@grafana/data@^10.2.1":
+  version "10.2.1"
+  resolved "https://registry.yarnpkg.com/@grafana/data/-/data-10.2.1.tgz#80f711af80f7afb9f370bea5749666c35234e3bc"
+  integrity sha512-7T4akx7PBq/aUj98q0U7mX1hJk9KGNglBr8+rqvkAsXc0l1WPykJDOGr2tWmTuAz73aUrjB7cbSUGEIQWNGWYA==
+  dependencies:
+    "@braintree/sanitize-url" "6.0.2"
+    "@grafana/schema" "10.2.1"
+    "@types/d3-interpolate" "^3.0.0"
+    "@types/string-hash" "1.1.1"
+    d3-interpolate "3.0.1"
+    date-fns "2.30.0"
+    dompurify "^2.4.3"
+    eventemitter3 "5.0.1"
+    fast_array_intersect "1.1.0"
+    history "4.10.1"
+    lodash "4.17.21"
+    marked "5.1.1"
+    marked-mangle "1.1.0"
+    moment "2.29.4"
+    moment-timezone "0.5.43"
+    ol "7.4.0"
+    papaparse "5.4.1"
+    react-use "17.4.0"
+    regenerator-runtime "0.13.11"
+    rxjs "7.8.1"
+    string-hash "^1.1.3"
+    tinycolor2 "1.6.0"
+    tslib "2.6.0"
+    uplot "1.6.27"
     xss "^1.0.14"
 
 "@grafana/e2e-selectors@10.2.0":
@@ -1377,6 +1408,13 @@
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/@grafana/schema/-/schema-10.2.0.tgz#4b21aed47cd521484c899ef26737b5e4cc2ea323"
   integrity sha512-IvjlezsOfIRjnsOwTJ1qu1GWbq9Rz3ofFi2Pd+1Brza6Gn951Hv/5MlLwqIuZJ+VnSVs35ZlNOl3sz9uSq2ibg==
+  dependencies:
+    tslib "2.6.0"
+
+"@grafana/schema@10.2.1":
+  version "10.2.1"
+  resolved "https://registry.yarnpkg.com/@grafana/schema/-/schema-10.2.1.tgz#85c0c6eb2f30400e6a87f99f1a93328160535f59"
+  integrity sha512-yyytYasg2nZzTiwq5QQ4NW+iuC+qNp3ZXgm7LuzH8WZPq9t6P8fxWS+QW9icL4dmocFardn1jVW1s/tpVqHgaw==
   dependencies:
     tslib "2.6.0"
 
@@ -9507,6 +9545,11 @@ uplot@1.6.26:
   version "1.6.26"
   resolved "https://registry.yarnpkg.com/uplot/-/uplot-1.6.26.tgz#a6012fd141ad4a71741c75af0c71283d0ade45a7"
   integrity sha512-qN0mveL6UsP40TnHzHAJkUQvpfA3y8zSLXtXKVlJo/sLfj2+vjan/Z3g81MCZjy/hEDUFNtnLftPmETDA4s7Rg==
+
+uplot@1.6.27:
+  version "1.6.27"
+  resolved "https://registry.yarnpkg.com/uplot/-/uplot-1.6.27.tgz#d282b98ea17f8980eadb2b7d634a8b11dd4521aa"
+  integrity sha512-78U4ss5YeU65kQkOC/QAKiyII+4uo+TYUJJKvuxRzeSpk/s5sjpY1TL0agkmhHBBShpvLtmbHIEiM7+C5lBULg==
 
 uri-js@^4.2.2:
   version "4.4.1"
