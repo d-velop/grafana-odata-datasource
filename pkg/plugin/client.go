@@ -13,6 +13,7 @@ import (
 )
 
 type ODataClient interface {
+	ODataVersion() string
 	GetServiceRoot() (*http.Response, error)
 	GetMetadata() (*http.Response, error)
 	Get(entitySet string, properties []property, timeProperty string, timeRange backend.TimeRange,
@@ -23,6 +24,11 @@ type ODataClientImpl struct {
 	httpClient       *http.Client
 	baseUrl          string
 	urlSpaceEncoding string
+	odataVersion     string
+}
+
+func (client *ODataClientImpl) ODataVersion() string {
+	return client.odataVersion
 }
 
 func (client *ODataClientImpl) GetServiceRoot() (*http.Response, error) {

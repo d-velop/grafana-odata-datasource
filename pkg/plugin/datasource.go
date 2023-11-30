@@ -30,6 +30,7 @@ type ODataSource struct {
 
 type DatasourceSettings struct {
 	URLSpaceEncoding string `json:"urlSpaceEncoding"`
+	ODataVersion     string `json:"odataVersion"`
 }
 
 func newDatasourceInstance(ctx context.Context, settings backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
@@ -50,7 +51,7 @@ func newDatasourceInstance(ctx context.Context, settings backend.DataSourceInsta
 	}
 
 	return &ODataSourceInstance{
-		&ODataClientImpl{client, settings.URL, dsSettings.URLSpaceEncoding},
+		&ODataClientImpl{client, settings.URL, dsSettings.URLSpaceEncoding, dsSettings.ODataVersion},
 	}, nil
 }
 
@@ -120,6 +121,24 @@ func (ds *ODataSource) CallResource(ctx context.Context, req *backend.CallResour
 	}
 }
 
+func mapToV4Response(bodyBytes []byte) ([]map[string]interface{}, error) {
+	var response odata.Response
+	err := json.Unmarshal(bodyBytes, &response)
+	if err != nil {
+		return nil, err
+	}
+	return response.Value, nil
+}
+
+func mapToV2Response(bodyBytes []byte) ([]map[string]interface{}, error) {
+	var response odata.ResponseV2
+	err := json.Unmarshal(bodyBytes, &response)
+	if err != nil {
+		return nil, err
+	}
+	return response.D.Results, nil
+}
+
 func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery) backend.DataResponse {
 	log.DefaultLogger.Debug("query", "query.JSON", string(query.JSON))
 	response := backend.DataResponse{}
@@ -168,18 +187,26 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 		response.Error = err
 		return response
 	}
-	var result odata.Response
-	err = json.Unmarshal(bodyBytes, &result)
-	if err != nil {
-		response.Error = err
-		return response
+	version := clientInstance.ODataVersion()
+	log.DefaultLogger.Debug("using odata version", "version", version)
+	var values []map[string]interface{}
+	if version == "V2" {
+		values, err = mapToV2Response(bodyBytes)
+		if err != nil {
+			response.Error = err
+			return response
+		}
+	} else {
+		values, err = mapToV4Response(bodyBytes)
+		if err != nil {
+			response.Error = err
+			return response
+		}
 	}
-
-	log.DefaultLogger.Debug("query complete", "noOfEntities", len(result.Value))
-
-	for _, entry := range result.Value {
+	log.DefaultLogger.Debug("query complete", "noOfEntities", len(values))
+	for _, entry := range values {
 		values := make([]interface{}, len(qm.Properties)+1)
-		if timeValue, err := time.Parse(time.RFC3339Nano, fmt.Sprint(entry[timeProperty])); err == nil {
+		if timeValue, err := odata.ParseTime(fmt.Sprint(entry[timeProperty]), version); err == nil {
 			values[0] = &timeValue
 		} else {
 			values[0] = nil

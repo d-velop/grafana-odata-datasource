@@ -4,7 +4,7 @@ import {
 } from '@grafana/data';
 import {DataSourceHttpSettings, FieldSet, InlineField, InlineFieldRow, Select} from '@grafana/ui';
 import React, {ComponentType, useCallback} from 'react';
-import {ODataOptions, URLSpaceEncoding} from '../types';
+import {ODataOptions, URLSpaceEncoding, ODataVersion} from '../types';
 
 type Props = DataSourcePluginOptionsEditorProps<ODataOptions>;
 
@@ -23,6 +23,20 @@ export const ConfigEditor: ComponentType<Props> = ({ options, onOptionsChange })
   const urlSpaceEncodings = Object.entries(URLSpaceEncoding)
     .map(([label, value]) => ({ label: `${label} (${value})`, value: value }));
 
+  const onODataVersionChange = useCallback((option: SelectableValue<ODataVersion>) => {
+    const odataVersion = option.value;
+    onOptionsChange({
+      ...options,
+      jsonData: {
+        ...options.jsonData,
+        odataVersion: odataVersion || 'V4',
+      },
+    });
+  }, [onOptionsChange, options]);
+
+  const odataVersions = Object.entries(ODataVersion)
+    .map(([label, value]) => ({ label: label, value: value }));
+
   return (
     <>
       <DataSourceHttpSettings
@@ -34,6 +48,27 @@ export const ConfigEditor: ComponentType<Props> = ({ options, onOptionsChange })
       <div className='gf-form-group'>
         <h3 className='page-heading'>Additional settings</h3>
         <FieldSet>
+          <InlineFieldRow>
+            <InlineField
+              label='OData Version'
+              labelWidth={26}
+              tooltip={
+                <p>
+                  Select the OData version, currently V2 and V4 (default) are supported. The plugin currently only
+                  supports XML format for metadata (`$metadata`) and JSON format for payload data for both OData
+                  versions.
+                </p>
+              }>
+              <Select
+                options={odataVersions}
+                value={options.jsonData.odataVersion?.length > 0
+                  ? odataVersions.find((type) => type.value === options.jsonData.odataVersion)
+                  : ODataVersion.V4}
+                className='width-10'
+                onChange={onODataVersionChange}
+              />
+            </InlineField>
+          </InlineFieldRow>
           <InlineFieldRow>
             <InlineField
               label='URL space encoding'

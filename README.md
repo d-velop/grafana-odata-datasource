@@ -2,7 +2,8 @@
 Visualize data from OData data sources with Grafana.
 
 ## About
-This is a Grafana data source for showing data from OData V4 compliant data sources.
+This is a Grafana data source for showing data from OData V2 and V4 compliant data sources. The plugin currently only
+supports XML format for metadata (`$metadata`) and JSON format for payload data.
 
 It was originally developed for internal purposes and is now made available to the open source community.
 

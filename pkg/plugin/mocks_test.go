@@ -27,6 +27,10 @@ type callResourceResponseSenderMock struct {
 	csr *backend.CallResourceResponse
 }
 
+func (client *clientMock) ODataVersion() string {
+	return "V4"
+}
+
 func (client *clientMock) GetServiceRoot() (*http.Response, error) {
 	return &http.Response{StatusCode: client.statusCode,
 		Body: io.NopCloser(bytes.NewReader(client.body))}, client.err

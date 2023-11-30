@@ -14,11 +14,17 @@ export const FilterOperators: string[] = ['eq', 'ne', 'gt', 'ge', 'lt', 'le'];
 
 export interface ODataOptions extends DataSourceJsonData {
   urlSpaceEncoding: string;
+  odataVersion: string;
 }
 
 export enum URLSpaceEncoding {
   Plus = '+',
   Percent = '%20',
+}
+
+export enum ODataVersion {
+  V2 = 'V2',
+  V4 = 'V4',
 }
 
 export interface Metadata {

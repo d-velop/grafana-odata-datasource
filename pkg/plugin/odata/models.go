@@ -27,6 +27,14 @@ type Response struct {
 	Value []map[string]interface{} `json:"value"`
 }
 
+type ResponseV2 struct {
+	D ResultsV2 `json:"d"`
+}
+
+type ResultsV2 struct {
+	Results []map[string]interface{} `json:"results"`
+}
+
 type Edmx struct {
 	XMLName      xml.Name        `xml:"Edmx"`
 	Version      string          `xml:"Version,attr"`

@@ -10,7 +10,6 @@ datasources:
   - name: 'OData-Test'
     uid: PD461F79B494E0A01
     type: dvelop-odata-datasource
-    access: proxy
     orgId: 1
     isDefault: true
     url: http://test-server:4004/odata/v4/test
@@ -21,9 +20,19 @@ datasources:
   - name: 'OData-Mock'
     uid: PD461F79B494E0A02
     type: dvelop-odata-datasource
-    access: proxy
     orgId: 1
     isDefault: false
     url: http://test-server:4004/mock
     version: 1
     editable: true
+  - name: 'OData-Test-V2'
+    uid: PD461F79B494E0A03
+    type: dvelop-odata-datasource
+    orgId: 1
+    isDefault: false
+    url: http://test-server:4004/v2/odata/v4/test
+    version: 1
+    editable: true
+    jsonData:
+      urlSpaceEncoding: '%20'
+      odataVersion: 'V2'
