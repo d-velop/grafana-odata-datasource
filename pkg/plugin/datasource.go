@@ -130,27 +130,39 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 		return response
 	}
 
-	timeProperty := qm.TimeProperty.Name
+	// TODO: Prevent empty queries from being executed
+	if len(qm.Properties) == 0 {
+		return response
+	}
+
 	frame := data.NewFrame("response")
 	frame.Name = query.RefID
 	if frame.Meta == nil {
 		frame.Meta = &data.FrameMeta{}
 	}
 	frame.Meta.PreferredVisualization = data.VisTypeTable
-	labels, err := data.LabelsFromString("time=" + timeProperty)
-	if err != nil {
-		response.Error = err
-		return response
+
+	if qm.TimeProperty != nil {
+		log.DefaultLogger.Debug("time property found", "name", qm.TimeProperty.Name)
+		labels, err := data.LabelsFromString("time=" + qm.TimeProperty.Name)
+		if err != nil {
+			response.Error = err
+			return response
+		}
+		field := data.NewField(qm.TimeProperty.Name, labels, odata.ToArray(qm.TimeProperty.Type))
+		frame.Fields = append(frame.Fields, field)
 	}
-	frame.Fields = append(frame.Fields,
-		data.NewField("time", labels, []*time.Time{}),
-	)
 	for _, prop := range qm.Properties {
-		frame.Fields = append(frame.Fields, data.NewField(prop.Name, nil, odata.ToArray(prop.Type)))
+		field := data.NewField(prop.Name, nil, odata.ToArray(prop.Type))
+		frame.Fields = append(frame.Fields, field)
 	}
 
-	resp, err := clientInstance.Get(qm.EntitySet.Name, qm.Properties, timeProperty,
-		query.TimeRange, qm.FilterConditions)
+	props := qm.Properties
+	if qm.TimeProperty != nil {
+		props = append(props, *qm.TimeProperty)
+	}
+	resp, err := clientInstance.Get(qm.EntitySet.Name, props,
+		append(qm.FilterConditions, BackendTimeRangeToODataFilter(query.TimeRange, qm.TimeProperty.Name)...))
 	if err != nil {
 		response.Error = err
 		return response
@@ -178,17 +190,21 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 	log.DefaultLogger.Debug("query complete", "noOfEntities", len(result.Value))
 
 	for _, entry := range result.Value {
-		values := make([]interface{}, len(qm.Properties)+1)
-		if timeValue, err := time.Parse(time.RFC3339Nano, fmt.Sprint(entry[timeProperty])); err == nil {
-			values[0] = &timeValue
-		} else {
-			values[0] = nil
-		}
-		for i, prop := range qm.Properties {
-			if value, ok := entry[prop.Name]; ok {
-				values[i+1] = odata.MapValue(value, prop.Type)
+		values := make([]interface{}, 0)
+
+		if qm.TimeProperty != nil {
+			if timeValue, err := time.Parse(time.RFC3339Nano, fmt.Sprint(entry[qm.TimeProperty.Name])); err == nil {
+				values = append(values, &timeValue)
 			} else {
-				values[i+1] = nil
+				values = append(values, nil)
+			}
+		}
+
+		for _, prop := range qm.Properties {
+			if value, ok := entry[prop.Name]; ok {
+				values = append(values, odata.MapValue(value, prop.Type))
+			} else {
+				values = append(values, nil)
 			}
 		}
 		frame.AppendRow(values...)

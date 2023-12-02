@@ -37,7 +37,7 @@ func (client *clientMock) GetMetadata() (*http.Response, error) {
 		Body: io.NopCloser(bytes.NewReader(client.body))}, client.err
 }
 
-func (client *clientMock) Get(_ string, _ []property, _ string, _ backend.TimeRange, _ []filterCondition) (*http.Response, error) {
+func (client *clientMock) Get(_ string, _ []property, _ []filterCondition) (*http.Response, error) {
 	return &http.Response{StatusCode: client.statusCode,
 		Body: io.NopCloser(bytes.NewReader(client.body))}, client.err
 }

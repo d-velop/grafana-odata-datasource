@@ -70,7 +70,7 @@ func TestQuery(t *testing.T) {
 	}{
 		{
 			name: "success simple",
-			query: aDataQuery("defaultTestFrame", withQueryModel(
+			query: aDataQuery("defaultTestFrame", withQueryModel(withTimeProperty("time"),
 				withFilterConditions(int32Eq5, withFilterCondition(stringProp, "eq", "Hello")),
 				withProperties(int32Prop, booleanProp, stringProp))),
 			mockODataResponse: anOdataResponse(withDefaultEntity()),
@@ -78,7 +78,7 @@ func TestQuery(t *testing.T) {
 		},
 		{
 			name: "success ordered",
-			query: aDataQuery("defaultTestFrame", withQueryModel(
+			query: aDataQuery("defaultTestFrame", withQueryModel(withTimeProperty("time"),
 				withProperties(int32Prop, booleanProp, stringProp))),
 			mockODataResponse: anOdataResponse(
 				withEntity(
@@ -120,11 +120,11 @@ func TestQuery(t *testing.T) {
 			name:              "success minimal",
 			query:             aDataQuery("baseFrame", withQueryModel()),
 			mockODataResponse: anOdataResponse(),
-			expected:          aDataResponse(withBaseFrame("baseFrame")),
+			expected:          aDataResponse(),
 		},
 		{
 			name: "failure",
-			query: aDataQuery("one", withQueryModel(
+			query: aDataQuery("one", withQueryModel(withTimeProperty("time"),
 				withFilterConditions(int32Eq5, withFilterCondition(stringProp, "eq", "Hello")),
 				withProperties(int32Prop, booleanProp, stringProp))),
 			mockODataResponse: anOdataResponse(),
@@ -162,13 +162,6 @@ func TestInvalidQueryModels(t *testing.T) {
 		query            backend.DataQuery
 		expectedErrorMsg string
 	}{
-		{
-			name: "Missing time property",
-			query: backend.DataQuery{
-				JSON: []byte(`{}`),
-			},
-			expectedErrorMsg: "invalid label key=value pair",
-		},
 		{
 			name: "Invalid json",
 			query: backend.DataQuery{

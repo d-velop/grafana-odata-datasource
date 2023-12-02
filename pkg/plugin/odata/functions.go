@@ -1,6 +1,9 @@
 package odata
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func ToArray(propertyType string) interface{} {
 	switch propertyType {
@@ -22,6 +25,10 @@ func ToArray(propertyType string) interface{} {
 		return []*int32{}
 	case EdmInt64:
 		return []*int64{}
+	case EdmDateTimeOffset:
+		return []*time.Time{}
+	case EdmDate:
+		return []*time.Time{}
 	default:
 		return []*string{}
 	}

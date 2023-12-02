@@ -42,12 +42,6 @@ func aDataQuery(refId string, builders ...func(*backend.DataQuery)) backend.Data
 func aQueryModel(builders ...func(*queryModel)) *queryModel {
 	model := &queryModel{
 		// Initialize with default values
-		From: "2022-01-01T00:00:00Z",
-		To:   "2022-01-02T00:00:00Z",
-		TimeProperty: property{
-			Name: "time",
-			Type: odata.EdmDateTimeOffset,
-		},
 		EntitySet: entitySet{
 			Name:       "Temperatures",
 			EntityType: "TemperatureODataMock.Models.Temperature",
@@ -491,6 +485,15 @@ func withQueryModel(builders ...func(*queryModel)) func(n *backend.DataQuery) {
 	}
 }
 
+func withTimeProperty(name string) func(n *queryModel) {
+	return func(model *queryModel) {
+		model.TimeProperty = &property{
+			Name: name,
+			Type: odata.EdmDateTimeOffset,
+		}
+	}
+}
+
 // --- Property related ---
 func aProperty(builders ...func(*property)) property {
 	p := property{}
@@ -522,6 +525,10 @@ func booleanProp(p *property) {
 func stringProp(p *property) {
 	p.Name = "string"
 	p.Type = odata.EdmString
+}
+func timeProp(p *property) {
+	p.Name = "time"
+	p.Type = odata.EdmDateTimeOffset
 }
 
 // Misc
