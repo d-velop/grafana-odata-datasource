@@ -1,7 +1,7 @@
 import {Application, Request, Response} from "express";
 import {ToXml} from "./util/XmlMetadataWriter";
 import {MockModel} from "./model/MockModel";
-import {Generate} from "./Testdata";
+import {GenerateTemperatures} from "./Testdata";
 
 export let addMockService = async (app: Application) => {
   app.get('/mock/\\$metadata',
@@ -25,7 +25,7 @@ export let addMockService = async (app: Application) => {
           console.log(`${min} / ${max}`);
         }
       }
-      let values = Generate();
+      let values = GenerateTemperatures();
       return res
         .contentType('application/json')
         .status(200).send(

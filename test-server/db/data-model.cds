@@ -8,3 +8,8 @@ entity Temperatures {
     value2 : Double;
     value3 : Double;
 }
+
+entity Rooms {
+    key id : UUID;
+    name: String
+}
