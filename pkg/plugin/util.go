@@ -6,15 +6,15 @@ import (
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 )
 
-func BackendTimeRangeToODataFilter(timeRange backend.TimeRange, timeProperty string) []filterCondition {
-	if timeProperty == "" {
+func BackendTimeRangeToODataFilter(timeRange backend.TimeRange, timeProperty *property) []filterCondition {
+	if timeProperty == nil {
 		return []filterCondition{}
 	}
 
 	return []filterCondition{
 		{
 			Property: property{
-				Name: timeProperty,
+				Name: timeProperty.Name,
 				Type: "Edm.DateTimeOffset",
 			},
 			Operator: "ge",
@@ -22,7 +22,7 @@ func BackendTimeRangeToODataFilter(timeRange backend.TimeRange, timeProperty str
 		},
 		{
 			Property: property{
-				Name: timeProperty,
+				Name: timeProperty.Name,
 				Type: "Edm.DateTimeOffset",
 			},
 			Operator: "le",

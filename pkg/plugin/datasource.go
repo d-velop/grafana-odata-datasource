@@ -162,7 +162,7 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 		props = append(props, *qm.TimeProperty)
 	}
 	resp, err := clientInstance.Get(qm.EntitySet.Name, props,
-		append(qm.FilterConditions, BackendTimeRangeToODataFilter(query.TimeRange, qm.TimeProperty.Name)...))
+		append(qm.FilterConditions, BackendTimeRangeToODataFilter(query.TimeRange, qm.TimeProperty)...))
 	if err != nil {
 		response.Error = err
 		return response

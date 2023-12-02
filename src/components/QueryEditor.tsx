@@ -62,7 +62,8 @@ export class QueryEditor extends PureComponent<Props, State> {
     if (!metadata || !entityType) {
       return [];
     }
-    return metadata.entityTypes[entityType].properties
+    const baseTimeProp: object[] = [{ label: '(None)', value: undefined}]
+    const timeProperties: object[] = metadata.entityTypes[entityType].properties
       .filter(
         (property) =>
           propertyKind === PropertyKind.All ||
@@ -71,8 +72,10 @@ export class QueryEditor extends PureComponent<Props, State> {
       .map((property) => ({
         label: property.name,
         value: property,
-      }));
-  }
+      }))
+
+    return baseTimeProp.concat(timeProperties);
+}
 
   update = () => {
     this.props.onChange(this.props.query);
