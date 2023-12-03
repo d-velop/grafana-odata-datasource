@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"time"
 
 	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
@@ -144,12 +143,7 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 
 	if qm.TimeProperty != nil {
 		log.DefaultLogger.Debug("time property found", "name", qm.TimeProperty.Name)
-		labels, err := data.LabelsFromString("time=" + qm.TimeProperty.Name)
-		if err != nil {
-			response.Error = err
-			return response
-		}
-		field := data.NewField(qm.TimeProperty.Name, labels, odata.ToArray(qm.TimeProperty.Type))
+		field := data.NewField(qm.TimeProperty.Name, nil, odata.ToArray(qm.TimeProperty.Type))
 		frame.Fields = append(frame.Fields, field)
 	}
 	for _, prop := range qm.Properties {
@@ -193,11 +187,7 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 		values := make([]interface{}, 0)
 
 		if qm.TimeProperty != nil {
-			if timeValue, err := time.Parse(time.RFC3339Nano, fmt.Sprint(entry[qm.TimeProperty.Name])); err == nil {
-				values = append(values, &timeValue)
-			} else {
-				values = append(values, nil)
-			}
+			values = append(values, odata.MapValue(entry[qm.TimeProperty.Name], qm.TimeProperty.Type))
 		}
 
 		for _, prop := range qm.Properties {

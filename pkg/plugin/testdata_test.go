@@ -82,11 +82,7 @@ func aDataFrame(frameName string, builders ...func(*data.Frame)) *data.Frame {
 		Meta: &data.FrameMeta{},
 	}
 	frame.Meta.PreferredVisualization = data.VisTypeTable
-	labels, _ := data.LabelsFromString("time=" + "time")
-	frame.Fields = append(
-		frame.Fields,
-		data.NewField("time", labels, []*time.Time{}),
-	)
+
 	for _, build := range builders {
 		build(frame)
 	}
@@ -153,6 +149,7 @@ func withDefaultTestFrame(builders ...func(*data.Frame)) func(n *backend.DataRes
 		var frame = aDataFrame("defaultTestFrame", builders...)
 		frame.Fields = append(
 			frame.Fields,
+			data.NewField("time", nil, []*time.Time{}),
 			data.NewField("int32", nil, []*int32{}),
 			data.NewField("boolean", nil, []*bool{}),
 			data.NewField("string", nil, []*string{}),
@@ -174,6 +171,12 @@ func withDefaultTestFrame(builders ...func(*data.Frame)) func(n *backend.DataRes
 func withBaseFrame(name string, builders ...func(*data.Frame)) func(n *backend.DataResponse) {
 	return func(dataResponse *backend.DataResponse) {
 		dataResponse.Frames = append(dataResponse.Frames, aDataFrame(name, builders...))
+	}
+}
+
+func withTimeField(name string) func(n *data.Frame) {
+	return func(frame *data.Frame) {
+		frame.Fields = append(frame.Fields, data.NewField(name, nil, []*time.Time{}))
 	}
 }
 

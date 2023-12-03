@@ -62,7 +62,9 @@ export class QueryEditor extends PureComponent<Props, State> {
     if (!metadata || !entityType) {
       return [];
     }
-    const baseTimeProp: object[] = [{ label: '(None)', value: undefined}]
+    const baseTimeProp: object[] = propertyKind === PropertyKind.Time
+      ? [{ label: '(None)', value: undefined}]
+      : [];
     const timeProperties: object[] = metadata.entityTypes[entityType].properties
       .filter(
         (property) =>

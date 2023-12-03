@@ -95,7 +95,7 @@ func TestQuery(t *testing.T) {
 				),
 			),
 			expected: aDataResponse(withBaseFrame("defaultTestFrame",
-				// Time field generated automatically
+				withTimeField("time"),
 				withField("int32", []*int32{}),
 				withField("boolean", []*bool{}),
 				withField("string", []*string{}),
@@ -113,6 +113,29 @@ func TestQuery(t *testing.T) {
 					withRowValue(time.Date(2010, 1, 2, 0, 0, 0, 0, time.UTC)),
 					nil, nil,
 					withRowValue("World"),
+				),
+			)),
+		},
+		{
+			name:  "success select time without time property",
+			query: aDataQuery("defaultTestFrame", withQueryModel(withProperties(timeProp, int32Prop, booleanProp, stringProp))),
+			mockODataResponse: anOdataResponse(
+				withEntity(
+					withProp("string", "Hello"),
+					withProp("int32", 10.0),
+					withProp("boolean", false),
+					withProp("time", "2022-01-02T00:00:00Z")),
+			),
+			expected: aDataResponse(withBaseFrame("defaultTestFrame",
+				withTimeField("time"),
+				withField("int32", []*int32{}),
+				withField("boolean", []*bool{}),
+				withField("string", []*string{}),
+				withRow(
+					withRowValue(time.Date(2022, 1, 2, 0, 0, 0, 0, time.UTC)),
+					withRowValue(int32(10)),
+					withRowValue(false),
+					withRowValue("Hello"),
 				),
 			)),
 		},

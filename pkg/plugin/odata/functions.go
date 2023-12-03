@@ -5,7 +5,9 @@ import (
 	"time"
 )
 
+// Maps OData property types to Grafana Field type
 func ToArray(propertyType string) interface{} {
+	// TODO: Add field labels here?
 	switch propertyType {
 	case EdmBoolean:
 		return []*bool{}
@@ -34,6 +36,7 @@ func ToArray(propertyType string) interface{} {
 	}
 }
 
+// Maps OData values to Grafana (Go) values
 func MapValue(value interface{}, propertyType string) interface{} {
 	if value == nil {
 		return nil
@@ -43,7 +46,14 @@ func MapValue(value interface{}, propertyType string) interface{} {
 		boolValue := value.(bool)
 		return &boolValue
 	case EdmSingle, EdmDecimal, EdmDouble, EdmSByte, EdmByte, EdmInt16, EdmInt32, EdmInt64:
+		// TODO: Min value for int64
 		return mapNumber(value.(float64), propertyType)
+	case EdmDateTimeOffset, EdmDate:
+		if timeValue, err := time.Parse(time.RFC3339Nano, fmt.Sprint(value)); err == nil {
+			return &timeValue
+		} else {
+			return nil
+		}
 	default:
 		x := fmt.Sprint(value)
 		return &x
