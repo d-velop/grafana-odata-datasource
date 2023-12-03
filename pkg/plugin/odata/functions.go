@@ -32,19 +32,30 @@ func ToArray(propertyType string) interface{} {
 	}
 }
 
+func parseOffset(s string, sign int) (time.Duration, error) {
+	offset, err := strconv.Atoi(s)
+	if err != nil {
+		return 0, err
+	}
+	return time.Duration(sign*offset) * time.Minute, nil
+}
+
 func parseV2Time(timeString string) (time.Time, error) {
-	trimmed := strings.TrimPrefix(timeString, "/Date(")
-	trimmed = strings.TrimSuffix(trimmed, ")/")
-	var offsetString string
+	trimmed := strings.TrimSuffix(strings.TrimPrefix(timeString, "/Date("), ")/")
+	var err error
 	var parts []string
+	var offset time.Duration
 	if strings.Contains(trimmed, "+") {
 		parts = strings.Split(trimmed, "+")
-		offsetString = "+" + parts[1]
+		offset, err = parseOffset(parts[1], 1)
 	} else if strings.Contains(trimmed, "-") {
 		parts = strings.Split(trimmed, "-")
-		offsetString = "-" + parts[1]
+		offset, err = parseOffset(parts[1], -1)
 	} else {
 		parts = []string{trimmed}
+	}
+	if err != nil {
+		return time.Time{}, err
 	}
 	ms, err := strconv.ParseInt(parts[0], 10, 64)
 	if err != nil {
@@ -52,14 +63,7 @@ func parseV2Time(timeString string) (time.Time, error) {
 	}
 	seconds := ms / 1000
 	nanoseconds := (ms % 1000) * 1000000
-	result := time.Unix(seconds, nanoseconds)
-	if offsetString != "" {
-		offset, err := time.ParseDuration(offsetString + "m")
-		if err != nil {
-			return time.Time{}, err
-		}
-		result = result.Add(offset)
-	}
+	result := time.Unix(seconds, nanoseconds).Add(offset)
 	return result, nil
 }
 
