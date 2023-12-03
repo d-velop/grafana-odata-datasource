@@ -30,7 +30,7 @@ datasources:
     type: dvelop-odata-datasource
     orgId: 1
     isDefault: false
-    url: http://test-server:4004/v2/odata/v4/test
+    url: http://test-server:4004/odata/v2/test
     version: 1
     editable: true
     jsonData:

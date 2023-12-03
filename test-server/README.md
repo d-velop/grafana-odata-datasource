@@ -6,8 +6,8 @@ The test server features three OData service roots:
 1. `/mock/` provides a very simple mock service root
 2. `/odata/v4/test` provides a full OData V4 service and is built on the
    [SAP Cloud Application Programming Model](https://cap.cloud.sap/)
-3. `/v2/odata/v4/test` based on
-   [CDS OData V2 Adapter Proxy](https://www.npmjs.com/package/@sap/cds-odata-v2-adapter-proxy)
+3. `/odata/v2/test` based on
+   [OData V2 Adapter](https://github.com/cap-js-community/odata-v2-adapter)
 
 ## Mock
 This is a simple mock service root that returns test data. It provides endpoints for service document (`/mock/`)
