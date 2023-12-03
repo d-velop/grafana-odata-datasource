@@ -32,22 +32,43 @@ func ToArray(propertyType string) interface{} {
 	}
 }
 
-func ParseTime(timeString string, version string) (time.Time, error) {
-	if version == "V2" {
-		// TODO: work in progress
-		trimmed := strings.TrimPrefix(timeString, "/Date(")
-		trimmed = strings.TrimSuffix(trimmed, ")/")
-		parts := strings.Split(trimmed, "+")
-		if len(parts) != 2 {
-			return time.Time{}, fmt.Errorf("invalid format")
-		}
-		ms, err := strconv.ParseInt(parts[0], 10, 64)
+func parseV2Time(timeString string) (time.Time, error) {
+	trimmed := strings.TrimPrefix(timeString, "/Date(")
+	trimmed = strings.TrimSuffix(trimmed, ")/")
+	var offsetString string
+	var parts []string
+	if strings.Contains(trimmed, "+") {
+		parts = strings.Split(trimmed, "+")
+		offsetString = "+" + parts[1]
+	} else if strings.Contains(trimmed, "-") {
+		parts = strings.Split(trimmed, "-")
+		offsetString = "-" + parts[1]
+	} else {
+		parts = []string{trimmed}
+	}
+	ms, err := strconv.ParseInt(parts[0], 10, 64)
+	if err != nil {
+		return time.Time{}, err
+	}
+	seconds := ms / 1000
+	nanoseconds := (ms % 1000) * 1000000
+	result := time.Unix(seconds, nanoseconds)
+	if offsetString != "" {
+		offset, err := time.ParseDuration(offsetString + "m")
 		if err != nil {
 			return time.Time{}, err
 		}
-		seconds := ms / 1000
-		nanoseconds := (ms % 1000) * 1000000
-		return time.Unix(seconds, nanoseconds), nil
+		result = result.Add(offset)
+	}
+	return result, nil
+}
+
+func ParseTime(timeString string) (time.Time, error) {
+	if strings.HasPrefix(timeString, "/") {
+		ts, err := parseV2Time(timeString)
+		if err == nil && !ts.IsZero() {
+			return ts, nil
+		}
 	}
 	return time.Parse(time.RFC3339Nano, timeString)
 }

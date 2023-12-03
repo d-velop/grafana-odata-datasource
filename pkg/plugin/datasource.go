@@ -189,24 +189,24 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 	}
 	version := clientInstance.ODataVersion()
 	log.DefaultLogger.Debug("using odata version", "version", version)
-	var values []map[string]interface{}
+	var entries []map[string]interface{}
 	if version == "V2" {
-		values, err = mapToV2Response(bodyBytes)
+		entries, err = mapToV2Response(bodyBytes)
 		if err != nil {
 			response.Error = err
 			return response
 		}
 	} else {
-		values, err = mapToV4Response(bodyBytes)
+		entries, err = mapToV4Response(bodyBytes)
 		if err != nil {
 			response.Error = err
 			return response
 		}
 	}
-	log.DefaultLogger.Debug("query complete", "noOfEntities", len(values))
-	for _, entry := range values {
+	log.DefaultLogger.Debug("query complete", "noOfEntities", len(entries))
+	for _, entry := range entries {
 		values := make([]interface{}, len(qm.Properties)+1)
-		if timeValue, err := odata.ParseTime(fmt.Sprint(entry[timeProperty]), version); err == nil {
+		if timeValue, err := odata.ParseTime(fmt.Sprint(entry[timeProperty])); err == nil {
 			values[0] = &timeValue
 		} else {
 			values[0] = nil
