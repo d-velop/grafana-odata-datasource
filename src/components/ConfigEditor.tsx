@@ -29,7 +29,7 @@ export const ConfigEditor: ComponentType<Props> = ({ options, onOptionsChange })
       ...options,
       jsonData: {
         ...options.jsonData,
-        odataVersion: odataVersion || 'V4',
+        odataVersion: odataVersion || 'Auto',
       },
     });
   }, [onOptionsChange, options]);
@@ -63,7 +63,7 @@ export const ConfigEditor: ComponentType<Props> = ({ options, onOptionsChange })
                 options={odataVersions}
                 value={options.jsonData.odataVersion?.length > 0
                   ? odataVersions.find((type) => type.value === options.jsonData.odataVersion)
-                  : ODataVersion.V4}
+                  : ODataVersion.Auto}
                 className='width-10'
                 onChange={onODataVersionChange}
               />

@@ -66,7 +66,7 @@ export class QueryEditor extends PureComponent<Props, State> {
       .filter(
         (property) =>
           propertyKind === PropertyKind.All ||
-          (propertyKind === PropertyKind.Time && property.type === 'Edm.DateTimeOffset')
+          (propertyKind === PropertyKind.Time && (property.type === 'Edm.DateTimeOffset' || property.type === 'Edm.DateTime' || property.type === 'Edm.Date'))
       )
       .map((property) => ({
         label: property.name,

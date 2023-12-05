@@ -74,7 +74,11 @@ func ParseTime(timeString string) (time.Time, error) {
 			return ts, nil
 		}
 	}
-	return time.Parse(time.RFC3339Nano, timeString)
+	ts, err := time.Parse(time.RFC3339Nano, timeString)
+	if err == nil && !ts.IsZero() {
+		return ts, nil
+	}
+	return time.ParseInLocation("2006-01-02T15:04:05", timeString, time.UTC)
 }
 
 func MapValue(value interface{}, propertyType string) interface{} {

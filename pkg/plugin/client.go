@@ -16,7 +16,7 @@ type ODataClient interface {
 	ODataVersion() string
 	GetServiceRoot() (*http.Response, error)
 	GetMetadata() (*http.Response, error)
-	Get(entitySet string, properties []property, timeProperty string, timeRange backend.TimeRange,
+	Get(entitySet string, properties []property, timeProperty property, timeRange backend.TimeRange,
 		filterConditions []filterCondition) (*http.Response, error)
 }
 
@@ -32,7 +32,7 @@ func (client *ODataClientImpl) ODataVersion() string {
 }
 
 func (client *ODataClientImpl) GetServiceRoot() (*http.Response, error) {
-	return client.httpClient.Get(client.baseUrl)
+	return get(client.httpClient, client.baseUrl, "application/json")
 }
 
 func (client *ODataClientImpl) GetMetadata() (*http.Response, error) {
@@ -41,20 +41,29 @@ func (client *ODataClientImpl) GetMetadata() (*http.Response, error) {
 		return nil, err
 	}
 	requestUrl.Path = path.Join(requestUrl.Path, odata.Metadata)
-	return client.httpClient.Get(requestUrl.String())
+	return get(client.httpClient, requestUrl.String(), "application/xml")
 }
 
-func (client *ODataClientImpl) Get(entitySet string, properties []property, timeProperty string,
+func (client *ODataClientImpl) Get(entitySet string, properties []property, timeProperty property,
 	timeRange backend.TimeRange, filterConditions []filterCondition) (*http.Response, error) {
 	requestUrl, err := buildQueryUrl(client.baseUrl, entitySet, properties, timeProperty, timeRange,
 		filterConditions, client.urlSpaceEncoding)
 	if err != nil {
 		return nil, err
 	}
-	return client.httpClient.Get(requestUrl.String())
+	return get(client.httpClient, requestUrl.String(), "application/json")
 }
 
-func buildQueryUrl(baseUrl string, entitySet string, properties []property, timeProperty string,
+func get(httpClient *http.Client, url string, accept string) (*http.Response, error) {
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Accept", accept)
+	return httpClient.Do(req)
+}
+
+func buildQueryUrl(baseUrl string, entitySet string, properties []property, timeProperty property,
 	timeRange backend.TimeRange, filterConditions []filterCondition, urlSpaceEncoding string) (*url.URL, error) {
 	requestUrl, err := url.Parse(baseUrl)
 	if err != nil {
@@ -78,24 +87,24 @@ func buildQueryUrl(baseUrl string, entitySet string, properties []property, time
 	return requestUrl, nil
 }
 
-func mapSelect(properties []property, timeProperty string) string {
+func mapSelect(properties []property, timeProperty property) string {
 	var result []string
 	if len(properties) > 0 {
 		for _, selectProp := range properties {
 			result = append(result, selectProp.Name)
 		}
 	}
-	if len(timeProperty) > 0 {
-		result = append(result, timeProperty)
+	if len(timeProperty.Name) > 0 {
+		result = append(result, timeProperty.Name)
 	}
 	return strings.Join(result[:], ",")
 }
 
-func mapFilter(timeProperty string, timeRange backend.TimeRange, filterConditions []filterCondition) string {
+func mapFilter(timeProperty property, timeRange backend.TimeRange, filterConditions []filterCondition) string {
 	var filter string
-	if len(timeProperty) > 0 {
-		filter = fmt.Sprintf("%s ge %s and %s le %s", timeProperty, timeRange.From.UTC().Format(time.RFC3339),
-			timeProperty, timeRange.To.UTC().Format(time.RFC3339))
+	if len(timeProperty.Name) > 0 {
+		filter = fmt.Sprintf("%s ge %s and %s le %s", timeProperty.Name, timeRange.From.UTC().Format(time.RFC3339),
+			timeProperty.Name, timeRange.To.UTC().Format(time.RFC3339))
 	}
 	var customFilter = ""
 	for index, element := range filterConditions {

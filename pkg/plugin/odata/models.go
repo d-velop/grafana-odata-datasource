@@ -17,6 +17,7 @@ const (
 	EdmGuid           = "Edm.Guid"
 	EdmTime           = "Edm.Time"
 	EdmDate           = "Edm.Date"
+	EdmDateTime       = "Edm.DateTime"
 
 	Metadata = "$metadata"
 	Filter   = "$filter"

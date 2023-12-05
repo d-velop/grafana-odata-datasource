@@ -5,6 +5,8 @@ deleteDatasources:
     orgId: 1
   - name: 'OData-Mock'
     orgId: 1
+  - name: 'OData-Test-V2'
+    orgId: 1
 
 datasources:
   - name: 'OData-Test'
@@ -35,4 +37,3 @@ datasources:
     editable: true
     jsonData:
       urlSpaceEncoding: '%20'
-      odataVersion: 'V2'
