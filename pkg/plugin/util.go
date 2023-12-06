@@ -13,18 +13,12 @@ func BackendTimeRangeToODataFilter(timeRange backend.TimeRange, timeProperty *pr
 
 	return []filterCondition{
 		{
-			Property: property{
-				Name: timeProperty.Name,
-				Type: "Edm.DateTimeOffset",
-			},
+			Property: *timeProperty,
 			Operator: "ge",
 			Value:    timeRange.From.UTC().Format(time.RFC3339),
 		},
 		{
-			Property: property{
-				Name: timeProperty.Name,
-				Type: "Edm.DateTimeOffset",
-			},
+			Property: *timeProperty,
 			Operator: "le",
 			Value:    timeRange.To.UTC().Format(time.RFC3339),
 		},
