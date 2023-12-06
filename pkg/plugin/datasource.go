@@ -129,7 +129,7 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 		return response
 	}
 
-	// TODO: Prevent empty queries from being executed
+	// Prevent empty queries from being executed
 	if len(qm.Properties) == 0 {
 		return response
 	}
@@ -142,7 +142,7 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 	frame.Meta.PreferredVisualization = data.VisTypeTable
 
 	if qm.TimeProperty != nil {
-		log.DefaultLogger.Debug("time property found", "name", qm.TimeProperty.Name)
+		log.DefaultLogger.Debug("Time property configured", "name", qm.TimeProperty.Name)
 		field := data.NewField(qm.TimeProperty.Name, nil, odata.ToArray(qm.TimeProperty.Type))
 		frame.Fields = append(frame.Fields, field)
 	}

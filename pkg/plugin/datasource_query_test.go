@@ -140,10 +140,53 @@ func TestQuery(t *testing.T) {
 			)),
 		},
 		{
+			name:  "success select no time property",
+			query: aDataQuery("defaultTestFrame", withQueryModel(withProperties(int32Prop, booleanProp, stringProp))),
+			mockODataResponse: anOdataResponse(
+				withEntity(
+					withProp("string", "Hello"),
+					withProp("int32", 10.0),
+					withProp("boolean", false)),
+			),
+			expected: aDataResponse(withBaseFrame("defaultTestFrame",
+				withField("int32", []*int32{}),
+				withField("boolean", []*bool{}),
+				withField("string", []*string{}),
+				withRow(
+					withRowValue(int32(10)),
+					withRowValue(false),
+					withRowValue("Hello"),
+				),
+			)),
+		},
+		{
 			name:              "success minimal",
 			query:             aDataQuery("baseFrame", withQueryModel()),
 			mockODataResponse: anOdataResponse(),
 			expected:          aDataResponse(),
+		},
+		{
+			name:  "success select time property that does not exist",
+			query: aDataQuery("defaultTestFrame", withQueryModel(withProperties(timeProp, int32Prop, booleanProp, stringProp))),
+			mockODataResponse: anOdataResponse(
+				withEntity(
+					withProp("string", "Hello"),
+					withProp("int32", 10.0),
+					withProp("boolean", false),
+					withProp("otherTimePropName", "2022-01-02T00:00:00Z")),
+			),
+			expected: aDataResponse(withBaseFrame("defaultTestFrame",
+				withTimeField("time"),
+				withField("int32", []*int32{}),
+				withField("boolean", []*bool{}),
+				withField("string", []*string{}),
+				withRow(
+					nil,
+					withRowValue(int32(10)),
+					withRowValue(false),
+					withRowValue("Hello"),
+				),
+			)),
 		},
 		{
 			name: "failure",
