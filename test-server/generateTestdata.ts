@@ -1,28 +1,10 @@
 const fs = require('fs');
-const {GenerateTemperatures, GenerateRooms} = require("./mock/Testdata");  // npm install uuid
+const {GenerateTemperatures, GenerateRooms} = require("./mock/Testdata");
 
-// Temperatures
-let fileName = 'db/data/test-Temperatures.csv';
-let header = "id,noTimeProperty,epoch,value1,value2,value3\n";
-fs.writeFileSync(fileName, header);
-
-let values = GenerateTemperatures();
-for(let i = 0; i < values.length; i++)
-{
-  const value = values[i];
-  const line = `${value.id},${value.time},${value.epoch},${value.value1},${value.value2},${value.value3}\n`;
-  fs.appendFileSync(fileName, line);
+function writeToCSV(fileName: string, header: string, dataGenerator: () => any[]) {
+  let data = dataGenerator().map(value => Object.values(value).join(',')).join('\n');
+  fs.writeFileSync(fileName, header + data + '\n');
 }
 
-// Rooms
-fileName = 'db/data/test-Rooms.csv';
-header = "id,name\n";
-fs.writeFileSync(fileName, header);
-
-values = GenerateRooms();
-for(let i = 0; i < values.length; i++)
-{
-  const value = values[i];
-  const line = `${value.id},${value.name}\n`;
-  fs.appendFileSync(fileName, line);
-}
+writeToCSV('db/data/test-Temperatures.csv', 'id,time,epoch,value1,value2,value3\n', GenerateTemperatures);
+writeToCSV('db/data/test-Rooms.csv', 'id,name\n', GenerateRooms);
