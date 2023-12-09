@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+const DateTimeWithoutTZ = "2006-01-02T15:04:05"
+
 func ToArray(propertyType string) interface{} {
 	switch propertyType {
 	case EdmBoolean:
@@ -32,19 +34,25 @@ func ToArray(propertyType string) interface{} {
 	}
 }
 
-func parseOffset(s string, sign int) (time.Duration, error) {
+func parseOffset(s string, sign int) (int, error) {
 	offset, err := strconv.Atoi(s)
 	if err != nil {
 		return 0, err
 	}
-	return time.Duration(sign*offset) * time.Minute, nil
+	return sign * offset * 60, nil
+}
+
+func localOffset() int {
+	currentTime := time.Now()
+	_, offset := currentTime.Zone()
+	return offset
 }
 
 func parseV2Time(timeString string) (time.Time, error) {
 	trimmed := strings.TrimSuffix(strings.TrimPrefix(timeString, "/Date("), ")/")
 	var err error
 	var parts []string
-	var offset time.Duration
+	var offset int
 	if strings.Contains(trimmed, "+") {
 		parts = strings.Split(trimmed, "+")
 		offset, err = parseOffset(parts[1], 1)
@@ -63,8 +71,14 @@ func parseV2Time(timeString string) (time.Time, error) {
 	}
 	seconds := ms / 1000
 	nanoseconds := (ms % 1000) * 1000000
-	result := time.Unix(seconds, nanoseconds).Add(offset)
-	return result, nil
+	result := time.Unix(seconds, nanoseconds).Add(time.Duration(offset) * time.Second)
+	var loc *time.Location
+	if localOffset() == offset {
+		loc = time.Local
+	} else {
+		loc = time.FixedZone("", offset)
+	}
+	return result.In(loc), nil
 }
 
 func ParseTime(timeString string) (time.Time, error) {
@@ -74,11 +88,19 @@ func ParseTime(timeString string) (time.Time, error) {
 			return ts, nil
 		}
 	}
-	ts, err := time.Parse(time.RFC3339Nano, timeString)
-	if err == nil && !ts.IsZero() {
-		return ts, nil
+	formats := []string{
+		time.RFC3339Nano,
+		time.DateOnly,
 	}
-	return time.ParseInLocation("2006-01-02T15:04:05", timeString, time.UTC)
+	var ts time.Time
+	var err error
+	for _, format := range formats {
+		ts, err = time.Parse(format, timeString)
+		if err == nil && !ts.IsZero() {
+			return ts, nil
+		}
+	}
+	return time.ParseInLocation(DateTimeWithoutTZ, timeString, time.UTC)
 }
 
 func MapValue(value interface{}, propertyType string) interface{} {

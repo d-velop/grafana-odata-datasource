@@ -25,15 +25,11 @@ const (
 )
 
 type Response struct {
-	Value []map[string]interface{} `json:"value"`
-}
-
-type ResponseV2 struct {
-	D ResultsV2 `json:"d"`
-}
-
-type ResultsV2 struct {
+	D *struct {
+		Results []map[string]interface{} `json:"results"`
+	} `json:"d"`
 	Results []map[string]interface{} `json:"results"`
+	Value   []map[string]interface{} `json:"value"`
 }
 
 type Edmx struct {

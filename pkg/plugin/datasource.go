@@ -128,16 +128,17 @@ func mapToResponse(bodyBytes []byte) ([]map[string]interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	return response.Value, nil
-}
-
-func mapToV2Response(bodyBytes []byte) ([]map[string]interface{}, error) {
-	var response odata.ResponseV2
-	err := json.Unmarshal(bodyBytes, &response)
-	if err != nil {
-		return nil, err
+	var result []map[string]interface{}
+	if response.Value != nil {
+		result = response.Value
+	} else if response.D != nil && response.D.Results != nil {
+		result = response.D.Results
+	} else if response.Results != nil {
+		result = response.Results
+	} else {
+		// TODO: return nil, fmt.Errorf("error mapping response: unrecognized response format")
 	}
-	return response.D.Results, nil
+	return result, nil
 }
 
 func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery) backend.DataResponse {
@@ -209,19 +210,10 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 		}
 	}
 	log.DefaultLogger.Debug("using odata version", "version", version)
-	var entries []map[string]interface{}
-	if version == "V2" {
-		entries, err = mapToV2Response(bodyBytes)
-		if err != nil {
-			response.Error = err
-			return response
-		}
-	} else {
-		entries, err = mapToResponse(bodyBytes)
-		if err != nil {
-			response.Error = err
-			return response
-		}
+	entries, err := mapToResponse(bodyBytes)
+	if err != nil {
+		response.Error = err
+		return response
 	}
 	log.DefaultLogger.Debug("query complete", "noOfEntities", len(entries))
 	for _, entry := range entries {

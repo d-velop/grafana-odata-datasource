@@ -54,9 +54,8 @@ export const ConfigEditor: ComponentType<Props> = ({ options, onOptionsChange })
               labelWidth={26}
               tooltip={
                 <p>
-                  Select the OData version, currently V2 and V4 (default) are supported. The plugin currently only
-                  supports XML format for metadata (`$metadata`) and JSON format for payload data for both OData
-                  versions.
+                  Select the OData version, currently V2, V3 and V4 are supported. The plugin currently only supports
+                  XML format for metadata (`$metadata`) and JSON format for payload data for both OData versions.
                 </p>
               }>
               <Select
