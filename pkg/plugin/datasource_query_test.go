@@ -194,7 +194,7 @@ func TestQuery(t *testing.T) {
 				withFilterConditions(int32Eq5, withFilterCondition(stringProp, "eq", "Hello")),
 				withProperties(int32Prop, booleanProp, stringProp))),
 			mockODataResponse: anOdataResponse(),
-			expected:          aDataResponse(withErrorResponse(errors.New("Something went wrong"))),
+			expected:          aDataResponse(withErrorResponse(errors.New("something went wrong"))),
 		},
 	}
 

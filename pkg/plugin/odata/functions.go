@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// Maps OData property types to Grafana Field type
+// ToArray maps OData property types to Grafana Field type
 func ToArray(propertyType string) interface{} {
 	// TODO: Add field labels here?
 	switch propertyType {
@@ -36,7 +36,7 @@ func ToArray(propertyType string) interface{} {
 	}
 }
 
-// Maps OData values to Grafana (Go) values
+// MapValue maps OData values to Grafana (Go) values
 func MapValue(value interface{}, propertyType string) interface{} {
 	if value == nil {
 		return nil
