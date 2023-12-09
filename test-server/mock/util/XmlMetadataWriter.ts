@@ -4,11 +4,11 @@ import {DataServices} from "../Metamodel";
 export function ToXml(dataServices: DataServices)
 {
   let ds = create({ version: '1.0', encoding: 'utf-8' })
-    .ele('edmx:Edmx', { Version: '4.0', 'xmlns:edmx': 'http://docs.oasis-open.org/odata/ns/edmx' })
+    .ele('edmx:Edmx', { Version: '4.0', 'xmlns:edmx': 'https://docs.oasis-open.org/odata/ns/edmx' })
     .ele('edmx:DataServices');
 
   for (let schema of dataServices.schemas) {
-    let s = ds.ele("Schema", { Namespace: schema.namespace, xmlns: 'http://docs.oasis-open.org/odata/ns/edm' });
+    let s = ds.ele("Schema", { Namespace: schema.namespace, xmlns: 'https://docs.oasis-open.org/odata/ns/edm' });
     if (schema.entityTypes != null)
     {
       for (let entityType of schema.entityTypes) {

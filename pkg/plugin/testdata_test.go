@@ -208,11 +208,11 @@ func withRowValue[T string | int32 | bool | time.Time](value T) func(index int, 
 func anOdataEdmx(version string, builders ...func(*odata.Edmx)) odata.Edmx {
 	edmx := odata.Edmx{
 		XMLName: xml.Name{
-			Space: "http://docs.oasis-open.org/odata/ns/edmx",
+			Space: "https://docs.oasis-open.org/odata/ns/edmx",
 			Local: "Edmx",
 		},
 		Version: version,
-		XmlNs:   "http://docs.oasis-open.org/odata/ns/edmx",
+		XmlNs:   "https://docs.oasis-open.org/odata/ns/edmx",
 	}
 	for _, build := range builders {
 		build(&edmx)
@@ -223,7 +223,7 @@ func anOdataEdmx(version string, builders ...func(*odata.Edmx)) odata.Edmx {
 func anOdataDataService(builders ...func(*odata.DataServices)) *odata.DataServices {
 	ds := &odata.DataServices{
 		XMLName: xml.Name{
-			Space: "http://docs.oasis-open.org/odata/ns/edmx",
+			Space: "https://docs.oasis-open.org/odata/ns/edmx",
 			Local: "DataServices",
 		},
 		Schemas: []*odata.Schema{},
@@ -237,11 +237,11 @@ func anOdataDataService(builders ...func(*odata.DataServices)) *odata.DataServic
 func anOdataSchema(namespace string, builders ...func(*odata.Schema)) *odata.Schema {
 	schema := &odata.Schema{
 		XMLName: xml.Name{
-			Space: "http://docs.oasis-open.org/odata/ns/edm",
+			Space: "https://docs.oasis-open.org/odata/ns/edm",
 			Local: "Schema",
 		},
 		Namespace: namespace,
-		XmlNs:     "http://docs.oasis-open.org/odata/ns/edm",
+		XmlNs:     "https://docs.oasis-open.org/odata/ns/edm",
 	}
 	for _, build := range builders {
 		build(schema)
@@ -252,7 +252,7 @@ func anOdataSchema(namespace string, builders ...func(*odata.Schema)) *odata.Sch
 func anOdataEntityType(name string, builders ...func(*odata.EntityType)) *odata.EntityType {
 	et := &odata.EntityType{
 		XMLName: xml.Name{
-			Space: "http://docs.oasis-open.org/odata/ns/edm",
+			Space: "https://docs.oasis-open.org/odata/ns/edm",
 			Local: "EntityType",
 		},
 		Name:       name,
@@ -268,7 +268,7 @@ func anOdataEntityType(name string, builders ...func(*odata.EntityType)) *odata.
 func anOdataEntityContainer(name string, builders ...func(*odata.EntityContainer)) *odata.EntityContainer {
 	ec := &odata.EntityContainer{
 		XMLName: xml.Name{
-			Space: "http://docs.oasis-open.org/odata/ns/edm",
+			Space: "https://docs.oasis-open.org/odata/ns/edm",
 			Local: "EntityContainer",
 		},
 		Name:      name,
@@ -282,7 +282,7 @@ func anOdataEntityContainer(name string, builders ...func(*odata.EntityContainer
 
 func anOdataEntitySet(name string, entityType string) *odata.EntitySet {
 	return &odata.EntitySet{
-		XMLName:    xml.Name{Space: "http://docs.oasis-open.org/odata/ns/edm", Local: "EntitySet"},
+		XMLName:    xml.Name{Space: "https://docs.oasis-open.org/odata/ns/edm", Local: "EntitySet"},
 		Name:       name,
 		EntityType: entityType,
 	}
@@ -290,7 +290,7 @@ func anOdataEntitySet(name string, entityType string) *odata.EntitySet {
 
 func anOdataProperty(name string, propertyType string) *odata.Property {
 	return &odata.Property{
-		XMLName:  xml.Name{Space: "http://docs.oasis-open.org/odata/ns/edm", Local: "Property"},
+		XMLName:  xml.Name{Space: "https://docs.oasis-open.org/odata/ns/edm", Local: "Property"},
 		Name:     name,
 		Type:     propertyType,
 		Nullable: "true",
@@ -299,9 +299,9 @@ func anOdataProperty(name string, propertyType string) *odata.Property {
 
 func anOdataKey(name string, builders ...func(*odata.Key)) *odata.Key {
 	k := &odata.Key{
-		XMLName: xml.Name{Space: "http://docs.oasis-open.org/odata/ns/edm", Local: "Key"},
+		XMLName: xml.Name{Space: "https://docs.oasis-open.org/odata/ns/edm", Local: "Key"},
 		PropertyRef: []*odata.PropertyRef{{
-			XMLName: xml.Name{Space: "http://docs.oasis-open.org/odata/ns/edm", Local: "PropertyRef"},
+			XMLName: xml.Name{Space: "https://docs.oasis-open.org/odata/ns/edm", Local: "PropertyRef"},
 			Name:    name},
 		},
 	}
