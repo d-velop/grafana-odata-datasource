@@ -130,7 +130,7 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 	}
 
 	// Prevent empty queries from being executed
-	if len(qm.Properties) == 0 {
+	if qm.TimeProperty == nil && len(qm.Properties) == 0 {
 		return response
 	}
 
