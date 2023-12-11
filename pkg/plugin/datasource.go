@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
@@ -30,6 +31,7 @@ type ODataSource struct {
 
 type DatasourceSettings struct {
 	URLSpaceEncoding string `json:"urlSpaceEncoding"`
+	ODataVersion     string `json:"odataVersion"`
 }
 
 func newDatasourceInstance(ctx context.Context, settings backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
@@ -50,7 +52,7 @@ func newDatasourceInstance(ctx context.Context, settings backend.DataSourceInsta
 	}
 
 	return &ODataSourceInstance{
-		&ODataClientImpl{client, settings.URL, dsSettings.URLSpaceEncoding},
+		&ODataClientImpl{client, strings.TrimSuffix(settings.URL, "/"), dsSettings.URLSpaceEncoding, dsSettings.ODataVersion},
 	}, nil
 }
 
@@ -130,14 +132,14 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 		return response
 	}
 
-	timeProperty := qm.TimeProperty.Name
+	timeProperty := qm.TimeProperty
 	frame := data.NewFrame("response")
 	frame.Name = query.RefID
 	if frame.Meta == nil {
 		frame.Meta = &data.FrameMeta{}
 	}
 	frame.Meta.PreferredVisualization = data.VisTypeTable
-	labels, err := data.LabelsFromString("time=" + timeProperty)
+	labels, err := data.LabelsFromString("time=" + timeProperty.Name)
 	if err != nil {
 		response.Error = err
 		return response
@@ -160,7 +162,13 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 
 	log.DefaultLogger.Debug("request response status", "status", resp.Status)
 	if resp.StatusCode != http.StatusOK {
-		response.Error = fmt.Errorf("get failed with status code %d", resp.StatusCode)
+		bodyBytes, err := io.ReadAll(resp.Body)
+		if err != nil {
+			log.DefaultLogger.Error("error reading response body", "err", err)
+			response.Error = fmt.Errorf("get failed - code %d", resp.StatusCode)
+		} else {
+			response.Error = fmt.Errorf("get failed - code %d: %s", resp.StatusCode, string(bodyBytes))
+		}
 		return response
 	}
 	bodyBytes, err := io.ReadAll(resp.Body)
@@ -168,24 +176,42 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 		response.Error = err
 		return response
 	}
-	var result odata.Response
-	err = json.Unmarshal(bodyBytes, &result)
+	version := clientInstance.ODataVersion()
+	if version == "Auto" || version == "" {
+		odataVersion := resp.Header.Get("DataServiceVersion")
+		if strings.HasPrefix(odataVersion, "2") {
+			version = "V2"
+		} else if strings.HasPrefix(odataVersion, "3") {
+			version = "V3"
+		} else {
+			odataVersion = resp.Header.Get("OData-Version")
+			if strings.HasPrefix(odataVersion, "4") {
+				version = "V4"
+			}
+		}
+	}
+	log.DefaultLogger.Debug("using odata version", "version", version)
+	entries, err := odata.MapToResponse(bodyBytes)
 	if err != nil {
 		response.Error = err
 		return response
 	}
-
-	log.DefaultLogger.Debug("query complete", "noOfEntities", len(result.Value))
-
-	for _, entry := range result.Value {
+	log.DefaultLogger.Debug("query complete", "noOfEntities", len(entries))
+	for _, entry := range entries {
 		values := make([]interface{}, len(qm.Properties)+1)
-		if timeValue, err := time.Parse(time.RFC3339Nano, fmt.Sprint(entry[timeProperty])); err == nil {
+		object, ok := entry.(map[string]interface{})
+		if !ok {
+			// TODO: error handling
+			continue
+		}
+		// TODO: guess time format only once!
+		if timeValue, err := odata.ParseTime(fmt.Sprint(object[timeProperty.Name])); err == nil {
 			values[0] = &timeValue
 		} else {
 			values[0] = nil
 		}
 		for i, prop := range qm.Properties {
-			if value, ok := entry[prop.Name]; ok {
+			if value, ok := object[prop.Name]; ok {
 				values[i+1] = odata.MapValue(value, prop.Type)
 			} else {
 				values[i+1] = nil

@@ -14,28 +14,28 @@ import (
 func TestMapFilter(t *testing.T) {
 	tables := []struct {
 		name             string
-		timeProperty     string
+		timeProperty     property
 		timeRange        backend.TimeRange
 		filterConditions []filterCondition
 		expected         string
 	}{
 		{
 			name:             "Time filter only",
-			timeProperty:     "time",
+			timeProperty:     property{Name: "time", Type: "Edm.DateTimeOffset"},
 			timeRange:        aOneDayTimeRange(),
 			filterConditions: someFilterConditions(int32Eq5),
 			expected:         "time ge 2022-04-21T12:30:50Z and time le 2022-04-21T12:30:50Z and int32 eq 5",
 		},
 		{
 			name:             "Time filter and int and string filter",
-			timeProperty:     "time",
+			timeProperty:     property{Name: "time", Type: "Edm.DateTimeOffset"},
 			timeRange:        aOneDayTimeRange(),
 			filterConditions: someFilterConditions(int32Eq5, withFilterCondition(stringProp, "eq", "Hello")),
 			expected:         "time ge 2022-04-21T12:30:50Z and time le 2022-04-21T12:30:50Z and int32 eq 5 and string eq 'Hello'",
 		},
 		{
 			name:             "Time filter and string filter",
-			timeProperty:     "time",
+			timeProperty:     property{Name: "time", Type: "Edm.DateTimeOffset"},
 			timeRange:        aOneDayTimeRange(),
 			filterConditions: someFilterConditions(withFilterCondition(stringProp, "eq", "")),
 			expected:         "time ge 2022-04-21T12:30:50Z and time le 2022-04-21T12:30:50Z and string eq ''",
@@ -64,7 +64,7 @@ func TestBuildQueryUrl(t *testing.T) {
 		baseUrl          string
 		entitySet        string
 		properties       []property
-		timeProperty     string
+		timeProperty     property
 		timeRange        backend.TimeRange
 		filterConditions []filterCondition
 		expected         string
@@ -74,7 +74,7 @@ func TestBuildQueryUrl(t *testing.T) {
 			baseUrl:          "http://localhost:5000",
 			entitySet:        "Temperatures",
 			properties:       []property{aProperty(int32Prop)},
-			timeProperty:     "time",
+			timeProperty:     property{Name: "time", Type: "Edm.DateTimeOffset"},
 			timeRange:        aOneDayTimeRange(),
 			filterConditions: someFilterConditions(withFilterCondition(stringProp, "eq", "")),
 			expected:         "http://localhost:5000/Temperatures?%24filter=time+ge+2022-04-21T12%3A30%3A50Z+and+time+le+2022-04-21T12%3A30%3A50Z+and+string+eq+%27%27&%24select=int32%2Ctime",
@@ -131,7 +131,7 @@ func TestGetEntities(t *testing.T) {
 			client := GetOC("*", table.handlerCallback)
 
 			// Act
-			resp, err := client.Get("Temperatures", []property{aProperty(int32Prop)}, "time", aOneDayTimeRange(), someFilterConditions(int32Eq5))
+			resp, err := client.Get("Temperatures", []property{aProperty(int32Prop)}, property{Name: "time", Type: "Edm.DateTimeOffset"}, aOneDayTimeRange(), someFilterConditions(int32Eq5))
 
 			// Assert
 			if table.expectedError == nil {
