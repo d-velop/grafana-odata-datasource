@@ -24,12 +24,12 @@ const (
 	Select   = "$select"
 )
 
+// Response represents different response formats from OData V2 to V4 and different implementations. It is used to
+// autodetect and extract the right payload.
 type Response struct {
-	D *struct {
-		Results []map[string]interface{} `json:"results"`
-	} `json:"d"`
-	Results []map[string]interface{} `json:"results"`
-	Value   []map[string]interface{} `json:"value"`
+	D       interface{}   `json:"d"`
+	Results []interface{} `json:"results"`
+	Value   []interface{} `json:"value"`
 }
 
 type Edmx struct {

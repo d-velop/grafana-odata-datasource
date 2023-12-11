@@ -122,25 +122,6 @@ func (ds *ODataSource) CallResource(ctx context.Context, req *backend.CallResour
 	}
 }
 
-func mapToResponse(bodyBytes []byte) ([]map[string]interface{}, error) {
-	var response odata.Response
-	err := json.Unmarshal(bodyBytes, &response)
-	if err != nil {
-		return nil, err
-	}
-	var result []map[string]interface{}
-	if response.Value != nil {
-		result = response.Value
-	} else if response.D != nil && response.D.Results != nil {
-		result = response.D.Results
-	} else if response.Results != nil {
-		result = response.Results
-	} else {
-		// TODO: return nil, fmt.Errorf("error mapping response: unrecognized response format")
-	}
-	return result, nil
-}
-
 func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery) backend.DataResponse {
 	log.DefaultLogger.Debug("query", "query.JSON", string(query.JSON))
 	response := backend.DataResponse{}
@@ -210,7 +191,7 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 		}
 	}
 	log.DefaultLogger.Debug("using odata version", "version", version)
-	entries, err := mapToResponse(bodyBytes)
+	entries, err := odata.MapToResponse(bodyBytes)
 	if err != nil {
 		response.Error = err
 		return response
@@ -218,13 +199,19 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 	log.DefaultLogger.Debug("query complete", "noOfEntities", len(entries))
 	for _, entry := range entries {
 		values := make([]interface{}, len(qm.Properties)+1)
-		if timeValue, err := odata.ParseTime(fmt.Sprint(entry[timeProperty.Name])); err == nil {
+		object, ok := entry.(map[string]interface{})
+		if !ok {
+			// TODO: error handling
+			continue
+		}
+		// TODO: guess time format only once!
+		if timeValue, err := odata.ParseTime(fmt.Sprint(object[timeProperty.Name])); err == nil {
 			values[0] = &timeValue
 		} else {
 			values[0] = nil
 		}
 		for i, prop := range qm.Properties {
-			if value, ok := entry[prop.Name]; ok {
+			if value, ok := object[prop.Name]; ok {
 				values[i+1] = odata.MapValue(value, prop.Type)
 			} else {
 				values[i+1] = nil

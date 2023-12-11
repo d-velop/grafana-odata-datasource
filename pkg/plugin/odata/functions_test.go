@@ -1,7 +1,7 @@
 package odata
 
 import (
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"testing"
 	"time"
 )
@@ -61,10 +61,63 @@ func TestParseTime(t *testing.T) {
 		},
 	}
 	for _, tc := range testCases {
-		t.Run(tc.input, func(t *testing.T) {
+		t.Run(tc.name+": "+tc.input, func(t *testing.T) {
 			ts, err := ParseTime(tc.input)
-			assert.NoError(t, err)
-			assert.Equal(t, tc.expectedTime.UTC(), ts.UTC())
+			require.NoError(t, err)
+			require.Equal(t, tc.expectedTime.UTC(), ts.UTC())
+		})
+	}
+}
+
+func TestResponseMapping(t *testing.T) {
+	testCases := []struct {
+		name  string
+		input string
+	}{
+		{
+			name: "",
+			input: `{
+				"value": [
+					{"test": "test"}
+				]
+			}`,
+		},
+		{
+			name: "",
+			input: `{
+				"d": {
+					"results": [
+						{"test": "test"}
+					]
+				}
+			}`,
+		},
+		{
+			name: "",
+			input: `{
+				"d": [
+					{"test": "test"}
+				]
+			}`,
+		},
+		{
+			name: "",
+			input: `{
+				"results": [
+					{"test": "test"}
+				]
+			}`,
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			entries, err := MapToResponse([]byte(tc.input))
+			require.NoError(t, err)
+			for _, entry := range entries {
+				object, ok := entry.(map[string]interface{})
+				require.Equal(t, true, ok)
+				require.Equal(t, "test", object["test"])
+			}
 		})
 	}
 }

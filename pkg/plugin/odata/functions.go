@@ -1,6 +1,7 @@
 package odata
 
 import (
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -157,4 +158,27 @@ func mapNumber(value float64, propertyType string) interface{} {
 	default:
 		panic("unexpected property type")
 	}
+}
+
+func MapToResponse(bodyBytes []byte) ([]interface{}, error) {
+	var response Response
+	err := json.Unmarshal(bodyBytes, &response)
+	if err != nil {
+		return nil, err
+	}
+	if response.Value != nil {
+		return response.Value, nil
+	} else if response.D != nil {
+		switch d := response.D.(type) {
+		case map[string]interface{}:
+			if results, ok := d["results"].([]interface{}); ok {
+				return results, nil
+			}
+		case []interface{}:
+			return d, nil
+		}
+	} else if response.Results != nil {
+		return response.Results, nil
+	}
+	return nil, nil
 }
