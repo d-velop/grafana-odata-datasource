@@ -39,7 +39,7 @@
     "@swc/jest": "^0.2.29",
     "@testing-library/jest-dom": "^6.1.5",
     "@types/glob": "^8.1.0",
-    "@types/node": "^20.10.4",
+    "@types/node": "^20.10.5",
     "copy-webpack-plugin": "^11.0.0",
     "eslint-plugin-deprecation": "^2.0.0",
     "eslint-webpack-plugin": "^4.0.1",
