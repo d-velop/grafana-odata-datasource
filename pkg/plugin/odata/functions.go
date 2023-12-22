@@ -46,7 +46,6 @@ func MapValue(value interface{}, propertyType string) interface{} {
 		boolValue := value.(bool)
 		return &boolValue
 	case EdmSingle, EdmDecimal, EdmDouble, EdmSByte, EdmByte, EdmInt16, EdmInt32, EdmInt64:
-		// TODO: Min value for int64
 		return mapNumber(value.(float64), propertyType)
 	case EdmDateTimeOffset, EdmDate:
 		if timeValue, err := time.Parse(time.RFC3339Nano, fmt.Sprint(value)); err == nil {

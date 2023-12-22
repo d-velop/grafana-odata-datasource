@@ -60,7 +60,6 @@ func TestQueryData(t *testing.T) {
 	}
 }
 
-// TODO: Tests with invalid query models
 func TestQuery(t *testing.T) {
 	tables := []struct {
 		name              string
