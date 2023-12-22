@@ -82,17 +82,17 @@ func mapSelect(properties []property) string {
 }
 
 func mapFilter(filterConditions []filterCondition) string {
-	var customFilter = ""
+	var filter = ""
 	for index, element := range filterConditions {
 		if element.Property.Type == odata.EdmString {
-			customFilter += fmt.Sprintf("%s %s '%s'", element.Property.Name, element.Operator, element.Value)
+			filter += fmt.Sprintf("%s %s '%s'", element.Property.Name, element.Operator, element.Value)
 		} else {
-			customFilter += fmt.Sprintf("%s %s %s", element.Property.Name, element.Operator, element.Value)
+			filter += fmt.Sprintf("%s %s %s", element.Property.Name, element.Operator, element.Value)
 		}
 		if index < (len(filterConditions) - 1) {
-			customFilter += " and "
+			filter += " and "
 		}
 	}
 
-	return customFilter
+	return filter
 }

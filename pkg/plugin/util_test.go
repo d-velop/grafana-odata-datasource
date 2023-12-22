@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestBackendTimeRangeToODataFilter(t *testing.T) {
+func TestTimeRangeToFilter(t *testing.T) {
 	tables := []struct {
 		name         string
 		timeProperty *property
@@ -38,7 +38,7 @@ func TestBackendTimeRangeToODataFilter(t *testing.T) {
 	for _, table := range tables {
 		t.Run(table.name, func(t *testing.T) {
 			// Act
-			result := BackendTimeRangeToODataFilter(table.timeRange, table.timeProperty)
+			result := TimeRangeToFilter(table.timeRange, table.timeProperty)
 
 			// Assert
 			assert.Equal(t, table.expected, result)

@@ -6,7 +6,7 @@ import (
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 )
 
-func BackendTimeRangeToODataFilter(timeRange backend.TimeRange, timeProperty *property) []filterCondition {
+func TimeRangeToFilter(timeRange backend.TimeRange, timeProperty *property) []filterCondition {
 	if timeProperty == nil {
 		return []filterCondition{}
 	}

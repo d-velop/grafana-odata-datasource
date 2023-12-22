@@ -156,7 +156,7 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 		props = append(props, *qm.TimeProperty)
 	}
 	resp, err := clientInstance.Get(qm.EntitySet.Name, props,
-		append(qm.FilterConditions, BackendTimeRangeToODataFilter(query.TimeRange, qm.TimeProperty)...))
+		append(qm.FilterConditions, TimeRangeToFilter(query.TimeRange, qm.TimeProperty)...))
 	if err != nil {
 		response.Error = err
 		return response
@@ -184,17 +184,25 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 	log.DefaultLogger.Debug("query complete", "noOfEntities", len(result.Value))
 
 	for _, entry := range result.Value {
-		values := make([]interface{}, 0)
+		var values []interface{}
 
 		if qm.TimeProperty != nil {
-			values = append(values, odata.MapValue(entry[qm.TimeProperty.Name], qm.TimeProperty.Type))
+			values = make([]interface{}, len(qm.Properties)+1)
+			values[0] = odata.MapValue(entry[qm.TimeProperty.Name], qm.TimeProperty.Type)
+		} else {
+			values = make([]interface{}, len(qm.Properties))
 		}
 
-		for _, prop := range qm.Properties {
+		for i, prop := range qm.Properties {
+			index := i
+			if qm.TimeProperty != nil {
+				index++
+			}
+
 			if value, ok := entry[prop.Name]; ok {
-				values = append(values, odata.MapValue(value, prop.Type))
+				values[index] = odata.MapValue(value, prop.Type)
 			} else {
-				values = append(values, nil)
+				values[index] = nil
 			}
 		}
 		frame.AppendRow(values...)
