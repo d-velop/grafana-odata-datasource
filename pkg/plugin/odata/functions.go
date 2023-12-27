@@ -7,7 +7,6 @@ import (
 
 // ToArray maps OData property types to Grafana Field type
 func ToArray(propertyType string) interface{} {
-	// TODO: Add field labels here?
 	switch propertyType {
 	case EdmBoolean:
 		return []*bool{}

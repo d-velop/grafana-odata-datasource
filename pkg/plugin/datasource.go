@@ -143,7 +143,12 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 
 	if qm.TimeProperty != nil {
 		log.DefaultLogger.Debug("Time property configured", "name", qm.TimeProperty.Name)
-		field := data.NewField(qm.TimeProperty.Name, nil, odata.ToArray(qm.TimeProperty.Type))
+		labels, err := data.LabelsFromString("time=" + qm.TimeProperty.Name)
+		if err != nil {
+			response.Error = err
+			return response
+		}
+		field := data.NewField(qm.TimeProperty.Name, labels, odata.ToArray(qm.TimeProperty.Type))
 		frame.Fields = append(frame.Fields, field)
 	}
 	for _, prop := range qm.Properties {

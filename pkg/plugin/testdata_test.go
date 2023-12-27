@@ -147,9 +147,10 @@ func withErrorResponse(err error) func(n *backend.DataResponse) {
 func withDefaultTestFrame(builders ...func(*data.Frame)) func(n *backend.DataResponse) {
 	return func(dataResponse *backend.DataResponse) {
 		var frame = aDataFrame("defaultTestFrame", builders...)
+		timeLabel, _ := data.LabelsFromString("time=time")
 		frame.Fields = append(
 			frame.Fields,
-			data.NewField("time", nil, []*time.Time{}),
+			data.NewField("time", timeLabel, []*time.Time{}),
 			data.NewField("int32", nil, []*int32{}),
 			data.NewField("boolean", nil, []*bool{}),
 			data.NewField("string", nil, []*string{}),
@@ -174,9 +175,13 @@ func withBaseFrame(name string, builders ...func(*data.Frame)) func(n *backend.D
 	}
 }
 
-func withTimeField(name string) func(n *data.Frame) {
+func withTimeField(name string, withLabels bool) func(n *data.Frame) {
 	return func(frame *data.Frame) {
-		frame.Fields = append(frame.Fields, data.NewField(name, nil, []*time.Time{}))
+		var labels data.Labels = nil
+		if withLabels {
+			labels, _ = data.LabelsFromString("time=" + name)
+		}
+		frame.Fields = append(frame.Fields, data.NewField(name, labels, []*time.Time{}))
 	}
 }
 
