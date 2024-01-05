@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"time"
 
 	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
@@ -130,27 +129,39 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 		return response
 	}
 
-	timeProperty := qm.TimeProperty.Name
+	// Prevent empty queries from being executed
+	if qm.TimeProperty == nil && len(qm.Properties) == 0 {
+		return response
+	}
+
 	frame := data.NewFrame("response")
 	frame.Name = query.RefID
 	if frame.Meta == nil {
 		frame.Meta = &data.FrameMeta{}
 	}
 	frame.Meta.PreferredVisualization = data.VisTypeTable
-	labels, err := data.LabelsFromString("time=" + timeProperty)
-	if err != nil {
-		response.Error = err
-		return response
+
+	if qm.TimeProperty != nil {
+		log.DefaultLogger.Debug("Time property configured", "name", qm.TimeProperty.Name)
+		labels, err := data.LabelsFromString("time=" + qm.TimeProperty.Name)
+		if err != nil {
+			response.Error = err
+			return response
+		}
+		field := data.NewField(qm.TimeProperty.Name, labels, odata.ToArray(qm.TimeProperty.Type))
+		frame.Fields = append(frame.Fields, field)
 	}
-	frame.Fields = append(frame.Fields,
-		data.NewField("time", labels, []*time.Time{}),
-	)
 	for _, prop := range qm.Properties {
-		frame.Fields = append(frame.Fields, data.NewField(prop.Name, nil, odata.ToArray(prop.Type)))
+		field := data.NewField(prop.Name, nil, odata.ToArray(prop.Type))
+		frame.Fields = append(frame.Fields, field)
 	}
 
-	resp, err := clientInstance.Get(qm.EntitySet.Name, qm.Properties, timeProperty,
-		query.TimeRange, qm.FilterConditions)
+	props := qm.Properties
+	if qm.TimeProperty != nil {
+		props = append(props, *qm.TimeProperty)
+	}
+	resp, err := clientInstance.Get(qm.EntitySet.Name, props,
+		append(qm.FilterConditions, TimeRangeToFilter(query.TimeRange, qm.TimeProperty)...))
 	if err != nil {
 		response.Error = err
 		return response
@@ -178,17 +189,25 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 	log.DefaultLogger.Debug("query complete", "noOfEntities", len(result.Value))
 
 	for _, entry := range result.Value {
-		values := make([]interface{}, len(qm.Properties)+1)
-		if timeValue, err := time.Parse(time.RFC3339Nano, fmt.Sprint(entry[timeProperty])); err == nil {
-			values[0] = &timeValue
+		var values []interface{}
+
+		if qm.TimeProperty != nil {
+			values = make([]interface{}, len(qm.Properties)+1)
+			values[0] = odata.MapValue(entry[qm.TimeProperty.Name], qm.TimeProperty.Type)
 		} else {
-			values[0] = nil
+			values = make([]interface{}, len(qm.Properties))
 		}
+
 		for i, prop := range qm.Properties {
+			index := i
+			if qm.TimeProperty != nil {
+				index++
+			}
+
 			if value, ok := entry[prop.Name]; ok {
-				values[i+1] = odata.MapValue(value, prop.Type)
+				values[index] = odata.MapValue(value, prop.Type)
 			} else {
-				values[i+1] = nil
+				values[index] = nil
 			}
 		}
 		frame.AppendRow(values...)

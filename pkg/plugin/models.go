@@ -2,10 +2,8 @@ package plugin
 
 type queryModel struct {
 	EntitySet        entitySet         `json:"entitySet"`
-	TimeProperty     property          `json:"timeProperty"`
+	TimeProperty     *property         `json:"timeProperty"`
 	Properties       []property        `json:"properties"`
-	From             string            `json:"from"`
-	To               string            `json:"to"`
 	FilterConditions []filterCondition `json:"filterConditions"`
 }
 

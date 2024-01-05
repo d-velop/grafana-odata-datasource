@@ -42,12 +42,6 @@ func aDataQuery(refId string, builders ...func(*backend.DataQuery)) backend.Data
 func aQueryModel(builders ...func(*queryModel)) *queryModel {
 	model := &queryModel{
 		// Initialize with default values
-		From: "2022-01-01T00:00:00Z",
-		To:   "2022-01-02T00:00:00Z",
-		TimeProperty: property{
-			Name: "time",
-			Type: odata.EdmDateTimeOffset,
-		},
 		EntitySet: entitySet{
 			Name:       "Temperatures",
 			EntityType: "TemperatureODataMock.Models.Temperature",
@@ -88,11 +82,7 @@ func aDataFrame(frameName string, builders ...func(*data.Frame)) *data.Frame {
 		Meta: &data.FrameMeta{},
 	}
 	frame.Meta.PreferredVisualization = data.VisTypeTable
-	labels, _ := data.LabelsFromString("time=" + "time")
-	frame.Fields = append(
-		frame.Fields,
-		data.NewField("time", labels, []*time.Time{}),
-	)
+
 	for _, build := range builders {
 		build(frame)
 	}
@@ -157,8 +147,10 @@ func withErrorResponse(err error) func(n *backend.DataResponse) {
 func withDefaultTestFrame(builders ...func(*data.Frame)) func(n *backend.DataResponse) {
 	return func(dataResponse *backend.DataResponse) {
 		var frame = aDataFrame("defaultTestFrame", builders...)
+		timeLabel, _ := data.LabelsFromString("time=time")
 		frame.Fields = append(
 			frame.Fields,
+			data.NewField("time", timeLabel, []*time.Time{}),
 			data.NewField("int32", nil, []*int32{}),
 			data.NewField("boolean", nil, []*bool{}),
 			data.NewField("string", nil, []*string{}),
@@ -180,6 +172,16 @@ func withDefaultTestFrame(builders ...func(*data.Frame)) func(n *backend.DataRes
 func withBaseFrame(name string, builders ...func(*data.Frame)) func(n *backend.DataResponse) {
 	return func(dataResponse *backend.DataResponse) {
 		dataResponse.Frames = append(dataResponse.Frames, aDataFrame(name, builders...))
+	}
+}
+
+func withTimeField(name string, withLabels bool) func(n *data.Frame) {
+	return func(frame *data.Frame) {
+		var labels data.Labels = nil
+		if withLabels {
+			labels, _ = data.LabelsFromString("time=" + name)
+		}
+		frame.Fields = append(frame.Fields, data.NewField(name, labels, []*time.Time{}))
 	}
 }
 
@@ -211,11 +213,11 @@ func withRowValue[T string | int32 | bool | time.Time](value T) func(index int, 
 func anOdataEdmx(version string, builders ...func(*odata.Edmx)) odata.Edmx {
 	edmx := odata.Edmx{
 		XMLName: xml.Name{
-			Space: "http://docs.oasis-open.org/odata/ns/edmx",
+			Space: "https://docs.oasis-open.org/odata/ns/edmx",
 			Local: "Edmx",
 		},
 		Version: version,
-		XmlNs:   "http://docs.oasis-open.org/odata/ns/edmx",
+		XmlNs:   "https://docs.oasis-open.org/odata/ns/edmx",
 	}
 	for _, build := range builders {
 		build(&edmx)
@@ -226,7 +228,7 @@ func anOdataEdmx(version string, builders ...func(*odata.Edmx)) odata.Edmx {
 func anOdataDataService(builders ...func(*odata.DataServices)) *odata.DataServices {
 	ds := &odata.DataServices{
 		XMLName: xml.Name{
-			Space: "http://docs.oasis-open.org/odata/ns/edmx",
+			Space: "https://docs.oasis-open.org/odata/ns/edmx",
 			Local: "DataServices",
 		},
 		Schemas: []*odata.Schema{},
@@ -240,11 +242,11 @@ func anOdataDataService(builders ...func(*odata.DataServices)) *odata.DataServic
 func anOdataSchema(namespace string, builders ...func(*odata.Schema)) *odata.Schema {
 	schema := &odata.Schema{
 		XMLName: xml.Name{
-			Space: "http://docs.oasis-open.org/odata/ns/edm",
+			Space: "https://docs.oasis-open.org/odata/ns/edm",
 			Local: "Schema",
 		},
 		Namespace: namespace,
-		XmlNs:     "http://docs.oasis-open.org/odata/ns/edm",
+		XmlNs:     "https://docs.oasis-open.org/odata/ns/edm",
 	}
 	for _, build := range builders {
 		build(schema)
@@ -255,7 +257,7 @@ func anOdataSchema(namespace string, builders ...func(*odata.Schema)) *odata.Sch
 func anOdataEntityType(name string, builders ...func(*odata.EntityType)) *odata.EntityType {
 	et := &odata.EntityType{
 		XMLName: xml.Name{
-			Space: "http://docs.oasis-open.org/odata/ns/edm",
+			Space: "https://docs.oasis-open.org/odata/ns/edm",
 			Local: "EntityType",
 		},
 		Name:       name,
@@ -271,7 +273,7 @@ func anOdataEntityType(name string, builders ...func(*odata.EntityType)) *odata.
 func anOdataEntityContainer(name string, builders ...func(*odata.EntityContainer)) *odata.EntityContainer {
 	ec := &odata.EntityContainer{
 		XMLName: xml.Name{
-			Space: "http://docs.oasis-open.org/odata/ns/edm",
+			Space: "https://docs.oasis-open.org/odata/ns/edm",
 			Local: "EntityContainer",
 		},
 		Name:      name,
@@ -285,7 +287,7 @@ func anOdataEntityContainer(name string, builders ...func(*odata.EntityContainer
 
 func anOdataEntitySet(name string, entityType string) *odata.EntitySet {
 	return &odata.EntitySet{
-		XMLName:    xml.Name{Space: "http://docs.oasis-open.org/odata/ns/edm", Local: "EntitySet"},
+		XMLName:    xml.Name{Space: "https://docs.oasis-open.org/odata/ns/edm", Local: "EntitySet"},
 		Name:       name,
 		EntityType: entityType,
 	}
@@ -293,7 +295,7 @@ func anOdataEntitySet(name string, entityType string) *odata.EntitySet {
 
 func anOdataProperty(name string, propertyType string) *odata.Property {
 	return &odata.Property{
-		XMLName:  xml.Name{Space: "http://docs.oasis-open.org/odata/ns/edm", Local: "Property"},
+		XMLName:  xml.Name{Space: "https://docs.oasis-open.org/odata/ns/edm", Local: "Property"},
 		Name:     name,
 		Type:     propertyType,
 		Nullable: "true",
@@ -302,9 +304,9 @@ func anOdataProperty(name string, propertyType string) *odata.Property {
 
 func anOdataKey(name string, builders ...func(*odata.Key)) *odata.Key {
 	k := &odata.Key{
-		XMLName: xml.Name{Space: "http://docs.oasis-open.org/odata/ns/edm", Local: "Key"},
+		XMLName: xml.Name{Space: "https://docs.oasis-open.org/odata/ns/edm", Local: "Key"},
 		PropertyRef: []*odata.PropertyRef{{
-			XMLName: xml.Name{Space: "http://docs.oasis-open.org/odata/ns/edm", Local: "PropertyRef"},
+			XMLName: xml.Name{Space: "https://docs.oasis-open.org/odata/ns/edm", Local: "PropertyRef"},
 			Name:    name},
 		},
 	}
@@ -491,6 +493,15 @@ func withQueryModel(builders ...func(*queryModel)) func(n *backend.DataQuery) {
 	}
 }
 
+func withTimeProperty(name string) func(n *queryModel) {
+	return func(model *queryModel) {
+		model.TimeProperty = &property{
+			Name: name,
+			Type: odata.EdmDateTimeOffset,
+		}
+	}
+}
+
 // --- Property related ---
 func aProperty(builders ...func(*property)) property {
 	p := property{}
@@ -522,6 +533,10 @@ func booleanProp(p *property) {
 func stringProp(p *property) {
 	p.Name = "string"
 	p.Type = odata.EdmString
+}
+func timeProp(p *property) {
+	p.Name = "time"
+	p.Type = odata.EdmDateTimeOffset
 }
 
 // Misc
