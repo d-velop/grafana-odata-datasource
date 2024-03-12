@@ -15,6 +15,9 @@ Enter `OData` into the filter input field and select the OData Data Source.
 
 Provide the URL of your OData Service Root and click `Save & test` to test the connection.
 
+The `URL space encoding` setting can be used to specify the encoding of spaces in URLs. `Percent` uses `%20` (see RFC
+3986), while `Plus` uses `+` (used in form data). E.g. `$filter=value%20EQ%201` vs. `$filter=value+EQ+1`.
+
 Add other connection settings, such as auth settings, as necessary.
 
 To use the data source, create a new query and select the newly created OData data source.
