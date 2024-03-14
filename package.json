@@ -1,6 +1,6 @@
 {
   "name": "grafana-odata-datasource",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Loads data from OData (V4) compliant data sources to Grafana",
   "bugs": {
     "url": "https://github.com/d-velop/grafana-odata-datasource/issues"
