@@ -23,8 +23,10 @@ services:
         grafana_version: ${GRAFANA_VERSION:-10.2.0}
     ports:
       - 3000:3000/tcp
+    environment:
+      GF_LOG_LEVEL: 'debug'
     volumes:
-      - ./dist:/var/lib/grafana/plugins/odata
+      - ./dist:/var/lib/grafana/plugins/dvelop-odata-datasource
       - ./provisioning:/etc/grafana/provisioning
       - ./integration/keycloak/grafana.ini:/etc/grafana/grafana.ini
   test-server:

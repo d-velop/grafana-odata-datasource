@@ -4,7 +4,7 @@ import {Issuer, Strategy} from 'openid-client';
 import passport from 'passport';
 import {ToXml} from "./util/XmlMetadataWriter";
 import {MockModel} from "./model/MockModel";
-import {Generate} from "./Testdata";
+import {GenerateTemperatures} from "./Testdata";
 
 export let addMockService = async (app: Application) => {
   const memoryStore = new expressSession.MemoryStore();
@@ -114,7 +114,7 @@ export let addMockService = async (app: Application) => {
           console.log(`${min} / ${max}`);
         }
       }
-      let values = Generate();
+      let values = GenerateTemperatures();
       return res
         .contentType('application/json')
         .status(200).send(

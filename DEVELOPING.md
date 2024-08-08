@@ -77,6 +77,24 @@ with the preconfigured OData Data Source.
 > Note: If you want to access a locally running OData Service Root make sure you use the correct hostname. You can use
 > docker's special DNS name `host.docker.internal` which resolves to the internal IP address used by the docker host.
 
+## Testing
+
+Run all backend test by executing the following command:
+
+```bash
+mage test
+```
+
+### Coverage
+
+To evaluate the backend test coverage execute the following command:
+
+```bash
+mage coverage
+```
+
+The results are written to a `backend.html` file located in the [`./coverage`](./coverage) folder.
+
 ## Update create-plugin versions
 To update the plugin to use a newer version of the `create-plugin` tool, follow the instructions here:
 <https://grafana.com/developers/plugin-tools/migration-guides/update-create-plugin-versions>.

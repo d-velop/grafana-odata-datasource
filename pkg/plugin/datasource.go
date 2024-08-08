@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"time"
 
 	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
@@ -125,48 +124,90 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 	response := backend.DataResponse{}
 	var qm queryModel
 	err := json.Unmarshal(query.JSON, &qm)
-	if response.Error != nil {
+	if err != nil {
 		response.Error = fmt.Errorf("error unmarshalling query json: %w", err)
 		return response
 	}
-	timeProperty := qm.TimeProperty.Name
+
+	// Prevent empty queries from being executed
+	if qm.TimeProperty == nil && len(qm.Properties) == 0 {
+		return response
+	}
+
 	frame := data.NewFrame("response")
 	frame.Name = query.RefID
 	if frame.Meta == nil {
 		frame.Meta = &data.FrameMeta{}
 	}
 	frame.Meta.PreferredVisualization = data.VisTypeTable
-	labels, err := data.LabelsFromString("time=" + timeProperty)
-	if err != nil {
-		response.Error = err
-		return response
-	}
-	frame.Fields = append(frame.Fields,
-		data.NewField("time", labels, []*time.Time{}),
-	)
-	for _, prop := range qm.Properties {
-		frame.Fields = append(frame.Fields, data.NewField(prop.Name, nil, odata.ToArray(prop.Type)))
-	}
-	var entities []map[string]interface{}
-	entities, err = ds.getEntities(clientInstance, qm.EntitySet.Name, qm.Properties, timeProperty,
-		query.TimeRange, qm.FilterConditions)
-	log.DefaultLogger.Debug("query complete", "noOfEntities", len(entities))
-	if err != nil {
-		response.Error = err
-		return response
-	}
-	for _, entry := range entities {
-		values := make([]interface{}, len(qm.Properties)+1)
-		if timeValue, err := time.Parse(time.RFC3339Nano, fmt.Sprint(entry[timeProperty])); err == nil {
-			values[0] = &timeValue
-		} else {
-			values[0] = nil
+
+	if qm.TimeProperty != nil {
+		log.DefaultLogger.Debug("Time property configured", "name", qm.TimeProperty.Name)
+		labels, err := data.LabelsFromString("time=" + qm.TimeProperty.Name)
+		if err != nil {
+			response.Error = err
+			return response
 		}
+		field := data.NewField(qm.TimeProperty.Name, labels, odata.ToArray(qm.TimeProperty.Type))
+		frame.Fields = append(frame.Fields, field)
+	}
+	for _, prop := range qm.Properties {
+		field := data.NewField(prop.Name, nil, odata.ToArray(prop.Type))
+		frame.Fields = append(frame.Fields, field)
+	}
+
+	props := qm.Properties
+	if qm.TimeProperty != nil {
+		props = append(props, *qm.TimeProperty)
+	}
+	resp, err := clientInstance.Get(qm.EntitySet.Name, props,
+		append(qm.FilterConditions, TimeRangeToFilter(query.TimeRange, qm.TimeProperty)...))
+	if err != nil {
+		response.Error = err
+		return response
+	}
+
+	defer resp.Body.Close()
+
+	log.DefaultLogger.Debug("request response status", "status", resp.Status)
+	if resp.StatusCode != http.StatusOK {
+		response.Error = fmt.Errorf("get failed with status code %d", resp.StatusCode)
+		return response
+	}
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		response.Error = err
+		return response
+	}
+	var result odata.Response
+	err = json.Unmarshal(bodyBytes, &result)
+	if err != nil {
+		response.Error = err
+		return response
+	}
+
+	log.DefaultLogger.Debug("query complete", "noOfEntities", len(result.Value))
+
+	for _, entry := range result.Value {
+		var values []interface{}
+
+		if qm.TimeProperty != nil {
+			values = make([]interface{}, len(qm.Properties)+1)
+			values[0] = odata.MapValue(entry[qm.TimeProperty.Name], qm.TimeProperty.Type)
+		} else {
+			values = make([]interface{}, len(qm.Properties))
+		}
+
 		for i, prop := range qm.Properties {
+			index := i
+			if qm.TimeProperty != nil {
+				index++
+			}
+
 			if value, ok := entry[prop.Name]; ok {
-				values[i+1] = odata.MapValue(value, prop.Type)
+				values[index] = odata.MapValue(value, prop.Type)
 			} else {
-				values[i+1] = nil
+				values[index] = nil
 			}
 		}
 		frame.AppendRow(values...)
@@ -175,37 +216,15 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 	return response
 }
 
-func (ds *ODataSource) getEntities(client ODataClient, entitySet string, properties []property, timeProperty string,
-	timeRange backend.TimeRange, filterConditions []filterCondition) ([]map[string]interface{}, error) {
-	resp, err := client.Get(entitySet, properties, timeProperty, timeRange, filterConditions)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	log.DefaultLogger.Debug("request response status", "status", resp.Status)
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("get failed with status code %d", resp.StatusCode)
-	}
-	bodyBytes, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	var result odata.Response
-	err = json.Unmarshal(bodyBytes, &result)
-	if err != nil {
-		return nil, err
-	}
-	return result.Value, nil
-}
-
 func (ds *ODataSource) getMetadata(ctx context.Context, req *backend.CallResourceRequest,
 	sender backend.CallResourceResponseSender) error {
 	clientInstance := ds.getClientInstance(ctx, req.PluginContext)
 	resp, err := clientInstance.GetMetadata()
+
 	if err != nil {
-		log.DefaultLogger.Error("error in http request")
 		return err
 	}
+
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("get metadata failed with status code %d", resp.StatusCode)
@@ -221,39 +240,40 @@ func (ds *ODataSource) getMetadata(ctx context.Context, req *backend.CallResourc
 		log.DefaultLogger.Error("error unmarshalling response body")
 		return err
 	}
-	metadata := make(map[string]interface{})
-	entityTypes := make(map[string]interface{})
-	entitySets := make(map[string]interface{})
+
+	metadata := schema{
+		EntityTypes: make(map[string]entityType),
+		EntitySets:  make(map[string]entitySet),
+	}
 	for _, ds := range edmx.DataServices {
 		for _, s := range ds.Schemas {
 			for _, et := range s.EntityTypes {
 				qualifiedName := s.Namespace + "." + et.Name
-				var properties []interface{}
+				var properties []property
 				for _, p := range et.Properties {
-					prop := map[string]interface{}{
-						"name": p.Name,
-						"type": p.Type,
+					prop := property{
+						Name: p.Name,
+						Type: p.Type,
 					}
 					properties = append(properties, prop)
 				}
-				entityTypes[qualifiedName] = map[string]interface{}{
-					"name":          et.Name,
-					"qualifiedName": qualifiedName,
-					"properties":    properties,
+				metadata.EntityTypes[qualifiedName] = entityType{
+					Name:          et.Name,
+					QualifiedName: qualifiedName,
+					Properties:    properties,
 				}
 			}
 			for _, ec := range s.EntityContainers {
 				for _, es := range ec.EntitySet {
-					entitySets[es.Name] = map[string]interface{}{
-						"name":       es.Name,
-						"entityType": es.EntityType,
+					metadata.EntitySets[es.Name] = entitySet{
+						Name:       es.Name,
+						EntityType: es.EntityType,
 					}
 				}
 			}
 		}
 	}
-	metadata["entityTypes"] = entityTypes
-	metadata["entitySets"] = entitySets
+
 	responseBody, err := json.Marshal(metadata)
 	if err != nil {
 		log.DefaultLogger.Error("error marshalling response body")

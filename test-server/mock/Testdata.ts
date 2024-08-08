@@ -1,6 +1,6 @@
 import {v4 as uuidv4} from "uuid";
 
-export function Generate()
+export function GenerateTemperatures()
 {
   const count = 1000;
   let values = [];
@@ -16,6 +16,20 @@ export function Generate()
       value1: Math.sin(i) + Math.random(),
       value2: Math.cos(i) + Math.random(),
       value3: Math.log2(i) + Math.random()
+    });
+  }
+  return values;
+}
+
+export function GenerateRooms()
+{
+  const count = 100;
+  let values = [];
+  for(let i = 0; i < count; i++)
+  {
+    values.push({
+      id: uuidv4(),
+      name: `Room ${i}`,
     });
   }
   return values;
