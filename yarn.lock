@@ -1445,15 +1445,6 @@
     uplot "1.6.30"
     xss "^1.0.14"
 
-"@grafana/e2e-selectors@10.4.3":
-  version "10.4.3"
-  resolved "https://registry.yarnpkg.com/@grafana/e2e-selectors/-/e2e-selectors-10.4.3.tgz#ecf6802f520a559571da2f8e7a1c43fb8c5fe540"
-  integrity sha512-cXSMg5JD3YIW7JrEM/S2F3SW7+YYl8bQzcnusy+RjnJNsG/5WwDrealNews8Iuw4b7aGVvwob1XsKbnARLMNIA==
-  dependencies:
-    "@grafana/tsconfig" "^1.2.0-rc1"
-    tslib "2.6.2"
-    typescript "5.3.3"
-
 "@grafana/e2e-selectors@10.4.5":
   version "10.4.5"
   resolved "https://registry.yarnpkg.com/@grafana/e2e-selectors/-/e2e-selectors-10.4.5.tgz#e6ac31c97c03567e8eb723f91e70e38646a0dd23"
@@ -1463,17 +1454,26 @@
     tslib "2.6.2"
     typescript "5.3.3"
 
-"@grafana/e2e@^10.4.3":
-  version "10.4.3"
-  resolved "https://registry.yarnpkg.com/@grafana/e2e/-/e2e-10.4.3.tgz#a3ff17af074686f4e17d65bcd9314823e3e774fb"
-  integrity sha512-5SC+OoyiqiyGNhDcSPO9BM0Pc5I8lXYqexdtinPJHANVb74YVsv0YVjAxagBXR2Z0kDZ06i7glpbLs0rGfKApA==
+"@grafana/e2e-selectors@11.0.4":
+  version "11.0.4"
+  resolved "https://registry.yarnpkg.com/@grafana/e2e-selectors/-/e2e-selectors-11.0.4.tgz#88112e79c8a10be1e06da8e0e7d48117319c32e4"
+  integrity sha512-6FSEsnQ4kwdFdjY3KZAz53ejrwfq1lK1r7ak8LspGzvFB8dasMq9FwTL1OF1g0uVeSz/MheGqZlchKYTOwys6g==
+  dependencies:
+    "@grafana/tsconfig" "^1.3.0-rc1"
+    tslib "2.6.2"
+    typescript "5.3.3"
+
+"@grafana/e2e@^11.0.4":
+  version "11.0.4"
+  resolved "https://registry.yarnpkg.com/@grafana/e2e/-/e2e-11.0.4.tgz#2342858090d8fb79cc7f9db57a713e6531458354"
+  integrity sha512-6DuXTk1kMpRB+1bBq+PJYSccMxHHLznC0bjw1Yv5P243vb9PD4cJmzAWXAdVE02EK9np410Ln0KmZWW2aKIVfw==
   dependencies:
     "@babel/core" "7.23.2"
     "@babel/preset-env" "7.23.2"
     "@cypress/webpack-preprocessor" "5.17.1"
-    "@grafana/e2e-selectors" "10.4.3"
-    "@grafana/schema" "10.4.3"
-    "@grafana/tsconfig" "^1.2.0-rc1"
+    "@grafana/e2e-selectors" "11.0.4"
+    "@grafana/schema" "11.0.4"
+    "@grafana/tsconfig" "^1.3.0-rc1"
     "@mochajs/json-file-reporter" "^1.2.0"
     babel-loader "9.1.3"
     blink-diff "1.0.13"
@@ -1542,17 +1542,17 @@
     systemjs-cjs-extra "0.2.0"
     tslib "2.6.2"
 
-"@grafana/schema@10.4.3":
-  version "10.4.3"
-  resolved "https://registry.yarnpkg.com/@grafana/schema/-/schema-10.4.3.tgz#f1b592381b643c945b8ea07d597a3318aeeb1701"
-  integrity sha512-7I+9wLfCw+g/HtJD0MpXyQZqYs+pLjU1QgmoGCHRV9wBCxKsZqAJqg5enlazcY2DqWhH350hJIn/mjNC4uamig==
-  dependencies:
-    tslib "2.6.2"
-
 "@grafana/schema@10.4.5":
   version "10.4.5"
   resolved "https://registry.yarnpkg.com/@grafana/schema/-/schema-10.4.5.tgz#e496cc5e247f58f4eb6e908b0ba156f96a9f886a"
   integrity sha512-Qi8GuMk5X8J+cIe18JZpU1QpagEeu+BdES97FmHXmBIR69i+sGebjzwH9NN++cjZZvq+x8tvXUxOpLL84VnYsg==
+  dependencies:
+    tslib "2.6.2"
+
+"@grafana/schema@11.0.4":
+  version "11.0.4"
+  resolved "https://registry.yarnpkg.com/@grafana/schema/-/schema-11.0.4.tgz#bc967126f74592dae4d2c9d342ea4c1911228a28"
+  integrity sha512-CVm2PCd/2NZRkr9zrppWwMeDYJ4q7ziHssaT/Z+COftn8h+Kw+WAh42RMcZ1bjjEWxaemY5G6DEXw6DxWXeTOg==
   dependencies:
     tslib "2.6.2"
 
