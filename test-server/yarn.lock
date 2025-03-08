@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@cap-js/cds-types@<=0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@cap-js/cds-types/-/cds-types-0.2.0.tgz#065c3df9f8891531e3d51a1e62398be14c665aa7"
-  integrity sha512-s4iVwAjf+rRIUu6jaEooXFcJv16+sP5CTkreQPxDUyxLWWGlhvEr67TuIH0C6Cnp4PPIsYmBK3AVxSW2mNc2wg==
-
 "@gar/promisify@^1.0.1":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
@@ -57,10 +52,10 @@
   resolved "https://registry.yarnpkg.com/@oozcitak/util/-/util-8.3.8.tgz#10f65fe1891fd8cde4957360835e78fd1936bfdd"
   integrity sha512-T8TbSnGsxo6TDBJx/Sgv/BlVJL3tshxZP7Aq5R1mSnM5OcHY2dQaxLMu2+E8u3gN0MLOzdjurqN4ZRVuzQycOQ==
 
-"@sap/cds-compiler@^4":
-  version "4.2.2"
-  resolved "https://registry.yarnpkg.com/@sap/cds-compiler/-/cds-compiler-4.2.2.tgz#707ba84b5c11d2dd1c87b87cb1f3365c6fda94b8"
-  integrity sha512-JnAmZ/dZiBrkQD0z/8zntgCnZ+5urHZCMB4/WNVqwuLdbaErY/OsQNyu+8xlhbS5iy5wzwndWEUGjacnJ7839w==
+"@sap/cds-compiler@>=5.1":
+  version "5.8.2"
+  resolved "https://registry.yarnpkg.com/@sap/cds-compiler/-/cds-compiler-5.8.2.tgz#3294ce194b973d8d3b0661482289f1952f76bc8f"
+  integrity sha512-doEOvu2ZTYjcC8v/UaYESYVjSAnLvuDlit4FurUiPfxiMxsQqwDOtldJGDTb26JpZdIi/GrTWv8qksk6PnpmMA==
   dependencies:
     antlr4 "4.9.3"
 
@@ -79,13 +74,12 @@
     xmlbuilder "^15.1.1"
     yaml "^2.2.2"
 
-"@sap/cds@^7.9.5":
-  version "7.9.5"
-  resolved "https://registry.yarnpkg.com/@sap/cds/-/cds-7.9.5.tgz#8e3af0438badf7232ed3cbc418e43054a6269a0f"
-  integrity sha512-DNCpXWhwZzIShqjoxOTW9cyYB/mE8k/7d+lSp1BCRLnc30R2vEU0ScqZVngjIZfQFRKWkLePy9/FulAEhqv+wQ==
+"@sap/cds@^8.8.1":
+  version "8.8.1"
+  resolved "https://registry.yarnpkg.com/@sap/cds/-/cds-8.8.1.tgz#b7e933d568f0fc31776344f920c19139e7422a82"
+  integrity sha512-9f0ELZMJ6jdXz1drej2zP39B9IXhs29AYo2iz/g+oDjKomwCkdL2I3Ec2aVfi13dG3fOq8ZcIHnEHnMQn2cm2A==
   dependencies:
-    "@cap-js/cds-types" "<=0.2.0"
-    "@sap/cds-compiler" "^4"
+    "@sap/cds-compiler" ">=5.1"
     "@sap/cds-fiori" "^1"
     "@sap/cds-foss" "^5.0.0"
 
@@ -109,23 +103,23 @@
   dependencies:
     "@types/node" "*"
 
-"@types/express-serve-static-core@^4.17.33":
-  version "4.19.6"
-  resolved "https://registry.yarnpkg.com/@types/express-serve-static-core/-/express-serve-static-core-4.19.6.tgz#e01324c2a024ff367d92c66f48553ced0ab50267"
-  integrity sha512-N4LZ2xG7DatVqhCZzOGb1Yi5lMbXSZcmdLDe9EzSndPV2HpWYWzRbaerl2n27irrm94EPpprqa8KpskPT085+A==
+"@types/express-serve-static-core@^5.0.0":
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/@types/express-serve-static-core/-/express-serve-static-core-5.0.6.tgz#41fec4ea20e9c7b22f024ab88a95c6bb288f51b8"
+  integrity sha512-3xhRnjJPkULekpSzgtoNYYcTWgEZkp4myc+Saevii5JPnHNvHMRlBSHDbs7Bh1iPPoVTERHEZXyhyLbMEsExsA==
   dependencies:
     "@types/node" "*"
     "@types/qs" "*"
     "@types/range-parser" "*"
     "@types/send" "*"
 
-"@types/express@^4.17.21":
-  version "4.17.21"
-  resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.21.tgz#c26d4a151e60efe0084b23dc3369ebc631ed192d"
-  integrity sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==
+"@types/express@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@types/express/-/express-5.0.0.tgz#13a7d1f75295e90d19ed6e74cab3678488eaa96c"
+  integrity sha512-DvZriSMehGHL1ZNLzi6MidnsDhUZM/x2pRdDIKdwbUNqqwHxMlRdkxtn6/EPKyqKpHqTl/4nRZsRNLpZxZRpPQ==
   dependencies:
     "@types/body-parser" "*"
-    "@types/express-serve-static-core" "^4.17.33"
+    "@types/express-serve-static-core" "^5.0.0"
     "@types/qs" "*"
     "@types/serve-static" "*"
 
