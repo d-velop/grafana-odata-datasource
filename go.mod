@@ -1,8 +1,8 @@
 module github.com/d-velop/grafana-odata-datasource
 
-go 1.21
+go 1.22
 
-toolchain go1.21.4
+toolchain go1.22.12
 
 require (
 	github.com/grafana/grafana-plugin-sdk-go v0.251.0
