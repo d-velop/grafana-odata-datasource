@@ -6,7 +6,7 @@ toolchain go1.22.12
 
 require (
 	github.com/grafana/grafana-plugin-sdk-go v0.251.0
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 )
 
 require (
