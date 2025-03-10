@@ -1,7 +1,11 @@
 package odata
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
+// ToArray maps OData property types to Grafana Field type
 func ToArray(propertyType string) interface{} {
 	switch propertyType {
 	case EdmBoolean:
@@ -22,11 +26,16 @@ func ToArray(propertyType string) interface{} {
 		return []*int32{}
 	case EdmInt64:
 		return []*int64{}
+	case EdmDateTimeOffset:
+		return []*time.Time{}
+	case EdmDate:
+		return []*time.Time{}
 	default:
 		return []*string{}
 	}
 }
 
+// MapValue maps OData values to Grafana (Go) values
 func MapValue(value interface{}, propertyType string) interface{} {
 	if value == nil {
 		return nil
@@ -37,6 +46,12 @@ func MapValue(value interface{}, propertyType string) interface{} {
 		return &boolValue
 	case EdmSingle, EdmDecimal, EdmDouble, EdmSByte, EdmByte, EdmInt16, EdmInt32, EdmInt64:
 		return mapNumber(value.(float64), propertyType)
+	case EdmDateTimeOffset, EdmDate:
+		if timeValue, err := time.Parse(time.RFC3339Nano, fmt.Sprint(value)); err == nil {
+			return &timeValue
+		} else {
+			return nil
+		}
 	default:
 		x := fmt.Sprint(value)
 		return &x

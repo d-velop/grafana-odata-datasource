@@ -1,12 +1,12 @@
 import {Application, Request, Response} from "express";
 import {ToXml} from "./util/XmlMetadataWriter";
 import {MockModel} from "./model/MockModel";
-import {Generate} from "./Testdata";
+import {GenerateTemperatures} from "./Testdata";
 
 export let addMockService = async (app: Application) => {
   app.get('/mock/\\$metadata',
-    async (_: Request, res: Response): Promise<Response> => {
-      return res
+    async (_: Request, res: Response): Promise<void> => {
+      res
         .contentType('application/xml')
         .status(200)
         .send(ToXml(MockModel));
@@ -14,7 +14,7 @@ export let addMockService = async (app: Application) => {
   );
 
   app.get('/mock/temperatures',
-    async (req: Request, res: Response): Promise<Response> => {
+    async (req: Request, res: Response): Promise<void> => {
       const {$filter} = req.query;
       if (typeof $filter === "string") {
         const regex = /Time ge ([0-9-TZ:.]+) and Time le ([0-9-TZ:.]+)/;
@@ -25,8 +25,8 @@ export let addMockService = async (app: Application) => {
           console.log(`${min} / ${max}`);
         }
       }
-      let values = Generate();
-      return res
+      let values = GenerateTemperatures();
+      res
         .contentType('application/json')
         .status(200).send(
           {
@@ -37,7 +37,7 @@ export let addMockService = async (app: Application) => {
   );
 
   app.get('/mock',
-    async (_: Request, res: Response): Promise<Response> => {
+    async (_: Request, res: Response): Promise<void> => {
       let entitySets = [];
       for (let schema of MockModel.schemas) {
         let entityContainer = schema.entityContainer;
@@ -47,7 +47,7 @@ export let addMockService = async (app: Application) => {
           }
         }
       }
-      return res
+      res
         .contentType('application/json')
         .status(200)
         .send({
