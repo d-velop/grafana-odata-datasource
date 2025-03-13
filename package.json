@@ -35,7 +35,7 @@
     "@grafana/e2e": "^10.4.12",
     "@grafana/eslint-config": "^7.0.0",
     "@grafana/tsconfig": "^2.0.0",
-    "@swc/core": "^1.11.8",
+    "@swc/core": "^1.11.9",
     "@swc/jest": "^0.2.37",
     "@testing-library/jest-dom": "^6.6.3",
     "@types/glob": "^8.1.0",
