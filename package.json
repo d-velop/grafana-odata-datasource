@@ -86,7 +86,7 @@
     "@grafana/data": "^11.5.2",
     "@grafana/runtime": "^11.5.2",
     "@grafana/ui": "^11.5.2",
-    "@grafana/schema": "^11.5.2",
+    "@grafana/schema": "^11.6.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
