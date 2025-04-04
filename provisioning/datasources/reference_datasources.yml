@@ -7,6 +7,8 @@ deleteDatasources:
     orgId: 1
   - name: 'Reference-V3'
     orgId: 1
+  - name: 'Reference-V4'
+    orgId: 1
 
 datasources:
   - name: 'Northwind-Reference-V2'
@@ -31,5 +33,13 @@ datasources:
     orgId: 1
     isDefault: false
     url: https://services.odata.org/V3/OData/OData.svc
+    version: 1
+    editable: true
+  - name: 'Reference-V4'
+    uid: PD461F79B494E0B04
+    type: dvelop-odata-datasource
+    orgId: 1
+    isDefault: false
+    url: https://services.odata.org/V4/OData/OData.svc
     version: 1
     editable: true

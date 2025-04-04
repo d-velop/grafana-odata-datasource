@@ -207,7 +207,9 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 		response.Error = err
 		return response
 	}
+
 	log.DefaultLogger.Debug("query complete", "noOfEntities", len(entries))
+
 	for _, entry := range entries {
 		var values []interface{}
 		object, ok := entry.(map[string]interface{})
@@ -215,14 +217,8 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 			// TODO: error handling
 			continue
 		}
-		// TODO: guess time format only once!
 		if qm.TimeProperty != nil {
 			values = make([]interface{}, len(qm.Properties)+1)
-			/*
-				if timeValue, err := odata.ParseTime(fmt.Sprint(object[qm.TimeProperty.Name])); err == nil {
-					values[0] = timeValue
-				}
-			*/
 			values[0] = odata.MapValue(object[qm.TimeProperty.Name], qm.TimeProperty.Type)
 		} else {
 			values = make([]interface{}, len(qm.Properties))

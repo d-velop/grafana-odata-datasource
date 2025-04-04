@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@cap-js-community/odata-v2-adapter@^1.11.11":
+"@cap-js-community/odata-v2-adapter@^1.14.3":
   version "1.14.3"
   resolved "https://registry.yarnpkg.com/@cap-js-community/odata-v2-adapter/-/odata-v2-adapter-1.14.3.tgz#4e071ba3b09251a98580528fb1371e7377807bfa"
   integrity sha512-E70/wnMZxZnXnnaL8DTLTun08NpT+iFN+1uJmSNVNIqBtMpNmK3cPvijLUyppE7FnOqyfxWP1URtMCt3YXAyhw==
@@ -86,10 +86,10 @@
     xmlbuilder "^15.1.1"
     yaml "^2.2.2"
 
-"@sap/cds@^8.8.3":
-  version "8.8.3"
-  resolved "https://registry.yarnpkg.com/@sap/cds/-/cds-8.8.3.tgz#f0059cb3045b237a1004940e1d711188e2ce9ca3"
-  integrity sha512-4OuQ1LTwFQYveMsPivyIfGN7kWIipB8kcG37ddGCrk0lNSv+dNBPpC1nUeOvCbFh0b0lu+shPpuqjQjCyR3pag==
+"@sap/cds@^8.9.1":
+  version "8.9.1"
+  resolved "https://registry.yarnpkg.com/@sap/cds/-/cds-8.9.1.tgz#1a13a844dd97b170fa3b4bb10dc304b2052b1e4d"
+  integrity sha512-+KoY7Bw1Gc3vwK4X3CFCV+IAQO4QT0HRsaW/qgETeOGqjzbuf6KvUqlkDuPE5msdXwfz/EFDB9Vx9jTyTw581Q==
   dependencies:
     "@sap/cds-compiler" ">=5.1"
     "@sap/cds-fiori" "^1"

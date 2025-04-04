@@ -31,9 +31,7 @@ func ToArray(propertyType string) interface{} {
 		return []*int32{}
 	case EdmInt64:
 		return []*int64{}
-	case EdmDateTimeOffset:
-		return []*time.Time{}
-	case EdmDate:
+	case EdmDateTimeOffset, EdmDateTime, EdmDate:
 		return []*time.Time{}
 	default:
 		return []*string{}
@@ -87,7 +85,7 @@ func parseV2Time(timeString string) (time.Time, error) {
 	return result.In(loc), nil
 }
 
-func ParseTime(timeString string) (time.Time, error) {
+func parseTime(timeString string) (time.Time, error) {
 	if strings.HasPrefix(timeString, "/") {
 		ts, err := parseV2Time(timeString)
 		if err == nil && !ts.IsZero() {
@@ -119,22 +117,14 @@ func MapValue(value interface{}, propertyType string) interface{} {
 		boolValue := value.(bool)
 		return &boolValue
 	case EdmSingle, EdmDecimal, EdmDouble, EdmSByte, EdmByte, EdmInt16, EdmInt32, EdmInt64:
-		if stringValue, ok := value.(string); ok {
-			// TODO: work in progress
-			floatValue, err := strconv.ParseFloat(stringValue, 64)
-			if err != nil {
-				panic("could not parse number value in string")
-			}
-			return mapNumber(floatValue, propertyType)
-		} else if floatValue, ok := value.(float64); ok {
-			return mapNumber(floatValue, propertyType)
-		} else {
-			// TODO: fall back to string?
-			x := fmt.Sprint(value)
-			return &x
+		floatValue, err := toFloat64(value)
+		if err != nil {
+			fmt.Printf("ERROR: Expected a numeric type but got %T with value %v\n", value, value)
+			return nil
 		}
-	case EdmDateTimeOffset, EdmDate:
-		if timeValue, err := time.Parse(time.RFC3339Nano, fmt.Sprint(value)); err == nil {
+		return mapNumber(floatValue, propertyType)
+	case EdmDateTimeOffset, EdmDateTime, EdmDate:
+		if timeValue, err := parseTime(fmt.Sprint(value)); err == nil {
 			return &timeValue
 		} else {
 			return nil
@@ -142,6 +132,29 @@ func MapValue(value interface{}, propertyType string) interface{} {
 	default:
 		x := fmt.Sprint(value)
 		return &x
+	}
+}
+
+func toFloat64(value interface{}) (float64, error) {
+	switch v := value.(type) {
+	case float64:
+		return v, nil
+	case float32:
+		return float64(v), nil
+	case int:
+		return float64(v), nil
+	case int64:
+		return float64(v), nil
+	case int32:
+		return float64(v), nil
+	case int16:
+		return float64(v), nil
+	case int8:
+		return float64(v), nil
+	case string:
+		return strconv.ParseFloat(v, 64)
+	default:
+		return 0, fmt.Errorf("cannot convert %T to float64", value)
 	}
 }
 

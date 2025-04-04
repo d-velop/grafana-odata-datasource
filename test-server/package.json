@@ -8,8 +8,8 @@
   "author": "d.velop AG",
   "license": "Apache-2.0",
   "dependencies": {
-    "@sap/cds": "^8.8.3",
-    "@cap-js-community/odata-v2-adapter": "^1.11.11",
+    "@sap/cds": "^8.9.1",
+    "@cap-js-community/odata-v2-adapter": "^1.14.3",
     "@types/express": "^5.0.1",
     "@types/uuid": "^10.0.0",
     "express": "^4.21.2",
