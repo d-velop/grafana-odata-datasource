@@ -59,19 +59,20 @@ export class QueryEditor extends PureComponent<Props, State> {
   }
 
   mapProperties(metadata: Metadata | undefined, entityType: string | undefined, propertyKind: PropertyKind) {
-    if (!metadata || !entityType) {
+    if (!metadata || !entityType || !metadata.entityTypes[entityType]) {
       return [];
     }
-    return metadata.entityTypes[entityType].properties
-      .filter(
-        (property) =>
+    return (propertyKind === PropertyKind.Time ? [{ label: '(None)', value: undefined as Property | undefined }] : [])
+      .concat(metadata.entityTypes[entityType].properties
+        .filter(property =>
           propertyKind === PropertyKind.All ||
           (propertyKind === PropertyKind.Time && (property.type === 'Edm.DateTimeOffset' || property.type === 'Edm.DateTime' || property.type === 'Edm.Date'))
-      )
-      .map((property) => ({
-        label: property.name,
-        value: property,
-      }));
+        )
+        .map(property => ({
+          label: property.name,
+          value: property,
+        }))
+      );
   }
 
   update = () => {

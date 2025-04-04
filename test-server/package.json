@@ -8,22 +8,22 @@
   "author": "d.velop AG",
   "license": "Apache-2.0",
   "dependencies": {
-    "@sap/cds": "^7.3.1",
+    "@sap/cds": "^8.8.3",
     "@cap-js-community/odata-v2-adapter": "^1.11.11",
-    "@types/express": "^4.17.20",
-    "@types/uuid": "^9.0.6",
-    "express": "^4.18.2",
+    "@types/express": "^5.0.1",
+    "@types/uuid": "^10.0.0",
+    "express": "^4.21.2",
     "morgan": "^1.10.0",
-    "prettier": "^3.0.3",
-    "sqlite3": "^5.1.6",
-    "typescript": "5.0.4",
-    "uuid": "^9.0.1",
+    "prettier": "^3.5.3",
+    "sqlite3": "^5.1.7",
+    "typescript": "5.8.2",
+    "uuid": "^11.1.0",
     "xmlbuilder2": "^3.1.1"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
-  "packageManager": "yarn@1.22.19",
+  "packageManager": "yarn@1.22.22",
   "cds": {
     "requires": {
       "db": {

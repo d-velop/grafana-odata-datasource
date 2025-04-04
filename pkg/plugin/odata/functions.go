@@ -10,6 +10,7 @@ import (
 
 const DateTimeWithoutTZ = "2006-01-02T15:04:05"
 
+// ToArray maps OData property types to Grafana Field type
 func ToArray(propertyType string) interface{} {
 	switch propertyType {
 	case EdmBoolean:
@@ -30,6 +31,10 @@ func ToArray(propertyType string) interface{} {
 		return []*int32{}
 	case EdmInt64:
 		return []*int64{}
+	case EdmDateTimeOffset:
+		return []*time.Time{}
+	case EdmDate:
+		return []*time.Time{}
 	default:
 		return []*string{}
 	}
@@ -104,6 +109,7 @@ func ParseTime(timeString string) (time.Time, error) {
 	return time.ParseInLocation(DateTimeWithoutTZ, timeString, time.UTC)
 }
 
+// MapValue maps OData values to Grafana (Go) values
 func MapValue(value interface{}, propertyType string) interface{} {
 	if value == nil {
 		return nil
@@ -126,6 +132,12 @@ func MapValue(value interface{}, propertyType string) interface{} {
 			// TODO: fall back to string?
 			x := fmt.Sprint(value)
 			return &x
+		}
+	case EdmDateTimeOffset, EdmDate:
+		if timeValue, err := time.Parse(time.RFC3339Nano, fmt.Sprint(value)); err == nil {
+			return &timeValue
+		} else {
+			return nil
 		}
 	default:
 		x := fmt.Sprint(value)
