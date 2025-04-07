@@ -62,7 +62,7 @@ func TestParseTime(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name+": "+tc.input, func(t *testing.T) {
-			ts, err := ParseTime(tc.input)
+			ts, err := parseTime(tc.input)
 			require.NoError(t, err)
 			require.Equal(t, tc.expectedTime.UTC(), ts.UTC())
 		})
