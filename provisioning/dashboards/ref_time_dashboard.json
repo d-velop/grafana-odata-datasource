@@ -1,0 +1,511 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "dvelop-odata-datasource",
+        "uid": "PD461F79B494E0B04"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.2.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "dvelop-odata-datasource",
+            "uid": "PD461F79B494E0B04"
+          },
+          "entitySet": {
+            "entityType": "ODataDemo.Product",
+            "name": "Products"
+          },
+          "properties": [
+            {
+              "name": "ID",
+              "type": "Edm.Int32"
+            },
+            {
+              "name": "Name",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Description",
+              "type": "Edm.String"
+            },
+            {
+              "name": "DiscontinuedDate",
+              "type": "Edm.DateTimeOffset"
+            },
+            {
+              "name": "Rating",
+              "type": "Edm.Int16"
+            },
+            {
+              "name": "Price",
+              "type": "Edm.Double"
+            }
+          ],
+          "refId": "A",
+          "timeProperty": {
+            "name": "ReleaseDate",
+            "type": "Edm.DateTimeOffset"
+          }
+        }
+      ],
+      "title": "Products table (Reference-V4)",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "dvelop-odata-datasource",
+        "uid": "PD461F79B494E0B03"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.2.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "dvelop-odata-datasource",
+            "uid": "PD461F79B494E0B03"
+          },
+          "entitySet": {
+            "entityType": "ODataDemo.Product",
+            "name": "Products"
+          },
+          "properties": [
+            {
+              "name": "ID",
+              "type": "Edm.Int32"
+            },
+            {
+              "name": "Name",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Description",
+              "type": "Edm.String"
+            },
+            {
+              "name": "DiscontinuedDate",
+              "type": "Edm.DateTime"
+            },
+            {
+              "name": "Rating",
+              "type": "Edm.Int16"
+            },
+            {
+              "name": "Price",
+              "type": "Edm.Double"
+            }
+          ],
+          "refId": "A",
+          "timeProperty": {
+            "name": "ReleaseDate",
+            "type": "Edm.DateTime"
+          }
+        }
+      ],
+      "title": "Orders table (Reference-V3)",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "dvelop-odata-datasource",
+        "uid": "PD461F79B494E0B02"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 2,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.2.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "dvelop-odata-datasource",
+            "uid": "PD461F79B494E0B02"
+          },
+          "entitySet": {
+            "entityType": "NorthwindModel.Order",
+            "name": "Orders"
+          },
+          "properties": [
+            {
+              "name": "OrderID",
+              "type": "Edm.Int32"
+            },
+            {
+              "name": "CustomerID",
+              "type": "Edm.String"
+            },
+            {
+              "name": "EmployeeID",
+              "type": "Edm.Int32"
+            },
+            {
+              "name": "RequiredDate",
+              "type": "Edm.DateTime"
+            },
+            {
+              "name": "ShippedDate",
+              "type": "Edm.DateTime"
+            },
+            {
+              "name": "ShipVia",
+              "type": "Edm.Int32"
+            },
+            {
+              "name": "Freight",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "ShipName",
+              "type": "Edm.String"
+            },
+            {
+              "name": "ShipAddress",
+              "type": "Edm.String"
+            },
+            {
+              "name": "ShipCity",
+              "type": "Edm.String"
+            },
+            {
+              "name": "ShipRegion",
+              "type": "Edm.String"
+            },
+            {
+              "name": "ShipPostalCode",
+              "type": "Edm.String"
+            },
+            {
+              "name": "ShipCountry",
+              "type": "Edm.String"
+            }
+          ],
+          "refId": "A",
+          "timeProperty": {
+            "name": "OrderDate",
+            "type": "Edm.DateTime"
+          }
+        }
+      ],
+      "title": "Products table (Northwind-Reference-V3)",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "dvelop-odata-datasource",
+        "uid": "PD461F79B494E0B01"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 8,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.2.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "dvelop-odata-datasource",
+            "uid": "PD461F79B494E0B01"
+          },
+          "entitySet": {
+            "entityType": "NorthwindModel.Order",
+            "name": "Orders"
+          },
+          "properties": [
+            {
+              "name": "OrderID",
+              "type": "Edm.Int32"
+            },
+            {
+              "name": "CustomerID",
+              "type": "Edm.String"
+            },
+            {
+              "name": "EmployeeID",
+              "type": "Edm.Int32"
+            },
+            {
+              "name": "RequiredDate",
+              "type": "Edm.DateTime"
+            },
+            {
+              "name": "ShippedDate",
+              "type": "Edm.DateTime"
+            },
+            {
+              "name": "ShipVia",
+              "type": "Edm.Int32"
+            },
+            {
+              "name": "Freight",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "ShipName",
+              "type": "Edm.String"
+            },
+            {
+              "name": "ShipAddress",
+              "type": "Edm.String"
+            },
+            {
+              "name": "ShipCity",
+              "type": "Edm.String"
+            },
+            {
+              "name": "ShipRegion",
+              "type": "Edm.String"
+            },
+            {
+              "name": "ShipPostalCode",
+              "type": "Edm.String"
+            },
+            {
+              "name": "ShipCountry",
+              "type": "Edm.String"
+            }
+          ],
+          "refId": "A",
+          "timeProperty": {
+            "name": "OrderDate",
+            "type": "Edm.DateTime"
+          }
+        }
+      ],
+      "title": "Products table (Northwind-Reference-V2)",
+      "type": "table"
+    }
+  ],
+  "refresh": "",
+  "revision": 1,
+  "schemaVersion": 38,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "1991-01-01T00:00:00.000Z",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [],
+    "time_options": []
+  },
+  "timezone": "browser",
+  "title": "OData-Reference-Time",
+  "uid": "zCA1lZbNx",
+  "version": 1,
+  "weekStart": ""
+}
