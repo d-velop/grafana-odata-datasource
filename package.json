@@ -72,7 +72,7 @@
     "terser-webpack-plugin": "^5.3.14",
     "ts-node": "^10.9.2",
     "typescript": "5.8.2",
-    "webpack": "^5.98.0",
+    "webpack": "^5.99.1",
     "webpack-cli": "^6.0.1",
     "webpack-livereload-plugin": "^3.0.2",
     "webpack-subresource-integrity": "^5.1.0",
