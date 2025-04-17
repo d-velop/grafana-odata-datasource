@@ -44,12 +44,7 @@ jobs:
       - name: Unit tests
         run: yarn run test:ci
       - name: Build frontend
-        run: |
-          if [ "${{ github.event_name }}" == "push" ] && [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            yarn run build --profile --json stats.json
-          else
-            yarn run build
-          fi
+        run: yarn run build
 
       - name: Check for backend
         id: check-for-backend
@@ -63,7 +58,7 @@ jobs:
         if: steps.check-for-backend.outputs.has-backend == 'true'
         uses: actions/setup-go@v5
         with:
-          go-version: '1.23'
+          go-version: '1.24'
 
       - name: Test backend
         if: steps.check-for-backend.outputs.has-backend == 'true'
@@ -122,14 +117,6 @@ jobs:
           name: ${{ steps.metadata.outputs.plugin-id }}-${{ steps.metadata.outputs.plugin-version }}
           path: ${{ steps.metadata.outputs.plugin-id }}
           retention-days: 5
-
-      - name: Upload stats.json artifact
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: actions/upload-artifact@v4
-        with:
-          name: main-branch-stats
-          path: stats.json
-          overwrite: true
 
   resolve-versions:
     name: Resolve e2e images
@@ -211,14 +198,14 @@ jobs:
       - name: Stop grafana docker
         run: docker compose down
 
-      # Uncomment this step to upload the server log to Github artifacts. Remember Github artifacts are public on the Internet if the repository is public.
-      # - name: Upload server log
-      #   uses: actions/upload-artifact@v4
-      #   if: ${{ always() && steps.run-tests.outcome == 'failure' }}
-      #   with:
-      #     name: ${{ matrix.GRAFANA_IMAGE.NAME }}-v${{ matrix.GRAFANA_IMAGE.VERSION }}-${{github.run_id}}-server-log
-      #     path: grafana-server.log
-      #     retention-days: 5
+      # This step uploads the server log to Github artifacts. Remember Github artifacts are public on the Internet if the repository is public.
+      - name: Upload server log
+        uses: actions/upload-artifact@v4
+        if: ${{ always() && steps.run-tests.outcome == 'failure' }}
+        with:
+          name: ${{ matrix.GRAFANA_IMAGE.NAME }}-v${{ matrix.GRAFANA_IMAGE.VERSION }}-${{github.run_id}}-server-log
+          path: grafana-server.log
+          retention-days: 5
 
   publish-report:
     if: ${{ always() && !cancelled() }}
