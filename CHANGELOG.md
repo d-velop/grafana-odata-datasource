@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.1.1] 2025-XX-XX
+## [1.1.1] 2025-04-17
 
 ### Features
 - Updated to go version `1.24`
