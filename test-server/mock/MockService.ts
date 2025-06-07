@@ -94,8 +94,8 @@ export let addMockService = async (app: Application) => {
   });
 
   app.get('/mock/\\$metadata',
-    async (_: Request, res: Response): Promise<Response> => {
-      return res
+    async (_: Request, res: Response): Promise<void> => {
+      res
         .contentType('application/xml')
         .status(200)
         .send(ToXml(MockModel));
@@ -103,7 +103,7 @@ export let addMockService = async (app: Application) => {
   );
 
   app.get('/mock/temperatures',
-    async (req: Request, res: Response): Promise<Response> => {
+    async (req: Request, res: Response): Promise<void> => {
       const {$filter} = req.query;
       if (typeof $filter === "string") {
         const regex = /Time ge ([0-9-TZ:.]+) and Time le ([0-9-TZ:.]+)/;
@@ -115,7 +115,7 @@ export let addMockService = async (app: Application) => {
         }
       }
       let values = GenerateTemperatures();
-      return res
+      res
         .contentType('application/json')
         .status(200).send(
           {
@@ -126,7 +126,7 @@ export let addMockService = async (app: Application) => {
   );
 
   app.get('/mock',
-    async (_: Request, res: Response): Promise<Response> => {
+    async (_: Request, res: Response): Promise<void> => {
       let entitySets = [];
       for (let schema of MockModel.schemas) {
         let entityContainer = schema.entityContainer;
@@ -136,7 +136,7 @@ export let addMockService = async (app: Application) => {
           }
         }
       }
-      return res
+      res
         .contentType('application/json')
         .status(200)
         .send({
