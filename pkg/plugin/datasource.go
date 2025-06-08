@@ -29,23 +29,29 @@ type ODataSource struct {
 
 type DatasourceSettings struct {
 	URLSpaceEncoding string `json:"urlSpaceEncoding"`
+	OauthPassThru    bool   `json:"oauthPassThru"`
 }
 
 func newDatasourceInstance(ctx context.Context, settings backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
-	clientOptions, err := settings.HTTPClientOptions(ctx)
-	if err != nil {
-		return nil, err
-	}
-	client, err := httpclient.New(clientOptions)
-	if err != nil {
-		return nil, err
-	}
-
 	var dsSettings DatasourceSettings
 	if settings.JSONData != nil && len(settings.JSONData) > 1 {
 		if err := json.Unmarshal(settings.JSONData, &dsSettings); err != nil {
 			return nil, err
 		}
+	}
+
+	clientOptions, err := settings.HTTPClientOptions(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	if dsSettings.OauthPassThru {
+		clientOptions.ForwardHTTPHeaders = true
+	}
+
+	client, err := httpclient.New(clientOptions)
+	if err != nil {
+		return nil, err
 	}
 
 	return &ODataSourceInstance{
@@ -76,7 +82,7 @@ func (ds *ODataSource) QueryData(ctx context.Context, req *backend.QueryDataRequ
 	clientInstance := ds.getClientInstance(ctx, req.PluginContext)
 	response := backend.NewQueryDataResponse()
 	for _, q := range req.Queries {
-		res := ds.query(clientInstance, q)
+		res := ds.query(ctx, clientInstance, q)
 		response.Responses[q.RefID] = res
 	}
 	return response, nil
@@ -87,7 +93,7 @@ func (ds *ODataSource) CheckHealth(ctx context.Context, req *backend.CheckHealth
 	var status backend.HealthStatus
 	var message string
 	clientInstance := ds.getClientInstance(ctx, req.PluginContext)
-	var res, err = clientInstance.GetServiceRoot()
+	var res, err = clientInstance.GetServiceRoot(ctx)
 	if err != nil {
 		status = backend.HealthStatusError
 		message = fmt.Sprintf("Health check failed: %s", err.Error())
@@ -119,7 +125,7 @@ func (ds *ODataSource) CallResource(ctx context.Context, req *backend.CallResour
 	}
 }
 
-func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery) backend.DataResponse {
+func (ds *ODataSource) query(ctx context.Context, clientInstance ODataClient, query backend.DataQuery) backend.DataResponse {
 	log.DefaultLogger.Debug("query", "query.JSON", string(query.JSON))
 	response := backend.DataResponse{}
 	var qm queryModel
@@ -160,7 +166,7 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 	if qm.TimeProperty != nil {
 		props = append(props, *qm.TimeProperty)
 	}
-	resp, err := clientInstance.Get(qm.EntitySet.Name, props,
+	resp, err := clientInstance.Get(ctx, qm.EntitySet.Name, props,
 		append(qm.FilterConditions, TimeRangeToFilter(query.TimeRange, qm.TimeProperty)...))
 	if err != nil {
 		response.Error = err
@@ -219,7 +225,7 @@ func (ds *ODataSource) query(clientInstance ODataClient, query backend.DataQuery
 func (ds *ODataSource) getMetadata(ctx context.Context, req *backend.CallResourceRequest,
 	sender backend.CallResourceResponseSender) error {
 	clientInstance := ds.getClientInstance(ctx, req.PluginContext)
-	resp, err := clientInstance.GetMetadata()
+	resp, err := clientInstance.GetMetadata(ctx)
 
 	if err != nil {
 		return err

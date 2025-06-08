@@ -15,7 +15,7 @@ indent_style = space
 indent_size = 2
 quote_type = single
 
-[*.yml]
+[*.{yml,yaml}]
 indent_style = space
 indent_size = 2
 

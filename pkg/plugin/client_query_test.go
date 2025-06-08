@@ -1,6 +1,7 @@
 package plugin
 
 import (
+	"context"
 	"net/http"
 	"net/url"
 	"testing"
@@ -132,7 +133,7 @@ func TestGetEntities(t *testing.T) {
 			client := GetOC("*", table.handlerCallback)
 
 			// Act
-			resp, err := client.Get("Temperatures", []property{aProperty(int32Prop)}, someFilterConditions(int32Eq5))
+			resp, err := client.Get(context.TODO(), "Temperatures", []property{aProperty(int32Prop)}, someFilterConditions(int32Eq5))
 
 			// Assert
 			if table.expectedError == nil {
@@ -186,7 +187,7 @@ func TestGetMetadata(t *testing.T) {
 			client := GetOC("*", table.handlerCallback)
 
 			// Act
-			resp, err := client.GetMetadata()
+			resp, err := client.GetMetadata(context.TODO())
 
 			// Assert
 			if table.expectedError == nil {

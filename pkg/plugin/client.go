@@ -1,6 +1,7 @@
 package plugin
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -12,9 +13,9 @@ import (
 )
 
 type ODataClient interface {
-	GetServiceRoot() (*http.Response, error)
-	GetMetadata() (*http.Response, error)
-	Get(entitySet string, properties []property,
+	GetServiceRoot(ctx context.Context) (*http.Response, error)
+	GetMetadata(ctx context.Context) (*http.Response, error)
+	Get(ctx context.Context, entitySet string, properties []property,
 		filterConditions []filterCondition) (*http.Response, error)
 }
 
@@ -24,20 +25,28 @@ type ODataClientImpl struct {
 	urlSpaceEncoding string
 }
 
-func (client *ODataClientImpl) GetServiceRoot() (*http.Response, error) {
-	return client.httpClient.Get(client.baseUrl)
+func (client *ODataClientImpl) get(ctx context.Context, url string) (*http.Response, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating new request with context: %w", err)
+	}
+	return client.httpClient.Do(req)
 }
 
-func (client *ODataClientImpl) GetMetadata() (*http.Response, error) {
+func (client *ODataClientImpl) GetServiceRoot(ctx context.Context) (*http.Response, error) {
+	return client.get(ctx, client.baseUrl)
+}
+
+func (client *ODataClientImpl) GetMetadata(ctx context.Context) (*http.Response, error) {
 	requestUrl, err := url.Parse(client.baseUrl)
 	if err != nil {
 		return nil, err
 	}
 	requestUrl.Path = path.Join(requestUrl.Path, odata.Metadata)
-	return client.httpClient.Get(requestUrl.String())
+	return client.get(ctx, requestUrl.String())
 }
 
-func (client *ODataClientImpl) Get(entitySet string, properties []property, filterConditions []filterCondition) (*http.Response, error) {
+func (client *ODataClientImpl) Get(ctx context.Context, entitySet string, properties []property, filterConditions []filterCondition) (*http.Response, error) {
 	requestUrl, err := buildQueryUrl(client.baseUrl, entitySet, properties,
 		filterConditions, client.urlSpaceEncoding)
 	if err != nil {
@@ -45,7 +54,7 @@ func (client *ODataClientImpl) Get(entitySet string, properties []property, filt
 	}
 	urlString := requestUrl.String()
 	log.DefaultLogger.Debug("Constructed request url: ", urlString)
-	return client.httpClient.Get(urlString)
+	return client.get(ctx, urlString)
 }
 
 func buildQueryUrl(baseUrl string, entitySet string, properties []property, filterConditions []filterCondition, urlSpaceEncoding string) (*url.URL, error) {

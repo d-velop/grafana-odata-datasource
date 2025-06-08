@@ -1,23 +1,8 @@
 services:
-  keycloak:
-    image: quay.io/keycloak/keycloak:21.1.2
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ./integration/keycloak/realm.json:/opt/keycloak/data/import/realm.json
-    ports:
-      - 8080:8080/tcp
-    command:
-      - start-dev
-      - --import-realm
-    environment:
-      - KEYCLOAK_ADMIN=admin
-      - KEYCLOAK_ADMIN_PASSWORD=admin
   grafana:
     extends:
       file: .config/docker-compose-base.yaml
       service: grafana
-    volumes:
-      - ./integration/keycloak/grafana.ini:/etc/grafana/grafana.ini
   test-server:
     build: test-server
     ports:
