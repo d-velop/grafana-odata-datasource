@@ -8,7 +8,9 @@
   "author": "d.velop AG",
   "license": "Apache-2.0",
   "dependencies": {
-    "@sap/cds": "^8.9.4",
+    "@cap-js/sqlite": "^2.0.1",
+    "@eslint/js": "^9.28.0",
+    "@sap/cds": "^9.0.3",
     "@types/express": "^5.0.3",
     "@types/express-session": "^1.18.2",
     "@types/uuid": "^10.0.0",
@@ -18,7 +20,6 @@
     "morgan": "^1.10.0",
     "openid-client": "^6.5.1",
     "prettier": "^3.5.3",
-    "sqlite3": "^5.1.7",
     "typescript": "5.8.3",
     "uuid": "^11.1.0",
     "xmlbuilder2": "^3.1.1"
