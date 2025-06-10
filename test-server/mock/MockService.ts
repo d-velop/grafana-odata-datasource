@@ -100,7 +100,7 @@ export let addMockService = async (app: Application) => {
         console.log('user: ', { preferred_username: payload.preferred_username, email: payload.email });
         return next();
       }
-      if (req.session?.['user']) return next();
+      if (req.session?.['user']) { return next() }
       const nextUrl = encodeURIComponent(req.originalUrl);
       res.redirect(`/login?returnTo=${nextUrl}`);
     };
