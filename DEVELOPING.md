@@ -131,6 +131,9 @@ internal communication between services within the Docker network.
 
 For more information see: [test-server/README.md](test-server/README.md).
 
+> Note: To test the feature within Grafana, you can use the provisioned datasource `OData-Mock`, which has the feature
+> enabled. See [datasources.yml](provisioning/datasources/datasources.yml) for details.
+
 ## Update create-plugin versions
 To update the plugin to use a newer version of the `create-plugin` tool, follow the instructions here:
 <https://grafana.com/developers/plugin-tools/migration-guides/update-create-plugin-versions>.
