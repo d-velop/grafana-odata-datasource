@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.1.1] 2025-04-17
+
+### Features
+- Updated to go version `1.24`
+- Updated to Grafana `11.6`
+
 ## [1.1.0] 2024-03-14
 
 ### Features
