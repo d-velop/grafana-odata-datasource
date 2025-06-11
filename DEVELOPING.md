@@ -98,7 +98,7 @@ The results are written to a `backend.html` file located in the [`./coverage`](.
 ### Testing the `oauthPassThru` feature of the plugin
 
 The plugin supports the `oauthPassThru` feature (Forward OAuth Identity), which allows Grafana to forward the user's
-upstream OAuth identity to the data source. This enables the backend to make requests on behalf of the user, useful for
+upstream OAuth identity to the data source. This enables the plugin to make requests on behalf of the user, useful for
 scenarios where per-user access control is needed.
 
 The project includes a [`docker-compose.withKeycloak.yaml`](docker-compose.withKeycloak.yaml) file for running the
@@ -128,6 +128,8 @@ This ensures that all services are reachable consistently:
 
 This is required for the authentication flow to work correctly, both from the browser on the host system and for
 internal communication between services within the Docker network.
+
+For more information see: [test-server/README.md](test-server/README.md).
 
 ## Update create-plugin versions
 To update the plugin to use a newer version of the `create-plugin` tool, follow the instructions here:

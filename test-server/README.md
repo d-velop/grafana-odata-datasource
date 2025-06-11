@@ -3,12 +3,12 @@ The test server offers a set of basic functions that aid in developing the Grafa
 
 The test server features two OData service roots:
 
-1. `/mock/` provides a very simple mock service root
+1. `/mock/` provides a basic OData mock service
 2. `/odata/v4/test` provides a full OData V4 service and is built on the
    [SAP Cloud Application Programming Model](https://cap.cloud.sap/)
 
 ## Mock
-This is a simple mock service root that returns test data. It provides endpoints for service document (`/mock/`)
+This is a simple mock service root that returns test data. It provides endpoints for the service document (`/mock`)
 and metadata (`/mock/$metadata`). In addition, it provides a simple entity set `/mock/temperatures` with support for
 very basic predefined filter functions.
 
@@ -22,3 +22,8 @@ To get an overview of the supported OData features in CDS/CAP, please visit
 [Serving OData APIs](https://cap.cloud.sap/docs/advanced/odata).
 
 The data model of the test server can be found in the file [db/data-model.cds](db/data-model.cds).
+
+## Authentication with Keycloak
+When the `KEYCLOAK_ADDR` environment variable is set, the test server requires authentication for all `/mock` routes.
+In this mode, access to these endpoints requires either a valid login or an access token issued by Keycloak.  
+The latter can be a token obtained by Grafana as part of the OAuth login flow.
