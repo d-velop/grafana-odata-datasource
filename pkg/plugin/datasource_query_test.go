@@ -213,7 +213,7 @@ func TestQuery(t *testing.T) {
 			im.On("Get", context.TODO(), mock.Anything).Return(&is, nil)
 
 			// Act
-			resp := ds.query(&client, table.query)
+			resp := ds.query(context.TODO(), &client, table.query)
 
 			// Assert
 			assert.Equal(t, table.expected, resp)
@@ -247,7 +247,7 @@ func TestInvalidQueryModels(t *testing.T) {
 			im.On("Get", context.TODO(), mock.Anything).Return(&is, nil)
 
 			// Act
-			resp := ds.query(&client, table.query)
+			resp := ds.query(context.TODO(), &client, table.query)
 
 			// Assert
 			assert.NotNil(t, resp.Error)

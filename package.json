@@ -25,6 +25,7 @@
     "lint:fix": "yarn run lint --fix && prettier --write --list-different .",
     "e2e": "playwright test",
     "server": "docker compose up --build",
+    "server:withKeycloak": "docker compose -f docker-compose.withKeycloak.yaml up --build",
     "sign": "npx --yes @grafana/sign-plugin@latest",
     "checkCompatibility": "npx @grafana/levitate@latest is-compatible --path src/module.ts --target @grafana/data,@grafana/ui,@grafana/runtime"
   },
