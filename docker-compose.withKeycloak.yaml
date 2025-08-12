@@ -1,0 +1,44 @@
+# This docker compose file is intended to be used for testing the `oauthPassThru` (Forward OAuth Identity) feature of the plugin
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0.4
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./integration/keycloak/realm.json:/opt/keycloak/data/import/realm.json
+    ports:
+      - "8080:8080"
+    extra_hosts:
+      - "dockerhost:host-gateway"
+    command:
+      - start-dev
+      - --import-realm
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_HEALTH_ENABLED: true
+      KC_HOSTNAME_STRICT: false
+    healthcheck:
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/9000 && echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200 OK'"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+  grafana:
+    extends:
+      file: .config/docker-compose-base.yaml
+      service: grafana
+    extra_hosts:
+      - "dockerhost:host-gateway"
+    volumes:
+      - ./integration/keycloak/grafana.ini:/etc/grafana/grafana.ini
+  test-server:
+    build: test-server
+    ports:
+      - "4004:4004"
+    extra_hosts:
+      - "dockerhost:host-gateway"
+    environment:
+      KEYCLOAK_ADDR: dockerhost:8080
+    depends_on:
+      keycloak:
+        condition: service_healthy
