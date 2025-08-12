@@ -123,7 +123,7 @@ export let addMockService = async (app: Application) => {
   );
 
   app.get('/mock/\\$metadata', ensureAuth,
-    async (res: Response): Promise<void> => {
+    async (req: Request, res: Response): Promise<void> => {
       res
         .contentType('application/xml')
         .status(200)
