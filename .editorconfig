@@ -7,6 +7,9 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 max_line_length = 120
 
+[*.go]
+indent_style = tab
+
 [*.md]
 trim_trailing_whitespace = false
 
