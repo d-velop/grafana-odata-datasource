@@ -3,9 +3,9 @@
 
 
 "@cap-js/db-service@^2":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@cap-js/db-service/-/db-service-2.2.0.tgz#3c78e707632771b659c8da380a07b215fd39bb32"
-  integrity sha512-C5n8Qy8MwOGWjpXS44CskaEZt8YKrEEs4AtJyBSfJ6+aKMu/ynqpXh0Up4Ql0XX2Frq2PwNU8Ohai/04wxd46g==
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@cap-js/db-service/-/db-service-2.3.0.tgz#8351124efc8e112bafbeb4dc239f7170e81e0d7d"
+  integrity sha512-KkYrnI05bx0PvwP5jxEUos8UQ+XYPucUMQt3i0muQXWJw3rEkWvEArvOwCYjTNnjzHqtVQfpPXsy1+ehkHUrWg==
   dependencies:
     generic-pool "^3.9.0"
 
@@ -18,9 +18,9 @@
     better-sqlite3 "^12.0.0"
 
 "@eslint/js@^9.28.0":
-  version "9.32.0"
-  resolved "https://registry.yarnpkg.com/@eslint/js/-/js-9.32.0.tgz#a02916f58bd587ea276876cb051b579a3d75d091"
-  integrity sha512-BBpRFZK3eX6uMLKz8WxFOBIFFcGFJ/g8XuwjTHCqHROSIsopI+ddn/d5Cfh36+7+e5edVS8dbSHnBNhrLEX0zg==
+  version "9.33.0"
+  resolved "https://registry.yarnpkg.com/@eslint/js/-/js-9.33.0.tgz#475c92fdddab59b8b8cab960e3de2564a44bf368"
+  integrity sha512-5K1/mKhWaMfreBGJTwval43JJmkip0RmM+3+IuqupeSKNC/Th2Kc7ucaq5ovTSra/OOKB9c58CGSz3QMVbWt0A==
 
 "@oozcitak/dom@1.15.10":
   version "1.15.10"
@@ -52,9 +52,9 @@
   integrity sha512-T8TbSnGsxo6TDBJx/Sgv/BlVJL3tshxZP7Aq5R1mSnM5OcHY2dQaxLMu2+E8u3gN0MLOzdjurqN4ZRVuzQycOQ==
 
 "@sap/cds-compiler@^6":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@sap/cds-compiler/-/cds-compiler-6.1.0.tgz#6e010591111e3c45b39b8035ae0e360532ecb6f5"
-  integrity sha512-s71fsxDZKqHn2xvoqoNst54K/BkBzCpiU+8xc0t3nMDXmsLzSC3VfygZGwGAZD8fkxUnXh8oL2XLHWKWcvcdNg==
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/@sap/cds-compiler/-/cds-compiler-6.2.2.tgz#6b75bbc5a2a5298531f9da7b6791be9f9a038755"
+  integrity sha512-LqRNfBsWnEJpXVJ6/v52VqAdelWoETLbECMPcy7BfoHE63DGBpKA/ZIgoH11t7vUm7GYQDcSfR7ryy02Q/fP7A==
 
 "@sap/cds-fiori@^2":
   version "2.0.1"
@@ -62,9 +62,9 @@
   integrity sha512-KZVLWXndydgqdlao8OL1gtgd/XMgBdiKBmmgwGpBL1y4S21FOXglnWh6d3bnSZL/qwR3z50D+0PoGghjhayF0Q==
 
 "@sap/cds@^9.0.3":
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@sap/cds/-/cds-9.1.0.tgz#e31a62e0070a50e088a4872e3868dc5084f9e084"
-  integrity sha512-i5bAVbFzi1uN11O4U6SdPKzYDDxc+YDSWMiqt1ryxT0WYrrehJPg5pJQjy4AH1EgRIqa3eqK2RfmHS6SgkBOyg==
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/@sap/cds/-/cds-9.2.0.tgz#8923204ddf0640e72e9b9aef278ce55ee36063d8"
+  integrity sha512-u/R+Bzz8RsiL4JINwwmbPFmSD8Y10PGpXetGHYvUyefUG/V/S8OBAWy/elu4FmTr1X8J4+kuynCgoETaWRveKw==
   dependencies:
     "@sap/cds-compiler" "^6"
     "@sap/cds-fiori" "^2"
@@ -122,11 +122,11 @@
   integrity sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==
 
 "@types/node@*":
-  version "24.1.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.1.0.tgz#0993f7dc31ab5cc402d112315b463e383d68a49c"
-  integrity sha512-ut5FthK5moxFKH2T1CUOC6ctR67rQRvvHdFLCD2Ql6KXmMuCrjsSsRI9UsLCm9M18BMwClv4pn327UvB7eeO1w==
+  version "24.2.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.2.1.tgz#83e41543f0a518e006594bb394e2cd961de56727"
+  integrity sha512-DRh5K+ka5eJic8CjH7td8QpYEV6Zo10gfRkjHCO3weqZHWDtAaSTFtl4+VMqOJ4N5jcuhZ9/l+yy8rVgw7BQeQ==
   dependencies:
-    undici-types "~7.8.0"
+    undici-types "~7.10.0"
 
 "@types/qs@*":
   version "6.14.0"
@@ -585,7 +585,7 @@ ipaddr.js@1.9.1:
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.9.1.tgz#bff38543eeb8984825079ff3a2a8e6cbd46781b3"
   integrity sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==
 
-jose@^6.0.11:
+jose@^6.0.11, jose@^6.0.12:
   version "6.0.12"
   resolved "https://registry.yarnpkg.com/jose/-/jose-6.0.12.tgz#56253d94d46bd784addc4bde3691c323552fe7e4"
   integrity sha512-T8xypXs8CpmiIi78k0E+Lk7T2zlK4zDyg+o1CZ4AkOHgDg98ogdP2BeZ61lTFKFyoEwJ9RgAgN+SdM3iPgNonQ==
@@ -695,10 +695,10 @@ node-abi@^3.3.0:
   dependencies:
     semver "^7.3.5"
 
-oauth4webapi@^3.5.4:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/oauth4webapi/-/oauth4webapi-3.6.0.tgz#839a4520c59f82fdc84d129ce308562646aa3fbc"
-  integrity sha512-OwXPTXjKPOldTpAa19oksrX9TYHA0rt+VcUFTkJ7QKwgmevPpNm9Cn5vFZUtIo96FiU6AfPuUUGzoXqgOzibWg==
+oauth4webapi@^3.6.1:
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/oauth4webapi/-/oauth4webapi-3.6.2.tgz#bca92404af8bbdbb7f1475b3a760ebcb0e8eb24d"
+  integrity sha512-hwWLiyBYuqhVdcIUJMJVKdEvz+DCweOcbSfqDyIv9PuUwrNfqrzfHP2bypZgZdbYOS67QYqnAnvZa2BJwBBrHw==
 
 object-inspect@^1.13.3:
   version "1.13.4"
@@ -732,12 +732,12 @@ once@^1.3.1, once@^1.4.0:
     wrappy "1"
 
 openid-client@^6.5.1:
-  version "6.6.2"
-  resolved "https://registry.yarnpkg.com/openid-client/-/openid-client-6.6.2.tgz#8b50685491e7a23cf6553a68ceeef1b2ee279f98"
-  integrity sha512-Xya5TNMnnZuTM6DbHdB4q0S3ig2NTAELnii/ASie1xDEr8iiB8zZbO871OWBdrw++sd3hW6bqWjgcmSy1RTWHA==
+  version "6.6.3"
+  resolved "https://registry.yarnpkg.com/openid-client/-/openid-client-6.6.3.tgz#3f4570e00b0c52d684302e041149747220d61a77"
+  integrity sha512-sYYFJsyN21bjf/QepIU/t6w22tEUT+rYVPf1VZOSQwC+s1hAkyZpvAbFNLMrnrYMS/H74MctEHna2jPLvWbkCA==
   dependencies:
-    jose "^6.0.11"
-    oauth4webapi "^3.5.4"
+    jose "^6.0.12"
+    oauth4webapi "^3.6.1"
 
 parseurl@~1.3.3:
   version "1.3.3"
@@ -1005,10 +1005,10 @@ type-is@~1.6.18:
     media-typer "0.3.0"
     mime-types "~2.1.24"
 
-typescript@5.8.3:
-  version "5.8.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.8.3.tgz#92f8a3e5e3cf497356f4178c34cd65a7f5e8440e"
-  integrity sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==
+typescript@5.9.2:
+  version "5.9.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.9.2.tgz#d93450cddec5154a2d5cabe3b8102b83316fb2a6"
+  integrity sha512-CWBzXQrc/qOkhidw1OzBTQuYRbfyxDXJMVJ1XNwUHGROVmuaeiEm3OslpZ1RV96d7SKKjZKrSJu3+t/xlw3R9A==
 
 uid-safe@~2.1.5:
   version "2.1.5"
@@ -1017,10 +1017,10 @@ uid-safe@~2.1.5:
   dependencies:
     random-bytes "~1.0.0"
 
-undici-types@~7.8.0:
-  version "7.8.0"
-  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-7.8.0.tgz#de00b85b710c54122e44fbfd911f8d70174cd294"
-  integrity sha512-9UJ2xGDvQ43tYyVMpuHlsgApydB8ZKfVYTsLDhXkFL/6gfkp+U8xTGdh8pMJv1SpZna0zxG1DwsKZsreLbXBxw==
+undici-types@~7.10.0:
+  version "7.10.0"
+  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-7.10.0.tgz#4ac2e058ce56b462b056e629cc6a02393d3ff350"
+  integrity sha512-t5Fy/nfn+14LuOc2KNYg75vZqClpAiqscVvMygNnlsHBFpSXdJaYtXMcdNLpl/Qvc3P2cB3s6lOV51nqsFq4ag==
 
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
