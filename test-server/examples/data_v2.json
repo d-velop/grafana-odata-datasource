@@ -1,0 +1,18 @@
+{
+  "d": {
+    "results": [
+      {
+        "id": "005ebc5d-edb5-465e-bdcc-44b7bc0647b8",
+        "time": "/Date(1701265650000+0000)/",
+        "epoch": 1701265650936,
+        "value1": "1.77658964096369",
+        "value2": "0.6797097507403618",
+        "value3": "9.637106006085434",
+        "__metadata": {
+          "type": "TestService.Temperatures",
+          "uri": "http://localhost:4004/v2/odata/v4/test/Temperatures(guid'005ebc5d-edb5-465e-bdcc-44b7bc0647b8')"
+        }
+      }
+    ]
+  }
+}
