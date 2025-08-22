@@ -25,16 +25,17 @@ type ODataClientImpl struct {
 	urlSpaceEncoding string
 }
 
-func (client *ODataClientImpl) get(ctx context.Context, url string) (*http.Response, error) {
+func (client *ODataClientImpl) get(ctx context.Context, url string, mimeType string) (*http.Response, error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error creating new request with context: %w", err)
 	}
+	req.Header.Set("Accept", mimeType)
 	return client.httpClient.Do(req)
 }
 
 func (client *ODataClientImpl) GetServiceRoot(ctx context.Context) (*http.Response, error) {
-	return client.get(ctx, client.baseUrl)
+	return client.get(ctx, client.baseUrl, "application/json")
 }
 
 func (client *ODataClientImpl) GetMetadata(ctx context.Context) (*http.Response, error) {
@@ -43,7 +44,7 @@ func (client *ODataClientImpl) GetMetadata(ctx context.Context) (*http.Response,
 		return nil, err
 	}
 	requestUrl.Path = path.Join(requestUrl.Path, odata.Metadata)
-	return client.get(ctx, requestUrl.String())
+	return client.get(ctx, requestUrl.String(), "application/xml")
 }
 
 func (client *ODataClientImpl) Get(ctx context.Context, entitySet string, properties []property, filterConditions []filterCondition) (*http.Response, error) {
@@ -54,7 +55,7 @@ func (client *ODataClientImpl) Get(ctx context.Context, entitySet string, proper
 	}
 	urlString := requestUrl.String()
 	log.DefaultLogger.Debug("Constructed request url: ", urlString)
-	return client.get(ctx, urlString)
+	return client.get(ctx, urlString, "application/json")
 }
 
 func buildQueryUrl(baseUrl string, entitySet string, properties []property, filterConditions []filterCondition, urlSpaceEncoding string) (*url.URL, error) {
