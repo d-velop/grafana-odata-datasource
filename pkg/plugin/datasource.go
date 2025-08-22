@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
 	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
@@ -77,8 +78,19 @@ func (ds *ODataSource) getClientInstance(ctx context.Context, pluginContext back
 	return clientInstance
 }
 
+func (ds *ODataSource) logTokenStatus(h http.Header) {
+	if log.DefaultLogger.Level() <= log.Debug {
+		auth := strings.ToLower(h.Get(backend.OAuthIdentityTokenHeaderName))
+		bearerToken := strings.HasPrefix(auth, "bearer ") && strings.TrimSpace(auth[7:]) != ""
+		log.DefaultLogger.Debug("bearer token", "present", bearerToken)
+		idTokenPresent := h.Get(backend.OAuthIdentityIDTokenHeaderName) != ""
+		log.DefaultLogger.Debug("id token", "present", idTokenPresent)
+	}
+}
+
 func (ds *ODataSource) QueryData(ctx context.Context, req *backend.QueryDataRequest) (*backend.QueryDataResponse,
 	error) {
+	ds.logTokenStatus(req.GetHTTPHeaders())
 	clientInstance := ds.getClientInstance(ctx, req.PluginContext)
 	response := backend.NewQueryDataResponse()
 	for _, q := range req.Queries {
@@ -90,6 +102,7 @@ func (ds *ODataSource) QueryData(ctx context.Context, req *backend.QueryDataRequ
 
 func (ds *ODataSource) CheckHealth(ctx context.Context, req *backend.CheckHealthRequest) (*backend.CheckHealthResult,
 	error) {
+	ds.logTokenStatus(req.GetHTTPHeaders())
 	var status backend.HealthStatus
 	var message string
 	clientInstance := ds.getClientInstance(ctx, req.PluginContext)
@@ -115,6 +128,7 @@ func (ds *ODataSource) CheckHealth(ctx context.Context, req *backend.CheckHealth
 
 func (ds *ODataSource) CallResource(ctx context.Context, req *backend.CallResourceRequest,
 	sender backend.CallResourceResponseSender) error {
+	ds.logTokenStatus(req.GetHTTPHeaders())
 	switch req.Path {
 	case "metadata":
 		return ds.getMetadata(ctx, req, sender)
