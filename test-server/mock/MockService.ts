@@ -92,17 +92,58 @@ export let addMockService = async (app: Application) => {
     );
 
     ensureAuth = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-      let rawAuthHeader = req.headers.authorization;
-      if (rawAuthHeader) {
-        let authHeader = Array.isArray(rawAuthHeader) ? rawAuthHeader[0] : rawAuthHeader;
-        let jwt = authHeader.replace(/^Bearer /i, '');
-        const { payload } = await jwtVerify(jwt, jwks, { issuer });
-        console.log('user: ', { preferred_username: payload.preferred_username, email: payload.email });
+      const raw = Array.isArray(req.headers.authorization)
+        ? req.headers.authorization[0]
+        : req.headers.authorization;
+
+      const wantsHTML = req.accepts(['html', 'json']) === 'html';
+      const isGet = req.method === 'GET';
+
+      // Session shortcut (works for both HTML and API)
+      if (req.session?.['user']) {
         return next();
       }
-      if (req.session?.['user']) { return next() }
-      const nextUrl = encodeURIComponent(req.originalUrl);
-      res.redirect(`/login?returnTo=${nextUrl}`);
+
+      // Verify Bearer token if present
+      if (raw) {
+        const m = raw.match(/^Bearer\s+(.+)$/i);
+        if (m && m[1].trim()) {
+          try {
+            console.log('Verifying JWT');
+            const { payload } = await jwtVerify(m[1].trim(), jwks, { issuer });
+            console.log('Verification OK', {
+              sub: payload.sub,
+              preferred_username: payload.preferred_username,
+              email: payload.email,
+            });
+            return next();
+          } catch (e: any) {
+            console.log('JWT verify failed:', e?.message);
+            // fall through to 401/redirect below
+          }
+        } else {
+          console.log('Authorization header present but not a Bearer token');
+        }
+      } else {
+        console.log('No Authorization header');
+      }
+
+      // Tell caches/proxies the response varies by Accept
+      res.vary('Accept');
+
+      // HTML clients - redirect to login (GET only)
+      if (wantsHTML && isGet) {
+        const returnTo = encodeURIComponent(req.originalUrl.startsWith('/') ? req.originalUrl : '/');
+        return res.redirect(`/login?returnTo=${returnTo}`);
+      }
+
+      // API clients - 401 with WWW-Authenticate
+      const err = 'Unauthorized';
+      const code = 'invalid_token';
+      res.set('WWW-Authenticate', `Bearer realm="api", error="${code}", error_description="${err}"`)
+        .status(401)
+        .json({ error: err, code });
+      return;
     };
   } else {
     console.log('Keycloak authentication disabled - KEYCLOAK_ADDR not set');
