@@ -54,7 +54,7 @@ func (client *ODataClientImpl) Get(ctx context.Context, entitySet string, proper
 		return nil, err
 	}
 	urlString := requestUrl.String()
-	log.DefaultLogger.Debug("Constructed request url: ", urlString)
+	log.DefaultLogger.Debug("Constructed request url", "url", urlString)
 	return client.get(ctx, urlString, "application/json")
 }
 
