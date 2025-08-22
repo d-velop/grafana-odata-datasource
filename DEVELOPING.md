@@ -101,6 +101,8 @@ The plugin supports the `oauthPassThru` feature (Forward OAuth Identity), which 
 upstream OAuth identity to the data source. This enables the plugin to make requests on behalf of the user, useful for
 scenarios where per-user access control is needed.
 
+For more information about this feature, see [Forward OAuth identity for the logged-in user](https://grafana.com/developers/plugin-tools/how-to-guides/data-source-plugins/add-authentication-for-data-source-plugins#forward-oauth-identity-for-the-logged-in-user).
+
 The project includes a [`docker-compose.withKeycloak.yaml`](docker-compose.withKeycloak.yaml) file for running the
 plugin together with a [Keycloak](https://www.keycloak.org/) instance.
 
@@ -128,6 +130,15 @@ This ensures that all services are reachable consistently:
 
 This is required for the authentication flow to work correctly, both from the browser on the host system and for
 internal communication between services within the Docker network.
+
+Keycloak is preconfigured for local development. The accounts below let you access the Keycloak Admin Console (`master`
+realm) and sign in to Grafana (`grafana` realm). This makes it easy to exercise the full OAuth flow end-to-end and
+confirm that Grafana forwards tokens to the mock server (access token in `Authorization`).
+
+| Realm     | Username              | Password | Purpose                                                                         |
+|-----------|-----------------------|----------|---------------------------------------------------------------------------------|
+| `master`  | `admin`               | `admin`  | Access to the Keycloak Admin Console                                            |
+| `grafana` | `user@test.localhost` | `user`   | Sign in to Grafana (end-user login; tokens can be forwarded to the mock server) |
 
 For more information see: [test-server/README.md](test-server/README.md).
 
