@@ -31,17 +31,17 @@ func (client *clientMock) ODataVersion() string {
 	return "Auto"
 }
 
-func (client *clientMock) GetServiceRoot() (*http.Response, error) {
+func (client *clientMock) GetServiceRoot(_ context.Context) (*http.Response, error) {
 	return &http.Response{StatusCode: client.statusCode,
 		Body: io.NopCloser(bytes.NewReader(client.body))}, client.err
 }
 
-func (client *clientMock) GetMetadata() (*http.Response, error) {
+func (client *clientMock) GetMetadata(_ context.Context) (*http.Response, error) {
 	return &http.Response{StatusCode: client.statusCode,
 		Body: io.NopCloser(bytes.NewReader(client.body))}, client.err
 }
 
-func (client *clientMock) Get(_ string, _ []property, _ []filterCondition) (*http.Response, error) {
+func (client *clientMock) Get(_ context.Context, _ string, _ []property, _ []filterCondition) (*http.Response, error) {
 	return &http.Response{StatusCode: client.statusCode,
 		Body: io.NopCloser(bytes.NewReader(client.body))}, client.err
 }

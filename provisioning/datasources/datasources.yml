@@ -27,6 +27,8 @@ datasources:
     url: http://test-server:4004/mock
     version: 1
     editable: true
+    jsonData:
+      oauthPassThru: true
   - name: 'OData-Test-V2'
     uid: PD461F79B494E0A03
     type: dvelop-odata-datasource
