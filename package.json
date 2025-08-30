@@ -1,6 +1,6 @@
 {
   "name": "grafana-odata-datasource",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Loads data from OData (V4) compliant data sources to Grafana",
   "bugs": {
     "url": "https://github.com/d-velop/grafana-odata-datasource/issues"
@@ -25,6 +25,7 @@
     "lint:fix": "yarn run lint --fix && prettier --write --list-different .",
     "e2e": "playwright test",
     "server": "docker compose up --build",
+    "server:withKeycloak": "docker compose -f docker-compose.withKeycloak.yaml up --build",
     "sign": "npx --yes @grafana/sign-plugin@latest",
     "checkCompatibility": "npx @grafana/levitate@latest is-compatible --path src/module.ts --target @grafana/data,@grafana/ui,@grafana/runtime"
   },

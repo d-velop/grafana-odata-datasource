@@ -60,7 +60,7 @@ In addition, the test server is automatically built and started using Docker Com
 For more information see [test-server/README.md](test-server/README.md).
 
 ### Try and test using Docker Compose
-The project includes a [`docker-compose.yml`](docker-compose.yml) file. With this, Grafana can be started quickly for
+The project includes a [`docker-compose.yaml`](docker-compose.yaml) file. With this, Grafana can be started quickly for
 development purposes. The local project directory is automatically mounted to the Grafana plugin directory.
 
 Additionally, to keep development uncomplicated, anonymous authorization is enabled in Grafana. The project also comes
@@ -94,6 +94,56 @@ mage coverage
 ```
 
 The results are written to a `backend.html` file located in the [`./coverage`](./coverage) folder.
+
+### Testing the `oauthPassThru` feature of the plugin
+
+The plugin supports the `oauthPassThru` feature (Forward OAuth Identity), which allows Grafana to forward the user's
+upstream OAuth identity to the data source. This enables the plugin to make requests on behalf of the user, useful for
+scenarios where per-user access control is needed.
+
+For more information about this feature, see [Forward OAuth identity for the logged-in user](https://grafana.com/developers/plugin-tools/how-to-guides/data-source-plugins/add-authentication-for-data-source-plugins#forward-oauth-identity-for-the-logged-in-user).
+
+The project includes a [`docker-compose.withKeycloak.yaml`](docker-compose.withKeycloak.yaml) file for running the
+plugin together with a [Keycloak](https://www.keycloak.org/) instance.
+
+Keycloak is used here as an example identity provider implementing OAuth2 and OpenID Connect.
+
+The [integration/keycloak](integration/keycloak) folder contains configuration files for Keycloak and Grafana:
+
+- `realm.json`: Keycloak realm configuration for testing purposes.
+- `grafana.ini`: Grafana configuration enabling OAuth integration.
+
+You can use the following command as a shortcut to run the Docker Compose setup:
+```bash
+yarn server:withKeycloak
+```
+
+To enable integrated testing across containers and from the host system, add the following entry to your `/etc/hosts`:
+```
+127.0.0.1 dockerhost
+```
+
+This ensures that all services are reachable consistently:
+* Grafana: http://dockerhost:3000
+* Keycloak: http://dockerhost:8080
+* Test server: http://dockerhost:4004
+
+This is required for the authentication flow to work correctly, both from the browser on the host system and for
+internal communication between services within the Docker network.
+
+Keycloak is preconfigured for local development. The accounts below let you access the Keycloak Admin Console (`master`
+realm) and sign in to Grafana (`grafana` realm). This makes it easy to exercise the full OAuth flow end-to-end and
+confirm that Grafana forwards tokens to the mock server (access token in `Authorization`).
+
+| Realm     | Username              | Password | Purpose                                                                         |
+|-----------|-----------------------|----------|---------------------------------------------------------------------------------|
+| `master`  | `admin`               | `admin`  | Access to the Keycloak Admin Console                                            |
+| `grafana` | `user@test.localhost` | `user`   | Sign in to Grafana (end-user login; tokens can be forwarded to the mock server) |
+
+For more information see: [test-server/README.md](test-server/README.md).
+
+> Note: To test the feature within Grafana, you can use the provisioned datasource `OData-Mock`, which has the feature
+> enabled. See [datasources.yml](provisioning/datasources/datasources.yml) for details.
 
 ## Update create-plugin versions
 To update the plugin to use a newer version of the `create-plugin` tool, follow the instructions here:
