@@ -9,6 +9,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@cap-js/sqlite": "^2.0.1",
+    "@cap-js-community/odata-v2-adapter": "^1.14.3",
     "@eslint/js": "^9.28.0",
     "@sap/cds": "^9.0.3",
     "@types/express": "^5.0.3",
@@ -42,6 +43,9 @@
     },
     "features": {
       "odata_new_parser": true
+    },
+    "cov2ap": {
+      "plugin": true
     }
   }
 }
