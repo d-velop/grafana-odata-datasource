@@ -51,22 +51,22 @@
   resolved "https://registry.yarnpkg.com/@oozcitak/util/-/util-8.3.8.tgz#10f65fe1891fd8cde4957360835e78fd1936bfdd"
   integrity sha512-T8TbSnGsxo6TDBJx/Sgv/BlVJL3tshxZP7Aq5R1mSnM5OcHY2dQaxLMu2+E8u3gN0MLOzdjurqN4ZRVuzQycOQ==
 
-"@sap/cds-compiler@^6":
-  version "6.2.2"
-  resolved "https://registry.yarnpkg.com/@sap/cds-compiler/-/cds-compiler-6.2.2.tgz#6b75bbc5a2a5298531f9da7b6791be9f9a038755"
-  integrity sha512-LqRNfBsWnEJpXVJ6/v52VqAdelWoETLbECMPcy7BfoHE63DGBpKA/ZIgoH11t7vUm7GYQDcSfR7ryy02Q/fP7A==
+"@sap/cds-compiler@^6.1":
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/@sap/cds-compiler/-/cds-compiler-6.3.0.tgz#750949baf62b27a77be3fb01829a6ce81fc5e120"
+  integrity sha512-4HhZuiKa8SztqtjfM9Iey7yb2U6xQGzUbjib3JXcSSP6AJ6Bz0gViliTwf8dASPTLRtv7HU82277m4uqxU2qjw==
 
 "@sap/cds-fiori@^2":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@sap/cds-fiori/-/cds-fiori-2.0.1.tgz#8f9b514b784fdb5402e3a8b1ad5b11803588bfb1"
   integrity sha512-KZVLWXndydgqdlao8OL1gtgd/XMgBdiKBmmgwGpBL1y4S21FOXglnWh6d3bnSZL/qwR3z50D+0PoGghjhayF0Q==
 
-"@sap/cds@^9.0.3":
-  version "9.2.0"
-  resolved "https://registry.yarnpkg.com/@sap/cds/-/cds-9.2.0.tgz#8923204ddf0640e72e9b9aef278ce55ee36063d8"
-  integrity sha512-u/R+Bzz8RsiL4JINwwmbPFmSD8Y10PGpXetGHYvUyefUG/V/S8OBAWy/elu4FmTr1X8J4+kuynCgoETaWRveKw==
+"@sap/cds@^9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@sap/cds/-/cds-9.3.0.tgz#2d5033b3506e460fb8dd910f63b2d04ef6844e58"
+  integrity sha512-2JaY4AlYvDP88DpZj5vo7B+9+r2ICmY5ktcCxHpnPoC9cmauYmXQtSn6gfuDwuBAWnFMSQEMu6qXz+7Yt8o7mQ==
   dependencies:
-    "@sap/cds-compiler" "^6"
+    "@sap/cds-compiler" "^6.1"
     "@sap/cds-fiori" "^2"
     js-yaml "^4.1.0"
 
