@@ -705,10 +705,10 @@
     micro-memoize "^4.1.2"
     react-i18next "^15.0.0"
 
-"@grafana/plugin-e2e@^2.1.10":
-  version "2.1.10"
-  resolved "https://registry.yarnpkg.com/@grafana/plugin-e2e/-/plugin-e2e-2.1.10.tgz#a3682fad85930db41dc555f31055ab304f8c61ed"
-  integrity sha512-j8iayggOAoFWvfEqy0ZgIcQPqb1FhnfOcBPX7rPXQLNnRGWceLnHLIgKzNu3biULNEq/QbEQffVBzsL30VLuvw==
+"@grafana/plugin-e2e@^2.1.11":
+  version "2.1.11"
+  resolved "https://registry.yarnpkg.com/@grafana/plugin-e2e/-/plugin-e2e-2.1.11.tgz#e8f64f182385c9c3a7f400b1febfbd23135b230c"
+  integrity sha512-58reVTiIhYXYwu9XuP2+U3dEcH9Kg4hZP3GXqgHm4Z15G8Wvyhh9t3volNLoi0se6HoJZx+OYXDbWdTCSVKHxw==
   dependencies:
     "@grafana/e2e-selectors" "^12.2.0-255920"
     semver "^7.5.4"
