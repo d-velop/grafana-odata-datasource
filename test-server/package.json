@@ -13,7 +13,7 @@
     "@sap/cds": "^9.3.1",
     "@types/express": "^5.0.3",
     "@types/express-session": "^1.18.2",
-    "@types/uuid": "^10.0.0",
+    "@types/uuid": "^11.0.0",
     "express": "^4.21.2",
     "express-session": "^1.18.1",
     "jose": "^6.1.0",
