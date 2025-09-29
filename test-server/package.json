@@ -18,7 +18,7 @@
     "express-session": "^1.18.1",
     "jose": "^6.1.0",
     "morgan": "^1.10.1",
-    "openid-client": "^6.8.0",
+    "openid-client": "^6.8.1",
     "prettier": "^3.6.2",
     "typescript": "5.9.2",
     "uuid": "^13.0.0",
