@@ -9,10 +9,10 @@
   dependencies:
     generic-pool "^3.9.0"
 
-"@cap-js/sqlite@^2.0.1":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@cap-js/sqlite/-/sqlite-2.0.2.tgz#52176d9726b064c39d5c5f3dd9a474231b80e872"
-  integrity sha512-oNg2f56sfELshyp0eSmYYwG1lt4Zmc135sLIzS8iykHdRVxxJpTrPj0jx0Y4Hc6sfC9u25LRXVu/ZKqjm9Yu+Q==
+"@cap-js/sqlite@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@cap-js/sqlite/-/sqlite-2.0.3.tgz#ea142fa2a9736c84f6c5808296b6ac0ec1cd8cb7"
+  integrity sha512-Zm2JLpPuddFkeqM47TX7V7IC6x3WOfn5lTRbaiVOMvRQoshCNXTkjv083ssfiwF/jF/46/PSVox+fTElozg6XA==
   dependencies:
     "@cap-js/db-service" "^2"
     better-sqlite3 "^12.0.0"
