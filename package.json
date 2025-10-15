@@ -46,7 +46,7 @@
     "@types/glob": "^8.1.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.7.2",
-    "@typescript-eslint/eslint-plugin": "^8.46.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.1",
     "@typescript-eslint/parser": "^8.46.1",
     "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^7.1.2",
