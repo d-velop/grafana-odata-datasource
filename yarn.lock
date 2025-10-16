@@ -1747,6 +1747,11 @@
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.34.41.tgz#aa51a6c1946df2c5a11494a2cdb9318e026db16c"
   integrity sha512-6gS8pZzSXdyRHTIqoqSVknxolr1kzfy4/CeDnrzsVz8TTIWUbOBr6gnzOmTYJ3eXQNh4IYHIGi5aIL7sOZ2G/g==
 
+"@sindresorhus/base62@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@sindresorhus/base62/-/base62-0.1.0.tgz#2ef36425f0210998adf504e495f6c1e85c7d2718"
+  integrity sha512-BNjiImatCV+CUdvzSbFWzZIZqOddg6qn0Ag6/8Ty5G09oOtvxidZ5tkPQW2XHpzGVkB3eHfdYGwrWNy2nUFOwQ==
+
 "@sinonjs/commons@^3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-3.0.1.tgz#1029357e44ca901a615585f6d27738dbc89084cd"
@@ -4011,10 +4016,10 @@ eslint-plugin-deprecation@^3.0.0:
     ts-api-utils "^1.3.0"
     tslib "^2.3.1"
 
-eslint-plugin-jsdoc@^61.1.3:
-  version "61.1.3"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-61.1.3.tgz#a307250ca177a1c7c2242a6ec5ca70d2bdcbf162"
-  integrity sha512-jTUpZv8KtzzDIWRINOryV2mcTt+dKI7U7koDqo2OeX/Cpf4CpFeo3iJ9rpzfKa8lciK9bb/Th387rJnqSouDNw==
+eslint-plugin-jsdoc@^61.1.4:
+  version "61.1.4"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-61.1.4.tgz#477002a98a4b79269bee1dfde046dac58f8cdee6"
+  integrity sha512-DmpKw8kHgNQlMS8m+XYtlGcsw4IzrHtupEObPZAww0OrXb7IekbKR7vjYu8jv5aOiFRhGdnIfEZRuoAf4ELe5w==
   dependencies:
     "@es-joy/jsdoccomment" "~0.76.0"
     are-docs-informative "^0.0.2"
@@ -4028,6 +4033,7 @@ eslint-plugin-jsdoc@^61.1.3:
     parse-imports-exports "^0.2.4"
     semver "^7.7.3"
     spdx-expression-parse "^4.0.0"
+    to-valid-identifier "^0.1.1"
 
 eslint-plugin-react-hooks@^5.2.0:
   version "5.2.0"
@@ -7248,6 +7254,11 @@ requires-port@^1.0.0:
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==
 
+reserved-identifiers@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/reserved-identifiers/-/reserved-identifiers-1.0.0.tgz#a4878ea2b5130ec2bf5aba40074edcb9704d2623"
+  integrity sha512-h0bP2Katmvf3hv4Z3WtDl4+6xt/OglQ2Xa6TnhZ/Rm9/7IH1crXQqMwD4J2ngKBonVv+fB55zfGgNDAmsevLVQ==
+
 resize-observer-polyfill@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
@@ -8119,6 +8130,14 @@ to-space-case@^1.0.0:
   integrity sha512-rLdvwXZ39VOn1IxGL3V6ZstoTbwLRckQmn/U8ZDLuWwIXNpuZDhQ3AiRUlhTbOXFVE9C+dR51wM0CBDhk31VcA==
   dependencies:
     to-no-case "^1.0.0"
+
+to-valid-identifier@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/to-valid-identifier/-/to-valid-identifier-0.1.1.tgz#bfd09b8c63ab0c0235e23c8243f7630f45b3e7a9"
+  integrity sha512-/m+BsP+oLrdYptSVuWdRanXBD0N1qiyx2GtAunpPz+TRPENw7IpEndqyPTwxe67wLiu16ZinauXESdOL1eDYBQ==
+  dependencies:
+    "@sindresorhus/base62" "^0.1.0"
+    reserved-identifiers "^1.0.0"
 
 toggle-selection@^1.0.6:
   version "1.0.6"
