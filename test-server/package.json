@@ -8,7 +8,7 @@
   "author": "d.velop AG",
   "license": "Apache-2.0",
   "dependencies": {
-    "@cap-js/sqlite": "^2.0.3",
+    "@cap-js/sqlite": "^2.0.4",
     "@eslint/js": "^9.38.0",
     "@sap/cds": "^9.4.4",
     "@types/express": "^5.0.3",
