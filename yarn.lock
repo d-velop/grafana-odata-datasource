@@ -4021,10 +4021,10 @@ eslint-plugin-deprecation@^3.0.0:
     ts-api-utils "^1.3.0"
     tslib "^2.3.1"
 
-eslint-plugin-jsdoc@^61.1.10:
-  version "61.1.10"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-61.1.10.tgz#9927e91aff52c0ce4c7f96f5789fd2d8eb3e5d60"
-  integrity sha512-ACsczYGax1Iu9zRBiG176I66cgL2nRt1TbMgE9TAzxoGKfBD9PjhA//K/JKk3uBk25RsYHj3TqMaAiy913IpEA==
+eslint-plugin-jsdoc@^61.1.11:
+  version "61.1.11"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-61.1.11.tgz#f5d044a48761753f706ba12e810a76bcb66892c6"
+  integrity sha512-c+NQQOFd+ZTjFt0pfFMB8OTumExg0vf8mlJsOtLj6qTDGewtLh7bhwoDgBg6rIiTziYc8N4u4dYmSdAIn0yTEQ==
   dependencies:
     "@es-joy/jsdoccomment" "~0.76.0"
     "@es-joy/resolve.exports" "1.2.0"
