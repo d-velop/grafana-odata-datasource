@@ -3,7 +3,7 @@ module github.com/d-velop/grafana-odata-datasource
 go 1.24.6
 
 require (
-	github.com/grafana/grafana-plugin-sdk-go v0.282.0
+	github.com/grafana/grafana-plugin-sdk-go v0.283.0
 	github.com/stretchr/testify v1.11.1
 )
 
