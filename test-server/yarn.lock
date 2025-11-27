@@ -2,19 +2,19 @@
 # yarn lockfile v1
 
 
-"@cap-js/db-service@^2.6.0":
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/@cap-js/db-service/-/db-service-2.6.0.tgz#2f9a41083db54c321c30ee4800f8b0cf7cdc67ae"
-  integrity sha512-t72/FcAYFbPdx+5iV+lVKcwF2MLOx8II3jJdlC1dX/KXQORoS3wDFwWbakP0f/eharE5hfa7KMFJqrSMtDigbQ==
+"@cap-js/db-service@^2.7.0":
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/@cap-js/db-service/-/db-service-2.7.0.tgz#59a0cadbc90f1906800b9176e9772797a97ee80e"
+  integrity sha512-g6LDETBPWr8LYs3emrpEA4+FdVCkGgFmKHaeMPVBFXgFTUv14uYnarqWuFubBTrp5JF6S3wgljMJujld5+DL8A==
   dependencies:
     generic-pool "^3.9.0"
 
-"@cap-js/sqlite@^2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@cap-js/sqlite/-/sqlite-2.0.4.tgz#3e46a2bd18a993b2911d042ad222f7619808f630"
-  integrity sha512-QPVkycLJG6EubtjrPeiK4dTI1zPH/nabvhiYnTeg2AbeQ8mbazm5pjmcLrzOOKF/5bGS8KQo2J+49fU5LPRR3A==
+"@cap-js/sqlite@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@cap-js/sqlite/-/sqlite-2.1.0.tgz#6f42db7159f759e0eee915efb8d08212da609aa2"
+  integrity sha512-5jz7GlsrYCd5VlFEzImz5SCBkNa6Ps1wB9+1MceGlMrQLt0lDxiK1NqA+pIrcMeGWkQIcbNLteuP26ZQkGRidw==
   dependencies:
-    "@cap-js/db-service" "^2.6.0"
+    "@cap-js/db-service" "^2.7.0"
     better-sqlite3 "^12.0.0"
 
 "@eslint/js@^9.39.1":
