@@ -663,10 +663,19 @@
     uplot "1.6.32"
     xss "^1.0.14"
 
-"@grafana/e2e-selectors@12.3.0", "@grafana/e2e-selectors@^12.2.0-255920":
+"@grafana/e2e-selectors@12.3.0":
   version "12.3.0"
   resolved "https://registry.yarnpkg.com/@grafana/e2e-selectors/-/e2e-selectors-12.3.0.tgz#25f747395fd6dfdf7bfcb743095098ea79bbf1fc"
   integrity sha512-b4Q4QVxV6SLfv4q2MGUwX2swNbDzTgHZB/PHe4/AmLBEU/BUrbeyQdRSUr5bj9NDNHqwSPC5ef1fmj7ZRBE+lw==
+  dependencies:
+    semver "^7.7.0"
+    tslib "2.8.1"
+    typescript "5.9.2"
+
+"@grafana/e2e-selectors@^12.4.0-19715147905":
+  version "12.4.0-19751380355"
+  resolved "https://registry.yarnpkg.com/@grafana/e2e-selectors/-/e2e-selectors-12.4.0-19751380355.tgz#de9e2ebe1576f15cfcc8abe5fb729ceff99198cd"
+  integrity sha512-fmUQXXnTKp3v/Lls/QJaKeVhQYoQsj8rdkJC1ynOzu9jaUMkO5hw+ASaLwlblBciVw7UtChfl/Fd2AqjyMPU2g==
   dependencies:
     semver "^7.7.0"
     tslib "2.8.1"
@@ -708,12 +717,12 @@
     micro-memoize "^4.1.2"
     react-i18next "^15.0.0"
 
-"@grafana/plugin-e2e@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@grafana/plugin-e2e/-/plugin-e2e-3.0.1.tgz#e3355593d252fd3ee2643a687f6476b5104f4856"
-  integrity sha512-4kWlSvXx0ldumu11QalgRm2bEYiTBpF4cehHx5JkbRrS8GGzyVrxvfWExm4lWuO0ieW7O0c3Oq6RS2MilQcYkg==
+"@grafana/plugin-e2e@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@grafana/plugin-e2e/-/plugin-e2e-3.0.2.tgz#4ce60779c696ce2d735e8efc8b62f267862e1c03"
+  integrity sha512-GoSqh9OfC0MsQC9AwaDZE/2Cakf83Onzfnaoq+88+qczacBKG7wVj61TDHk1dA9tf2N2lKUolk6YSGjDX2rNJA==
   dependencies:
-    "@grafana/e2e-selectors" "^12.2.0-255920"
+    "@grafana/e2e-selectors" "^12.4.0-19715147905"
     semver "^7.5.4"
     uuid "^13.0.0"
     yaml "^2.3.4"
