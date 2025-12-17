@@ -61,14 +61,14 @@
   resolved "https://registry.yarnpkg.com/@sap/cds-fiori/-/cds-fiori-2.0.1.tgz#8f9b514b784fdb5402e3a8b1ad5b11803588bfb1"
   integrity sha512-KZVLWXndydgqdlao8OL1gtgd/XMgBdiKBmmgwGpBL1y4S21FOXglnWh6d3bnSZL/qwR3z50D+0PoGghjhayF0Q==
 
-"@sap/cds@^9.5.2":
-  version "9.5.2"
-  resolved "https://registry.yarnpkg.com/@sap/cds/-/cds-9.5.2.tgz#6af3b0d206b05ff6701202cfb1995c7fd1e53bdb"
-  integrity sha512-8fZ4DpLrMHt54nK1lQL07HjHJQ4S2KRcmqwJyo+8a7vFFiH4t1LEYO4Kaa29n0FydAoj5HqOkujJisdUkLEBRg==
+"@sap/cds@^9.6.0":
+  version "9.6.0"
+  resolved "https://registry.yarnpkg.com/@sap/cds/-/cds-9.6.0.tgz#41fce7ff3e6aa10895c9e75680fcd6255bb73428"
+  integrity sha512-KZdAQZl8B2hvY71eh0FlXezTMuAsFILNgPZwqcT45ibAU4GSQB1eDc51jqA3t6UnpWN+jLSZDYNOagpztBkwJg==
   dependencies:
     "@sap/cds-compiler" "^6.3"
     "@sap/cds-fiori" "^2"
-    js-yaml "^4.1.0"
+    js-yaml "^4.1.1"
 
 "@types/body-parser@*":
   version "1.19.6"
@@ -562,7 +562,7 @@ jose@^6.1.0, jose@^6.1.3:
   resolved "https://registry.yarnpkg.com/jose/-/jose-6.1.3.tgz#8453d7be88af7bb7d64a0481d6a35a0145ba3ea5"
   integrity sha512-0TpaTfihd4QMNwrz/ob2Bp7X04yuxJkjRGi4aKmOqwhov54i6u79oCv7T+C7lo70MKH6BesI3vscD1yb/yzKXQ==
 
-js-yaml@^4.1.0, js-yaml@^4.1.1:
+js-yaml@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.1.1.tgz#854c292467705b699476e1a2decc0c8a3458806b"
   integrity sha512-qQKT4zQxXl8lLwBtHMWwaTcGfFOZviOJet3Oy/xmGk2gZH677CJM9EvtfdSkgWcATZhj/55JZ0rmy3myCT5lsA==
