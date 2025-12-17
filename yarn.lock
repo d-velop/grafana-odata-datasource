@@ -659,7 +659,7 @@
   dependencies:
     tslib "^2.8.0"
 
-"@grafana/data@12.3.0", "@grafana/data@^12.2.0":
+"@grafana/data@12.3.0":
   version "12.3.0"
   resolved "https://registry.yarnpkg.com/@grafana/data/-/data-12.3.0.tgz#b0eb4155a9d9f3b32bd952108eaec7cc1c72c24c"
   integrity sha512-oe0ov1iKzvQlct+jtig5s7V3o6XdjloJ+T4ooSKeXcJ1Pm+byg7j0d77HkiuYvFv2e/Na8N4XRvC8EDWQMxA+g==
@@ -692,10 +692,52 @@
     uplot "1.6.32"
     xss "^1.0.14"
 
+"@grafana/data@12.3.1", "@grafana/data@^12.2.0":
+  version "12.3.1"
+  resolved "https://registry.yarnpkg.com/@grafana/data/-/data-12.3.1.tgz#43cf85ab78a1fa8bca4a05eaee105ce5f53d712e"
+  integrity sha512-Aw7zpWflvLfuKcaYzPvsqKpNR43ZyGOooZJAEfJU/Xqg93TGkuSDImPndFEAIeQ6OwlFOQhkzbsz1GqmtKtpFg==
+  dependencies:
+    "@braintree/sanitize-url" "7.0.1"
+    "@grafana/i18n" "12.3.1"
+    "@grafana/schema" "12.3.1"
+    "@leeoniya/ufuzzy" "1.0.19"
+    "@types/d3-interpolate" "^3.0.0"
+    "@types/string-hash" "1.1.3"
+    "@types/systemjs" "6.15.3"
+    d3-interpolate "3.0.1"
+    date-fns "4.1.0"
+    dompurify "3.3.0"
+    eventemitter3 "5.0.1"
+    fast_array_intersect "1.1.0"
+    history "4.10.1"
+    lodash "4.17.21"
+    marked "16.3.0"
+    marked-mangle "1.1.11"
+    moment "2.30.1"
+    moment-timezone "0.5.47"
+    ol "10.6.1"
+    papaparse "5.5.3"
+    react-use "17.6.0"
+    rxjs "7.8.2"
+    string-hash "^1.1.3"
+    tinycolor2 "1.6.0"
+    tslib "2.8.1"
+    uplot "1.6.32"
+    xss "^1.0.14"
+
 "@grafana/e2e-selectors@12.3.0":
   version "12.3.0"
   resolved "https://registry.yarnpkg.com/@grafana/e2e-selectors/-/e2e-selectors-12.3.0.tgz#25f747395fd6dfdf7bfcb743095098ea79bbf1fc"
   integrity sha512-b4Q4QVxV6SLfv4q2MGUwX2swNbDzTgHZB/PHe4/AmLBEU/BUrbeyQdRSUr5bj9NDNHqwSPC5ef1fmj7ZRBE+lw==
+  dependencies:
+    semver "^7.7.0"
+    tslib "2.8.1"
+    typescript "5.9.2"
+
+"@grafana/e2e-selectors@12.3.1":
+  version "12.3.1"
+  resolved "https://registry.yarnpkg.com/@grafana/e2e-selectors/-/e2e-selectors-12.3.1.tgz#689f7bdd718bfa872ee7be8807869b4e3705c3d1"
+  integrity sha512-65riVBmMDMIqndLL/dQcmVP/Jujn5nkTs9IbE5+nTjEniqLopWXlkz1OGt7k/Q32PRVmzNKJbFvNqp4msGWK7Q==
   dependencies:
     semver "^7.7.0"
     tslib "2.8.1"
@@ -746,6 +788,20 @@
     micro-memoize "^4.1.2"
     react-i18next "^15.0.0"
 
+"@grafana/i18n@12.3.1":
+  version "12.3.1"
+  resolved "https://registry.yarnpkg.com/@grafana/i18n/-/i18n-12.3.1.tgz#02fe93f93cdac64a6f964e0a022ed734423ea0dc"
+  integrity sha512-yzcGZyIdHI0jR9WGxdmdwBZ3F/FPFnsYmVn/0jX407hEUb+/APJy39ru2tf5f7+/9fZDOCKQyqLJQ6ooEW2VsA==
+  dependencies:
+    "@formatjs/intl-durationformat" "^0.7.0"
+    "@typescript-eslint/utils" "^8.33.1"
+    fast-deep-equal "^3.1.3"
+    i18next "^25.0.0"
+    i18next-browser-languagedetector "^8.0.0"
+    i18next-pseudo "^2.2.1"
+    micro-memoize "^4.1.2"
+    react-i18next "^15.0.0"
+
 "@grafana/plugin-e2e@^3.0.4":
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@grafana/plugin-e2e/-/plugin-e2e-3.0.4.tgz#6ff239d2e4182e0b736eb8bb64a35ca9cc47e6e7"
@@ -777,10 +833,17 @@
     rxjs "7.8.2"
     tslib "2.8.1"
 
-"@grafana/schema@12.3.0", "@grafana/schema@^12.2.0":
+"@grafana/schema@12.3.0":
   version "12.3.0"
   resolved "https://registry.yarnpkg.com/@grafana/schema/-/schema-12.3.0.tgz#02a54b069c897e2e5331eaf32d0e5a73259f94e4"
   integrity sha512-LK3IVdluYmcrbz7+ioUK3CrmuYbjBoOuenxAzKuz13Q5xhFd6WLSzWRvnDYP3TyPMnxDtm+8QhL55kaj1aPApg==
+  dependencies:
+    tslib "2.8.1"
+
+"@grafana/schema@12.3.1", "@grafana/schema@^12.2.0":
+  version "12.3.1"
+  resolved "https://registry.yarnpkg.com/@grafana/schema/-/schema-12.3.1.tgz#8a24e0adb3f4d4c4389faee0dd2c5969bc5fc552"
+  integrity sha512-Dd3JSwBOFS+Z0K6eoOsLngWvVQWW55rKJHKT0Q/v98FXa+owEpJra4nsyaIigccNx+WhNQmj2JV6p3/T87e80w==
   dependencies:
     tslib "2.8.1"
 
@@ -789,7 +852,7 @@
   resolved "https://registry.yarnpkg.com/@grafana/tsconfig/-/tsconfig-2.0.1.tgz#231d46e996e53cd04367da850c03f1ef1170484c"
   integrity sha512-yGNQWQDlxFfklzMfk0i8qnDqKOvIGc0Aqe62zLS4LTqptkhnyLEVsdaVmX99m3QFOcBiiFn8scREDzGeF2iNvQ==
 
-"@grafana/ui@12.3.0", "@grafana/ui@^12.2.1":
+"@grafana/ui@12.3.0":
   version "12.3.0"
   resolved "https://registry.yarnpkg.com/@grafana/ui/-/ui-12.3.0.tgz#5eb05bf84c9a4a7cf50516880e8c15cbeca7ce8a"
   integrity sha512-T6673OHV8nEBQptAKFr0XuPdP0KvCawGhcfvfbGM5ThXzoagEMQjA7eDvqWKq0fPg0fy0AbAE8Ypp/tC51hkWQ==
@@ -803,6 +866,81 @@
     "@grafana/faro-web-sdk" "^1.13.2"
     "@grafana/i18n" "12.3.0"
     "@grafana/schema" "12.3.0"
+    "@hello-pangea/dnd" "18.0.1"
+    "@monaco-editor/react" "4.7.0"
+    "@popperjs/core" "2.11.8"
+    "@react-aria/dialog" "3.5.31"
+    "@react-aria/focus" "3.21.2"
+    "@react-aria/overlays" "3.30.0"
+    "@react-aria/utils" "3.31.0"
+    "@tanstack/react-virtual" "^3.5.1"
+    "@types/jquery" "3.5.33"
+    "@types/lodash" "4.17.20"
+    "@types/react-table" "7.7.20"
+    calculate-size "1.1.1"
+    classnames "2.5.1"
+    clsx "^2.1.1"
+    d3 "7.9.0"
+    date-fns "4.1.0"
+    downshift "^9.0.6"
+    hoist-non-react-statics "3.3.2"
+    i18next "^25.0.0"
+    i18next-browser-languagedetector "^8.0.0"
+    immutable "5.1.4"
+    is-hotkey "0.2.0"
+    jquery "3.7.1"
+    lodash "4.17.21"
+    micro-memoize "^4.1.2"
+    moment "2.30.1"
+    monaco-editor "0.34.1"
+    ol "10.6.1"
+    prismjs "1.30.0"
+    rc-cascader "3.34.0"
+    rc-drawer "7.3.0"
+    rc-picker "4.11.3"
+    rc-slider "11.1.9"
+    rc-tooltip "6.4.0"
+    react-calendar "^6.0.0"
+    react-colorful "5.6.1"
+    react-custom-scrollbars-2 "4.5.0"
+    react-data-grid "github:grafana/react-data-grid#a922856b5ede21d55db3fdffb6d38dc76bdc7c58"
+    react-dropzone "14.3.8"
+    react-highlight-words "0.21.0"
+    react-hook-form "^7.49.2"
+    react-i18next "^15.0.0"
+    react-inlinesvg "4.2.0"
+    react-loading-skeleton "3.5.0"
+    react-router-dom "5.3.4"
+    react-router-dom-v5-compat "^6.26.1"
+    react-select "5.10.2"
+    react-table "7.8.0"
+    react-transition-group "4.4.5"
+    react-use "17.6.0"
+    react-window "1.8.11"
+    rxjs "7.8.2"
+    slate "0.47.9"
+    slate-plain-serializer "0.7.13"
+    slate-react "0.22.10"
+    tinycolor2 "1.6.0"
+    tslib "2.8.1"
+    uplot "1.6.32"
+    uuid "11.1.0"
+    uwrap "0.1.2"
+
+"@grafana/ui@^12.3.1":
+  version "12.3.1"
+  resolved "https://registry.yarnpkg.com/@grafana/ui/-/ui-12.3.1.tgz#4d95ae539edaf5203b14977ec34bc7571e595c5a"
+  integrity sha512-bkjOJP0kcQSNs/hpId30OiJFWlfvBvFvcYrkOo1fXW1jQ6efGSwMfNeKIVhkRXYlcf+I2G8nwXmdOAJ8X6hXwA==
+  dependencies:
+    "@emotion/css" "11.13.5"
+    "@emotion/react" "11.14.0"
+    "@emotion/serialize" "1.3.3"
+    "@floating-ui/react" "0.27.16"
+    "@grafana/data" "12.3.1"
+    "@grafana/e2e-selectors" "12.3.1"
+    "@grafana/faro-web-sdk" "^1.13.2"
+    "@grafana/i18n" "12.3.1"
+    "@grafana/schema" "12.3.1"
     "@hello-pangea/dnd" "18.0.1"
     "@monaco-editor/react" "4.7.0"
     "@popperjs/core" "2.11.8"
