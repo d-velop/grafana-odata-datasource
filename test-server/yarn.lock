@@ -61,10 +61,10 @@
   resolved "https://registry.yarnpkg.com/@sap/cds-fiori/-/cds-fiori-2.0.1.tgz#8f9b514b784fdb5402e3a8b1ad5b11803588bfb1"
   integrity sha512-KZVLWXndydgqdlao8OL1gtgd/XMgBdiKBmmgwGpBL1y4S21FOXglnWh6d3bnSZL/qwR3z50D+0PoGghjhayF0Q==
 
-"@sap/cds@^9.6.1":
-  version "9.6.1"
-  resolved "https://registry.yarnpkg.com/@sap/cds/-/cds-9.6.1.tgz#670de33b5c383f632591de828b3e45d350346965"
-  integrity sha512-Bx6asOBhYXBE+jB6FtmyHmAjoPi11MYb/v/AYpnp0jqL/+kAXXWo6YOxJHqpx1k5Um5FS1r6gM/5tVAo/ta7bw==
+"@sap/cds@^9.6.2":
+  version "9.6.2"
+  resolved "https://registry.yarnpkg.com/@sap/cds/-/cds-9.6.2.tgz#b95994ea597b34f213ac89e54126f8b3bf6fec14"
+  integrity sha512-BBn2k3fZFfOC8Qmgo/kC9Sjs7ClhtVjf480++LmY/vtthfuybnLA2g4SdisTbCBVePALN44JNA339wVfHCAPSw==
   dependencies:
     "@sap/cds-compiler" "^6.3"
     "@sap/cds-fiori" "^2"
