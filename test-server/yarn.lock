@@ -51,23 +51,24 @@
   resolved "https://registry.yarnpkg.com/@oozcitak/util/-/util-10.0.0.tgz#f6b40472d96c210094a556ee5ccb8e77f1bd30af"
   integrity sha512-hAX0pT/73190NLqBPPWSdBVGtbY6VOhWYK3qqHqtXQ1gK7kS2yz4+ivsN07hpJ6I3aeMtKP6J6npsEKOAzuTLA==
 
-"@sap/cds-compiler@^6.3":
-  version "6.4.2"
-  resolved "https://registry.yarnpkg.com/@sap/cds-compiler/-/cds-compiler-6.4.2.tgz#176f01d688db8cfc019e855e36515ec3fd44f66b"
-  integrity sha512-kjhq8GxzCLIfsM4aln9saxkifPC26MYuAqT82QB7RGZDVFM5Pw09Dp6TcKCSp65hut0YgHkvHlVGWMZWWBJNdA==
+"@sap/cds-compiler@^6.4":
+  version "6.7.1"
+  resolved "https://registry.yarnpkg.com/@sap/cds-compiler/-/cds-compiler-6.7.1.tgz#a3a51dc5a204c8d930660169172e52b172354078"
+  integrity sha512-vfPhfLoT5sy73LBo8fGwYJ030tXY/ZY+1PSnVxLsghycg3/eMt06HrnI8Pt6vc7ia57x3/QGcHYXa+06SF3pZA==
 
 "@sap/cds-fiori@^2":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@sap/cds-fiori/-/cds-fiori-2.0.1.tgz#8f9b514b784fdb5402e3a8b1ad5b11803588bfb1"
   integrity sha512-KZVLWXndydgqdlao8OL1gtgd/XMgBdiKBmmgwGpBL1y4S21FOXglnWh6d3bnSZL/qwR3z50D+0PoGghjhayF0Q==
 
-"@sap/cds@^9.6.3":
-  version "9.6.3"
-  resolved "https://registry.yarnpkg.com/@sap/cds/-/cds-9.6.3.tgz#1c247c0a1087a5493c937b8d9136ddf68c859864"
-  integrity sha512-VZ5fDJt6ZAI6UzQnOzOgjgVjRRbI9Z1T1eVVCZ7FJkVTPSC05LVcKJ4nhjKgecE6sGkn7QyphIhu/933oYPccw==
+"@sap/cds@^9.7.0":
+  version "9.7.0"
+  resolved "https://registry.yarnpkg.com/@sap/cds/-/cds-9.7.0.tgz#c3496bd90242065cebbd4383542012e51e475a6a"
+  integrity sha512-E2ntY7l98fIIbhRbgjxL/M3+iM0mAOz8ehNu+evCUusQHveTWyx3b4DQomJaD4yOAlzMq1m26iDYQBT8HuSIpg==
   dependencies:
-    "@sap/cds-compiler" "^6.3"
+    "@sap/cds-compiler" "^6.4"
     "@sap/cds-fiori" "^2"
+    express "^4.22.1 || ^5"
     js-yaml "^4.1.1"
 
 "@types/body-parser@*":
@@ -392,7 +393,7 @@ express-session@^1.19.0:
     safe-buffer "~5.2.1"
     uid-safe "~2.1.5"
 
-express@^5.2.1:
+"express@^4.22.1 || ^5", express@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/express/-/express-5.2.1.tgz#8f21d15b6d327f92b4794ecf8cb08a72f956ac04"
   integrity sha512-hIS4idWWai69NezIdRt2xFVofaF4j+6INOpJlVOLDO8zXGpUVEVzIYk12UUi2JzjEzWL3IOAxcTubgz9Po0yXw==
