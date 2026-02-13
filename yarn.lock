@@ -666,40 +666,7 @@
   dependencies:
     tslib "^2.8.0"
 
-"@grafana/data@12.3.2":
-  version "12.3.2"
-  resolved "https://registry.yarnpkg.com/@grafana/data/-/data-12.3.2.tgz#0c24a2e3219534c27e9f992733b3cc8f25d7d735"
-  integrity sha512-rWTsyBnoIHGEmCP4WZ15HXP8Z+zp+aw+CtmR+gDmypCS6IDSRWIsakuQmu5ZbWqrmQhE50jYpe2KQLae7IMS5Q==
-  dependencies:
-    "@braintree/sanitize-url" "7.0.1"
-    "@grafana/i18n" "12.3.2"
-    "@grafana/schema" "12.3.2"
-    "@leeoniya/ufuzzy" "1.0.19"
-    "@types/d3-interpolate" "^3.0.0"
-    "@types/string-hash" "1.1.3"
-    "@types/systemjs" "6.15.3"
-    d3-interpolate "3.0.1"
-    date-fns "4.1.0"
-    dompurify "3.3.0"
-    eventemitter3 "5.0.1"
-    fast_array_intersect "1.1.0"
-    history "4.10.1"
-    lodash "4.17.21"
-    marked "16.3.0"
-    marked-mangle "1.1.11"
-    moment "2.30.1"
-    moment-timezone "0.5.47"
-    ol "10.6.1"
-    papaparse "5.5.3"
-    react-use "17.6.0"
-    rxjs "7.8.2"
-    string-hash "^1.1.3"
-    tinycolor2 "1.6.0"
-    tslib "2.8.1"
-    uplot "1.6.32"
-    xss "^1.0.14"
-
-"@grafana/data@^12.3.3":
+"@grafana/data@12.3.3", "@grafana/data@^12.3.3":
   version "12.3.3"
   resolved "https://registry.yarnpkg.com/@grafana/data/-/data-12.3.3.tgz#9beb0a192a1c6abf41093b4988cff8db2063bb80"
   integrity sha512-ZviEC8sKdMYof3ILxWUcgtySQRvfpCH6leLc0m4PY112kKg6ltTNkOM7PhZYNqnJO88AULDKYvTS/DNduakiCQ==
@@ -732,10 +699,10 @@
     uplot "1.6.32"
     xss "^1.0.14"
 
-"@grafana/e2e-selectors@12.3.2":
-  version "12.3.2"
-  resolved "https://registry.yarnpkg.com/@grafana/e2e-selectors/-/e2e-selectors-12.3.2.tgz#b2b8cf984c88be4a3cec90553ceedbe66d90c420"
-  integrity sha512-IQzQBI9LwkeKLd7WaJScLB75zIJ/Xw2rTU2H/B2hsgmrKe5ppGAAObNPm7+yhQQfEX78jo9SEHj8ywCYqHmLCw==
+"@grafana/e2e-selectors@12.3.3":
+  version "12.3.3"
+  resolved "https://registry.yarnpkg.com/@grafana/e2e-selectors/-/e2e-selectors-12.3.3.tgz#c70e232fbb8429ce5d3abffea309e05c796f265e"
+  integrity sha512-A83VWOosQXYTLzrsFk7e4KVAP050BKm0DALny9LKL5j8I8xjJJP7dDUbE85KGG+2Z4KN6AT0upo71Z+R6M3tCg==
   dependencies:
     semver "^7.7.0"
     tslib "2.8.1"
@@ -772,20 +739,6 @@
     ua-parser-js "^1.0.32"
     web-vitals "^4.0.1"
 
-"@grafana/i18n@12.3.2":
-  version "12.3.2"
-  resolved "https://registry.yarnpkg.com/@grafana/i18n/-/i18n-12.3.2.tgz#f4dbb9b5aae2550486e57b94a433729ccb37f728"
-  integrity sha512-1H/iVe52ipd4Vj3lFvMpH266tn8QibfTDEaDoNMHgR/TP68233035Z71Tgv1GZai72k3R4gEeSF+03pMAilaOg==
-  dependencies:
-    "@formatjs/intl-durationformat" "^0.7.0"
-    "@typescript-eslint/utils" "^8.33.1"
-    fast-deep-equal "^3.1.3"
-    i18next "^25.0.0"
-    i18next-browser-languagedetector "^8.0.0"
-    i18next-pseudo "^2.2.1"
-    micro-memoize "^4.1.2"
-    react-i18next "^15.0.0"
-
 "@grafana/i18n@12.3.3":
   version "12.3.3"
   resolved "https://registry.yarnpkg.com/@grafana/i18n/-/i18n-12.3.3.tgz#efdd69b9d080eb3e35df48aa6d88adef844a448e"
@@ -810,32 +763,25 @@
     uuid "^13.0.0"
     yaml "^2.3.4"
 
-"@grafana/runtime@^12.3.2":
-  version "12.3.2"
-  resolved "https://registry.yarnpkg.com/@grafana/runtime/-/runtime-12.3.2.tgz#1599d7b9df918ec194290845ff99477fab2d58a3"
-  integrity sha512-1MkDnS80lT8mj87cSI20adUCZzp8Hw+VjpwzWFsLGEmSWO1Ko+VhIpt05KpNiSzWBvmQzJ+s9n4AQymf88KHhw==
+"@grafana/runtime@^12.3.3":
+  version "12.3.3"
+  resolved "https://registry.yarnpkg.com/@grafana/runtime/-/runtime-12.3.3.tgz#8b6f96df1cb6938199ef048af6acf2a4b506c53d"
+  integrity sha512-XfLeNoGf6HoZAHlqirCFoW8iLk4FNJxxKMeJSl6iqUFlu0bqN3B3JHiaaBmafJZ+bVV6ZeRcBP+d7qneQuh2Fw==
   dependencies:
-    "@grafana/data" "12.3.2"
-    "@grafana/e2e-selectors" "12.3.2"
+    "@grafana/data" "12.3.3"
+    "@grafana/e2e-selectors" "12.3.3"
     "@grafana/faro-web-sdk" "^1.13.2"
-    "@grafana/schema" "12.3.2"
-    "@grafana/ui" "12.3.2"
+    "@grafana/schema" "12.3.3"
+    "@grafana/ui" "12.3.3"
     "@openfeature/core" "^1.9.0"
     "@openfeature/ofrep-web-provider" "^0.3.3"
     "@openfeature/web-sdk" "^1.6.1"
     "@types/systemjs" "6.15.3"
     history "4.10.1"
-    lodash "4.17.21"
+    lodash "^4.17.23"
     react-loading-skeleton "3.5.0"
     react-use "17.6.0"
     rxjs "7.8.2"
-    tslib "2.8.1"
-
-"@grafana/schema@12.3.2":
-  version "12.3.2"
-  resolved "https://registry.yarnpkg.com/@grafana/schema/-/schema-12.3.2.tgz#6e0734f2a5b263a12774c0628e3e089ccee56128"
-  integrity sha512-X3ExqXvKg5zWV8WNimczM0wbhQoehdj05K/YRA/rD00Fuo8y0OuECFSsG/VhdLoIUM4VCqsHStaQymsYDFundg==
-  dependencies:
     tslib "2.8.1"
 
 "@grafana/schema@12.3.3", "@grafana/schema@^12.2.0":
@@ -850,20 +796,20 @@
   resolved "https://registry.yarnpkg.com/@grafana/tsconfig/-/tsconfig-2.0.1.tgz#231d46e996e53cd04367da850c03f1ef1170484c"
   integrity sha512-yGNQWQDlxFfklzMfk0i8qnDqKOvIGc0Aqe62zLS4LTqptkhnyLEVsdaVmX99m3QFOcBiiFn8scREDzGeF2iNvQ==
 
-"@grafana/ui@12.3.2", "@grafana/ui@^12.2.1":
-  version "12.3.2"
-  resolved "https://registry.yarnpkg.com/@grafana/ui/-/ui-12.3.2.tgz#8b3d6d2619410577301e2ba8c48525bc3545b6c3"
-  integrity sha512-ke6ONJx2/nZDl9zkc5alDc9vx03UGO1P0njUmzQa/qDFuFuX9miyfqnHLK46AQUhDegVqCODrtKZ4EcuOHciGA==
+"@grafana/ui@12.3.3", "@grafana/ui@^12.2.1":
+  version "12.3.3"
+  resolved "https://registry.yarnpkg.com/@grafana/ui/-/ui-12.3.3.tgz#11183b88351a6cbf9d41e095b79aeb9b41f18b9c"
+  integrity sha512-xmmT7XBUS92LqnBjPmO90uC4sqB5bPjk9S3XdEhLWyL8pD7Xi1wSrPBC0Tyrh4PI/J0tmz1+8q66pKllX4K91Q==
   dependencies:
     "@emotion/css" "11.13.5"
     "@emotion/react" "11.14.0"
     "@emotion/serialize" "1.3.3"
     "@floating-ui/react" "0.27.16"
-    "@grafana/data" "12.3.2"
-    "@grafana/e2e-selectors" "12.3.2"
+    "@grafana/data" "12.3.3"
+    "@grafana/e2e-selectors" "12.3.3"
     "@grafana/faro-web-sdk" "^1.13.2"
-    "@grafana/i18n" "12.3.2"
-    "@grafana/schema" "12.3.2"
+    "@grafana/i18n" "12.3.3"
+    "@grafana/schema" "12.3.3"
     "@hello-pangea/dnd" "18.0.1"
     "@monaco-editor/react" "4.7.0"
     "@popperjs/core" "2.11.8"
@@ -887,7 +833,7 @@
     immutable "5.1.4"
     is-hotkey "0.2.0"
     jquery "3.7.1"
-    lodash "4.17.21"
+    lodash "^4.17.23"
     micro-memoize "^4.1.2"
     moment "2.30.1"
     monaco-editor "0.34.1"
@@ -6149,11 +6095,6 @@ lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
-
-lodash@4.17.21:
-  version "4.17.21"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
-  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 lodash@^4.1.1, lodash@^4.17.23, lodash@^4.17.4:
   version "4.17.23"
