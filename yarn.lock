@@ -666,7 +666,7 @@
   dependencies:
     tslib "^2.8.0"
 
-"@grafana/data@12.3.2", "@grafana/data@^12.2.0":
+"@grafana/data@12.3.2":
   version "12.3.2"
   resolved "https://registry.yarnpkg.com/@grafana/data/-/data-12.3.2.tgz#0c24a2e3219534c27e9f992733b3cc8f25d7d735"
   integrity sha512-rWTsyBnoIHGEmCP4WZ15HXP8Z+zp+aw+CtmR+gDmypCS6IDSRWIsakuQmu5ZbWqrmQhE50jYpe2KQLae7IMS5Q==
@@ -685,6 +685,39 @@
     fast_array_intersect "1.1.0"
     history "4.10.1"
     lodash "4.17.21"
+    marked "16.3.0"
+    marked-mangle "1.1.11"
+    moment "2.30.1"
+    moment-timezone "0.5.47"
+    ol "10.6.1"
+    papaparse "5.5.3"
+    react-use "17.6.0"
+    rxjs "7.8.2"
+    string-hash "^1.1.3"
+    tinycolor2 "1.6.0"
+    tslib "2.8.1"
+    uplot "1.6.32"
+    xss "^1.0.14"
+
+"@grafana/data@^12.3.3":
+  version "12.3.3"
+  resolved "https://registry.yarnpkg.com/@grafana/data/-/data-12.3.3.tgz#9beb0a192a1c6abf41093b4988cff8db2063bb80"
+  integrity sha512-ZviEC8sKdMYof3ILxWUcgtySQRvfpCH6leLc0m4PY112kKg6ltTNkOM7PhZYNqnJO88AULDKYvTS/DNduakiCQ==
+  dependencies:
+    "@braintree/sanitize-url" "7.0.1"
+    "@grafana/i18n" "12.3.3"
+    "@grafana/schema" "12.3.3"
+    "@leeoniya/ufuzzy" "1.0.19"
+    "@types/d3-interpolate" "^3.0.0"
+    "@types/string-hash" "1.1.3"
+    "@types/systemjs" "6.15.3"
+    d3-interpolate "3.0.1"
+    date-fns "4.1.0"
+    dompurify "3.3.0"
+    eventemitter3 "5.0.1"
+    fast_array_intersect "1.1.0"
+    history "4.10.1"
+    lodash "^4.17.23"
     marked "16.3.0"
     marked-mangle "1.1.11"
     moment "2.30.1"
@@ -753,6 +786,20 @@
     micro-memoize "^4.1.2"
     react-i18next "^15.0.0"
 
+"@grafana/i18n@12.3.3":
+  version "12.3.3"
+  resolved "https://registry.yarnpkg.com/@grafana/i18n/-/i18n-12.3.3.tgz#efdd69b9d080eb3e35df48aa6d88adef844a448e"
+  integrity sha512-hVsGMzawxc8K7HoXbTDyBB0774XKl8iklk8f5KSGBlX4rswQaEC0BLgsqLrIQeoQ87aldU8ka/zfIPe0HvU7uQ==
+  dependencies:
+    "@formatjs/intl-durationformat" "^0.7.0"
+    "@typescript-eslint/utils" "^8.33.1"
+    fast-deep-equal "^3.1.3"
+    i18next "^25.0.0"
+    i18next-browser-languagedetector "^8.0.0"
+    i18next-pseudo "^2.2.1"
+    micro-memoize "^4.1.2"
+    react-i18next "^15.0.0"
+
 "@grafana/plugin-e2e@^3.2.2":
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/@grafana/plugin-e2e/-/plugin-e2e-3.2.2.tgz#1076ae86e660aec88b09d7ce8b789d0361ce8266"
@@ -784,10 +831,17 @@
     rxjs "7.8.2"
     tslib "2.8.1"
 
-"@grafana/schema@12.3.2", "@grafana/schema@^12.2.0":
+"@grafana/schema@12.3.2":
   version "12.3.2"
   resolved "https://registry.yarnpkg.com/@grafana/schema/-/schema-12.3.2.tgz#6e0734f2a5b263a12774c0628e3e089ccee56128"
   integrity sha512-X3ExqXvKg5zWV8WNimczM0wbhQoehdj05K/YRA/rD00Fuo8y0OuECFSsG/VhdLoIUM4VCqsHStaQymsYDFundg==
+  dependencies:
+    tslib "2.8.1"
+
+"@grafana/schema@12.3.3", "@grafana/schema@^12.2.0":
+  version "12.3.3"
+  resolved "https://registry.yarnpkg.com/@grafana/schema/-/schema-12.3.3.tgz#07c754ff91c18ae4fac640255c4b7f125aa33988"
+  integrity sha512-0GkuXLENQfLDUFWQDyFxCtZPzMGC93STyez+0babBtolQq4SvOdAn0qkJW2PYjaGAaZqxKEzsrms6i3IE4jxqA==
   dependencies:
     tslib "2.8.1"
 
@@ -6082,10 +6136,15 @@ lodash.merge@^4.6.2:
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
-lodash@4.17.21, lodash@^4.1.1, lodash@^4.17.4:
+lodash@4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
+
+lodash@^4.1.1, lodash@^4.17.23, lodash@^4.17.4:
+  version "4.17.23"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.23.tgz#f113b0378386103be4f6893388c73d0bde7f2c5a"
+  integrity sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==
 
 log4js@^6.4.0:
   version "6.9.1"
