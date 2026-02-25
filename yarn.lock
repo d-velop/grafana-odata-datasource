@@ -666,7 +666,7 @@
   dependencies:
     tslib "^2.8.0"
 
-"@grafana/data@12.3.3", "@grafana/data@^12.3.3":
+"@grafana/data@12.3.3":
   version "12.3.3"
   resolved "https://registry.yarnpkg.com/@grafana/data/-/data-12.3.3.tgz#9beb0a192a1c6abf41093b4988cff8db2063bb80"
   integrity sha512-ZviEC8sKdMYof3ILxWUcgtySQRvfpCH6leLc0m4PY112kKg6ltTNkOM7PhZYNqnJO88AULDKYvTS/DNduakiCQ==
@@ -698,6 +698,41 @@
     tslib "2.8.1"
     uplot "1.6.32"
     xss "^1.0.14"
+
+"@grafana/data@^12.4.0":
+  version "12.4.0"
+  resolved "https://registry.yarnpkg.com/@grafana/data/-/data-12.4.0.tgz#c43a63c7f5f3832a7830c42f2bbc89ab6c07990a"
+  integrity sha512-clIlKlEHq3Ieho4ji5Yb4a5XMPheUzTNuNBwNHoHvtulzXQOtYmmKxjJ1sOwJWsMuqNwV+YdEhQqWKWsWaRd0g==
+  dependencies:
+    "@braintree/sanitize-url" "7.0.1"
+    "@grafana/i18n" "12.4.0"
+    "@grafana/schema" "12.4.0"
+    "@leeoniya/ufuzzy" "1.0.19"
+    "@types/d3-interpolate" "^3.0.0"
+    "@types/string-hash" "1.1.3"
+    "@types/systemjs" "6.15.3"
+    d3-interpolate "3.0.1"
+    d3-scale-chromatic "3.1.0"
+    date-fns "4.1.0"
+    dompurify "3.3.0"
+    eventemitter3 "5.0.1"
+    fast_array_intersect "1.1.0"
+    history "4.10.1"
+    lodash "^4.17.23"
+    marked "16.3.0"
+    marked-mangle "1.1.12"
+    moment "2.30.1"
+    moment-timezone "0.5.47"
+    ol "10.7.0"
+    papaparse "5.5.3"
+    react-use "17.6.0"
+    rxjs "7.8.2"
+    string-hash "^1.1.3"
+    tinycolor2 "1.6.0"
+    tslib "2.8.1"
+    uplot "1.6.32"
+    xss "^1.0.14"
+    zod "^4.3.0"
 
 "@grafana/e2e-selectors@12.3.3":
   version "12.3.3"
@@ -753,6 +788,20 @@
     micro-memoize "^4.1.2"
     react-i18next "^15.0.0"
 
+"@grafana/i18n@12.4.0":
+  version "12.4.0"
+  resolved "https://registry.yarnpkg.com/@grafana/i18n/-/i18n-12.4.0.tgz#d376a2f3eeb15fbe023160a88b25e673d6f2856b"
+  integrity sha512-q+FqI+KjF2/jzzTv5gwDaJMmNmONjjT2SsX+SNOJby0b3Lx10B/6TSyPTEsOeeAEr59ClpQmNmSo4e1C2/v5MA==
+  dependencies:
+    "@formatjs/intl-durationformat" "^0.7.0"
+    "@typescript-eslint/utils" "^8.33.1"
+    fast-deep-equal "^3.1.3"
+    i18next "^25.0.0"
+    i18next-browser-languagedetector "^8.0.0"
+    i18next-pseudo "^2.2.1"
+    micro-memoize "^4.1.2"
+    react-i18next "^15.0.0"
+
 "@grafana/plugin-e2e@^3.3.2":
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/@grafana/plugin-e2e/-/plugin-e2e-3.3.2.tgz#e63ab8e32f957ed8aa6f53bf4a02deb0155b313e"
@@ -784,10 +833,17 @@
     rxjs "7.8.2"
     tslib "2.8.1"
 
-"@grafana/schema@12.3.3", "@grafana/schema@^12.2.0":
+"@grafana/schema@12.3.3":
   version "12.3.3"
   resolved "https://registry.yarnpkg.com/@grafana/schema/-/schema-12.3.3.tgz#07c754ff91c18ae4fac640255c4b7f125aa33988"
   integrity sha512-0GkuXLENQfLDUFWQDyFxCtZPzMGC93STyez+0babBtolQq4SvOdAn0qkJW2PYjaGAaZqxKEzsrms6i3IE4jxqA==
+  dependencies:
+    tslib "2.8.1"
+
+"@grafana/schema@12.4.0", "@grafana/schema@^12.2.0":
+  version "12.4.0"
+  resolved "https://registry.yarnpkg.com/@grafana/schema/-/schema-12.4.0.tgz#736603b077760b63c10191c7d9a43ef38c036093"
+  integrity sha512-UEcsY6anwBuBdDt7C9Ke00p374iiBtPYiw+m+QnnXESCPW9x+nPZCF5utDs6irao6moIJmFU2Mm7F6I81BmKlA==
   dependencies:
     tslib "2.8.1"
 
@@ -3561,7 +3617,7 @@ d3-random@3:
   resolved "https://registry.yarnpkg.com/d3-random/-/d3-random-3.0.1.tgz#d4926378d333d9c0bfd1e6fa0194d30aebaa20f4"
   integrity sha512-FXMe9GfxTxqd5D6jFsQ+DJ8BJS4E/fT5mqqdjovykEB2oFbTMDVdg1MGFxfQW+FBOGoB++k8swBrgwSHT1cUXQ==
 
-d3-scale-chromatic@3:
+d3-scale-chromatic@3, d3-scale-chromatic@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/d3-scale-chromatic/-/d3-scale-chromatic-3.1.0.tgz#34c39da298b23c20e02f1a4b239bd0f22e7f1314"
   integrity sha512-A3s5PWiZ9YCXFye1o246KoscMWqf8BsD9eRiJ3He7C9OBaxKhAd5TFCdEx/7VbKtxxTsu//1mMJFrEt572cEyQ==
@@ -6220,6 +6276,11 @@ marked-mangle@1.1.11:
   resolved "https://registry.yarnpkg.com/marked-mangle/-/marked-mangle-1.1.11.tgz#d743093b5f48ce964e5594764915abdf05c364f6"
   integrity sha512-BUZiRqPooKZZhC7e8aDlzqkZt4MKkbJ/VY22b8iqrI3fJdnWmSyc7/uujDkrMszZrKURrXsYVUfgdWG6gEspcA==
 
+marked-mangle@1.1.12:
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/marked-mangle/-/marked-mangle-1.1.12.tgz#7ecc1dab1e03695f3b8b9d606e8becfba8277496"
+  integrity sha512-bRrqNcfU9v3iRECb7YPvA+/xKZMjHojd9R92YwHbFjdPQ+Wc7vozkbGKAv4U8AUl798mNUuY3DTBQkedsV3TeQ==
+
 marked@16.3.0:
   version "16.3.0"
   resolved "https://registry.yarnpkg.com/marked/-/marked-16.3.0.tgz#2f513891f867d6edc4772b4a026db9cc331eb94f"
@@ -6499,6 +6560,17 @@ ol@10.6.1:
   version "10.6.1"
   resolved "https://registry.yarnpkg.com/ol/-/ol-10.6.1.tgz#950f3914b4eec978f087b36aa74ce1e18c41ab09"
   integrity sha512-xp174YOwPeLj7c7/8TCIEHQ4d41tgTDDhdv6SqNdySsql5/MaFJEJkjlsYcvOPt7xA6vrum/QG4UdJ0iCGT1cg==
+  dependencies:
+    "@types/rbush" "4.0.0"
+    earcut "^3.0.0"
+    geotiff "^2.1.3"
+    pbf "4.0.1"
+    rbush "^4.0.0"
+
+ol@10.7.0:
+  version "10.7.0"
+  resolved "https://registry.yarnpkg.com/ol/-/ol-10.7.0.tgz#6a072a602cab3a5d9b35356de8b837221d78379b"
+  integrity sha512-122U5gamPqNgLpLOkogFJhgpywvd/5en2kETIDW+Ubfi9lPnZ0G9HWRdG+CX0oP8od2d6u6ky3eewIYYlrVczw==
   dependencies:
     "@types/rbush" "4.0.0"
     earcut "^3.0.0"
@@ -8952,10 +9024,10 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/zod-validation-error/-/zod-validation-error-4.0.2.tgz#bc605eba49ce0fcd598c127fee1c236be3f22918"
   integrity sha512-Q6/nZLe6jxuU80qb/4uJ4t5v2VEZ44lzQjPDhYJNztRQ4wyWc6VF3D3Kb/fAuPetZQnhS3hnajCf9CsWesghLQ==
 
-"zod@^3.25.0 || ^4.0.0":
-  version "4.1.12"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-4.1.12.tgz#64f1ea53d00eab91853195653b5af9eee68970f0"
-  integrity sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==
+"zod@^3.25.0 || ^4.0.0", zod@^4.3.0:
+  version "4.3.6"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-4.3.6.tgz#89c56e0aa7d2b05107d894412227087885ab112a"
+  integrity sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==
 
 zstddec@^0.1.0:
   version "0.1.0"
