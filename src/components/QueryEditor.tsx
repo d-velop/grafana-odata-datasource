@@ -75,16 +75,10 @@ export class QueryEditor extends PureComponent<Props, State> {
       );
   }
 
-  update = () => {
-    this.props.onChange(this.props.query);
+  update = (updatedQuery: ODataQuery) => {
+    this.props.onChange(updatedQuery);
     this.props.onRunQuery();
   };
-
-  resetSelection() {
-    const { query } = this.props;
-    query.timeProperty = null;
-    query.properties = [];
-  }
 
   onEntitySetChange = (option: SelectableValue<EntitySet>) => {
     if (this.props.query.entitySet?.name === option.value?.name) {
@@ -93,14 +87,13 @@ export class QueryEditor extends PureComponent<Props, State> {
     const { query } = this.props;
     const { metadata } = this.state;
     const entitySet = option.value;
-    query.entitySet = entitySet;
-    this.resetSelection();
+    const updatedQuery: ODataQuery = { ...query, entitySet, timeProperty: null, properties: [] };
     this.setState(
       {
         timeProperties: this.mapProperties(metadata, entitySet?.entityType, PropertyKind.Time),
         allProperties: this.mapProperties(metadata, entitySet?.entityType, PropertyKind.All),
       },
-      this.update
+      () => this.update(updatedQuery)
     );
   };
 
@@ -108,45 +101,84 @@ export class QueryEditor extends PureComponent<Props, State> {
     if (this.props.query.timeProperty === option.value) {
       return;
     }
-    const { query } = this.props;
-    query.timeProperty = option.value;
-    this.update();
+    this.update({ ...this.props.query, timeProperty: option.value });
   };
 
   onPropertyChange = (option: SelectableValue<Property>, index: number) => {
     if (this.props.query.properties![index] === option.value) {
       return;
     }
-    const properties: Property[] = this.props.query.properties!;
     if (option.value != null) {
+      const properties = [...this.props.query.properties!];
       properties[index] = option.value;
+      this.update({ ...this.props.query, properties });
     }
-    this.update();
   };
 
   addProperty = () => {
-    const properties: Property[] = this.props.query.properties!;
-    properties.push({ name: '', type: '' });
-    this.update();
+    const properties = [...(this.props.query.properties ?? []), { name: '', type: '' }];
+    this.update({ ...this.props.query, properties });
   };
 
   removeProperty = (index: number) => {
-    const properties: Property[] = this.props.query.properties!;
+    const properties = [...this.props.query.properties!];
     properties.splice(index, 1);
-    this.update();
+    this.update({ ...this.props.query, properties });
   };
 
   addFilterCondition = () => {
-    this.props.query.filterConditions = this.props.query.filterConditions ?? [];
-    const filterConditions: FilterCondition[] = this.props.query.filterConditions!;
-    filterConditions.push({ property: { name: '', type: '' }, operator: '', value: '' });
-    this.update();
+    const filterConditions = [
+      ...(this.props.query.filterConditions ?? []),
+      { property: { name: '', type: '' }, operator: '', value: '' },
+    ];
+    this.update({ ...this.props.query, filterConditions });
   };
 
   removeFilterCondition = (index: number) => {
-    const filterConditions: FilterCondition[] = this.props.query.filterConditions!;
+    const filterConditions = [...this.props.query.filterConditions!];
     filterConditions.splice(index, 1);
-    this.update();
+    this.update({ ...this.props.query, filterConditions });
+  };
+
+  onFilterPropertyChange = (option: SelectableValue<Property>, index: number) => {
+    const filterCondition = this.props.query.filterConditions![index];
+    if (option.value?.name === filterCondition.property.name) {
+      return;
+    }
+    if (option.value) {
+      const type = this.state.allProperties.find((item) => item.value?.name === option.value?.name)?.value?.type ?? '';
+      const updatedCondition: FilterCondition = {
+        ...filterCondition,
+        property: { name: option.value.name, type },
+      };
+      const filterConditions = [...this.props.query.filterConditions!];
+      filterConditions[index] = updatedCondition;
+      this.update({ ...this.props.query, filterConditions });
+    }
+  };
+
+  onFilterOperatorChange = (option: SelectableValue<string>, index: number) => {
+    const filterCondition = this.props.query.filterConditions![index];
+    if (option.value === filterCondition.operator) {
+      return;
+    }
+    if (option.value) {
+      const filterConditions = [...this.props.query.filterConditions!];
+      filterConditions[index] = { ...filterCondition, operator: option.value };
+      this.update({ ...this.props.query, filterConditions });
+    }
+  };
+
+  onFilterValueChange = (value: string, index: number) => {
+    const filterCondition = this.props.query.filterConditions![index];
+    if (value === filterCondition.value) {
+      return;
+    }
+    if (value) {
+      const filterConditions = [...this.props.query.filterConditions!];
+      filterConditions[index] = { ...filterCondition, value };
+      this.update({ ...this.props.query, filterConditions });
+    }
   };
 
   render() {
@@ -188,18 +220,7 @@ export class QueryEditor extends PureComponent<Props, State> {
               )}
               isClearable={true}
               placeholder="(Property)"
-              onChange={(item) => {
-                filterCondition = this.props.query.filterConditions![index];
-                if (item.value?.name === filterCondition.property.name) {
-                  return;
-                }
-                if (item.value) {
-                  filterCondition.property.name = item.value?.name!;
-                  filterCondition.property.type = allProperties.find(
-                    (item) => item.value?.name === filterCondition.property.name
-                  )!.value!.type;
-                }
-              }}
+              onChange={(item) => this.onFilterPropertyChange(item, index)}
               onBlur={this.props.onRunQuery}
               options={allProperties}
               isSearchable={false}
@@ -212,15 +233,7 @@ export class QueryEditor extends PureComponent<Props, State> {
               }
               isClearable={true}
               placeholder="(Operator)"
-              onChange={(item) => {
-                filterCondition = this.props.query.filterConditions![index];
-                if (item.value === filterCondition.operator) {
-                  return;
-                }
-                if (item.value) {
-                  filterCondition.operator = item.value! as string;
-                }
-              }}
+              onChange={(item) => this.onFilterOperatorChange(item, index)}
               onBlur={this.props.onRunQuery}
               options={filterOperators}
               isSearchable={false}
@@ -230,15 +243,7 @@ export class QueryEditor extends PureComponent<Props, State> {
               defaultValue={this.props.query.filterConditions?.[index].value}
               type="text"
               placeholder="(value)"
-              onChange={(item) => {
-                filterCondition = this.props.query.filterConditions![index];
-                if (item.currentTarget.value === filterCondition.value) {
-                  return;
-                }
-                if (item.currentTarget.value) {
-                  filterCondition.value = item.currentTarget.value;
-                }
-              }}
+              onChange={(item) => this.onFilterValueChange(item.currentTarget.value, index)}
               onBlur={this.props.onRunQuery}
             />
             <Button variant={'secondary'} onClick={() => this.removeFilterCondition(index)}>
