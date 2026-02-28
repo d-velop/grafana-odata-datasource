@@ -24,6 +24,10 @@
     "uuid": "^13.0.0",
     "xmlbuilder2": "^4.0.3"
   },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "@sap/cds-dk": "^9.7.2"
+  },
   "engines": {
     "node": ">=22"
   },

@@ -31,7 +31,7 @@ Frontend code is located in the `src` folder
 
 Install dependencies
 ```bash
-yarn install
+pnpm install
 ```
 
 Build plugin in development mode
@@ -41,7 +41,7 @@ yarn dev
 
 or build plugin in production mode
 ```bash
-yarn build
+pnpm run build
 ```
 
 ### Using the OData test-server
@@ -69,7 +69,7 @@ to be tried out and tested directly. See folder [`provisioning`](provisioning) f
 
 To start, simply run the following command
 ```bash
-yarn server
+pnpm run server
 ```
 in the projects root directory. Afterwards you can open `http://localhost:3000` in your browser and begin using Grafana
 with the preconfigured OData Data Source.
@@ -115,7 +115,7 @@ The [integration/keycloak](integration/keycloak) folder contains configuration f
 
 You can use the following command as a shortcut to run the Docker Compose setup:
 ```bash
-yarn server:withKeycloak
+pnpm run server:withKeycloak
 ```
 
 To enable integrated testing across containers and from the host system, add the following entry to your `/etc/hosts`:
