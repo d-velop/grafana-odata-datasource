@@ -35,7 +35,7 @@ type DatasourceSettings struct {
 
 func newDatasourceInstance(ctx context.Context, settings backend.DataSourceInstanceSettings) (instancemgmt.Instance, error) {
 	var dsSettings DatasourceSettings
-	if settings.JSONData != nil && len(settings.JSONData) > 1 {
+	if len(settings.JSONData) > 1 {
 		if err := json.Unmarshal(settings.JSONData, &dsSettings); err != nil {
 			return nil, err
 		}
@@ -187,7 +187,7 @@ func (ds *ODataSource) query(ctx context.Context, clientInstance ODataClient, qu
 		return response
 	}
 
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	log.DefaultLogger.Debug("request response status", "status", resp.Status)
 	if resp.StatusCode != http.StatusOK {
@@ -245,7 +245,7 @@ func (ds *ODataSource) getMetadata(ctx context.Context, req *backend.CallResourc
 		return err
 	}
 
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("get metadata failed with status code %d", resp.StatusCode)
 	}

@@ -477,7 +477,7 @@ func withQueryModel(builders ...func(*queryModel)) func(n *backend.DataQuery) {
 		// as this behavior is stated in the docs:
 		// "JSON is the raw JSON query and includes the above properties as well as custom properties."
 		base := make(map[string]interface{})
-		json.Unmarshal(model, &base)
+		_ = json.Unmarshal(model, &base)
 
 		base["refId"] = query.RefID
 		base["queryType"] = query.QueryType

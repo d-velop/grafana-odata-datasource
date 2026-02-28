@@ -12,7 +12,6 @@ import (
 )
 
 type clientMock struct {
-	baseUrl    string
 	statusCode int
 	body       []byte
 	err        error
