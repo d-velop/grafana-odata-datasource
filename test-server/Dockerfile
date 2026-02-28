@@ -2,16 +2,13 @@ FROM node:24.14.0-bookworm
 
 WORKDIR /app
 
-COPY package.json yarn.lock generateTestdata.ts tsconfig.json /app/
+COPY package.json pnpm-lock.yaml .npmrc generateTestdata.ts tsconfig.json /app/
 COPY db /app/db
 COPY srv /app/srv
 COPY mock /app/mock
 
-RUN yarn global add ts-node
-RUN yarn global add @sap/cds-dk
-
-RUN yarn install
+RUN corepack enable && pnpm install --frozen-lockfile
 
 EXPOSE 4004/tcp
 
-CMD [ "yarn", "start" ]
+CMD [ "pnpm", "start" ]

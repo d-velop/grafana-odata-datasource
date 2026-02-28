@@ -24,10 +24,17 @@
     "uuid": "^13.0.0",
     "xmlbuilder2": "^4.0.3"
   },
-  "engines": {
-    "node": ">=22"
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "@sap/cds-dk": "^9.7.2"
   },
-  "packageManager": "yarn@1.22.22",
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@10.30.3",
+  "pnpm": {
+    "onlyBuiltDependencies": ["better-sqlite3"]
+  },
   "cds": {
     "requires": {
       "db": {
