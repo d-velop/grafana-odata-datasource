@@ -5,7 +5,7 @@ consists of both backend and frontend components.
 ## Prerequisites
 For this project to work you need [Node.js](https://nodejs.org/en/) and [Go](https://go.dev) installed.
 
-As with other Grafana data source plugin projects, [yarn](https://yarnpkg.com/) is used for managing and building the
+As with other Grafana data source plugin projects, [pnpm](https://pnpm.io/) is used for managing and building the
 frontend and [Mage](https://magefile.org) for the backend.
 
 Additionally, [Docker](https://www.docker.com/) is used to simplify plugin development and integration testing.
@@ -36,7 +36,7 @@ pnpm install
 
 Build plugin in development mode
 ```bash
-yarn dev
+pnpm run dev
 ```
 
 or build plugin in production mode
@@ -52,7 +52,7 @@ If you don't have a full-fledged OData server at hand, you will find a test serv
 It can be started by using the command
 ```bash
 cd test-server
-yarn start 
+pnpm run start
 ```
 
 In addition, the test server is automatically built and started using Docker Compose (see below).

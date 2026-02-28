@@ -29,9 +29,12 @@
     "@sap/cds-dk": "^9.7.2"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   },
-  "packageManager": "yarn@1.22.22",
+  "packageManager": "pnpm@10.30.3",
+  "pnpm": {
+    "onlyBuiltDependencies": ["better-sqlite3"]
+  },
   "cds": {
     "requires": {
       "db": {
