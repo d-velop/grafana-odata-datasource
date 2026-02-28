@@ -173,6 +173,7 @@ func TestCallResourceMetadata(t *testing.T) {
 			// Parse crs.csr.Body into a metadataResponse struct
 			var resp schema
 			err = json.Unmarshal(crs.csr.Body, &resp)
+			require.NoError(t, err)
 
 			require.Equal(t, table.expResponse, resp)
 		})
