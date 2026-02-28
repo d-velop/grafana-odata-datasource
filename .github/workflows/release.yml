@@ -17,10 +17,13 @@ jobs:
       attestations: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: grafana/plugin-actions/build-plugin@main
+      - uses: actions/checkout@v6
         with:
-          node-version: '22'
-          go-version: '1.24'
+          persist-credentials: false
+
+      - uses: grafana/plugin-actions/build-plugin@build-plugin/v1.2.0
+        with:
+          node-version: '24'
+          go-version: '1.25'
           policy_token: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}
           attestation: true
