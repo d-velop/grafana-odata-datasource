@@ -1,0 +1,14 @@
+{
+  "@odata.context": "$metadata#Temperatures",
+  "value": [
+    {
+      "id": "005ebc5d-edb5-465e-bdcc-44b7bc0647b8",
+      "time": "2023-11-29T13:47:30Z",
+      "epoch": 1701265650936,
+      "value1": 1.77658964096369,
+      "value2": 0.6797097507403618,
+      "value3": 9.637106006085434
+    }
+  ],
+  "@odata.nextLink": "Temperatures?$skiptoken=1000"
+}

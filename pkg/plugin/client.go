@@ -13,6 +13,7 @@ import (
 )
 
 type ODataClient interface {
+	ODataVersion() string
 	GetServiceRoot(ctx context.Context) (*http.Response, error)
 	GetMetadata(ctx context.Context) (*http.Response, error)
 	Get(ctx context.Context, entitySet string, properties []property,
@@ -23,6 +24,11 @@ type ODataClientImpl struct {
 	httpClient       *http.Client
 	baseUrl          string
 	urlSpaceEncoding string
+	odataVersion     string
+}
+
+func (client *ODataClientImpl) ODataVersion() string {
+	return client.odataVersion
 }
 
 func (client *ODataClientImpl) get(ctx context.Context, url string, mimeType string) (*http.Response, error) {

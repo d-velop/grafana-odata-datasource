@@ -17,14 +17,19 @@ const (
 	EdmGuid           = "Edm.Guid"
 	EdmTime           = "Edm.Time"
 	EdmDate           = "Edm.Date"
+	EdmDateTime       = "Edm.DateTime"
 
 	Metadata = "$metadata"
 	Filter   = "$filter"
 	Select   = "$select"
 )
 
+// Response represents different response formats from OData V2 to V4 and different implementations. It is used to
+// autodetect and extract the right payload.
 type Response struct {
-	Value []map[string]interface{} `json:"value"`
+	D       interface{}   `json:"d"`
+	Results []interface{} `json:"results"`
+	Value   []interface{} `json:"value"`
 }
 
 type Edmx struct {
