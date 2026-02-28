@@ -108,7 +108,7 @@ func TestGetEntities(t *testing.T) {
 			expectedRespCode: 200,
 			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusOK)
-				w.Write([]byte("{\"value\":[{\"hello\":\"world\"}]}"))
+				_, _ = w.Write([]byte("{\"value\":[{\"hello\":\"world\"}]}"))
 			},
 		},
 		{
@@ -162,7 +162,7 @@ func TestGetMetadata(t *testing.T) {
 			expectedRespCode: 200,
 			handlerCallback: func(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusOK)
-				w.Write([]byte("<?xml version=\"1.0\" encoding=\"utf-8\"?><edmx:Edmx Version=\"4.0\" xmlns:edmx=\"https://docs.oasis-open.org/odata/ns/edmx\"></edmx:Edmx>"))
+				_, _ = w.Write([]byte("<?xml version=\"1.0\" encoding=\"utf-8\"?><edmx:Edmx Version=\"4.0\" xmlns:edmx=\"https://docs.oasis-open.org/odata/ns/edmx\"></edmx:Edmx>"))
 			},
 		},
 		{
