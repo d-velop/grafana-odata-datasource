@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.2.0] 2025-08-30
+## [1.2.0] 2026-02-28
 
 ### Features
 - [#1](https://github.com/d-velop/grafana-odata-datasource/issues/1): Add 'Forward OAuth Identity' support
