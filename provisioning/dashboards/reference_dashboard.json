@@ -30,7 +30,7 @@
     {
       "datasource": {
         "type": "dvelop-odata-datasource",
-        "uid": "PD461F79B494E0B04"
+        "uid": "PD461F79B494E0B12"
       },
       "fieldConfig": {
         "defaults": {
@@ -86,7 +86,7 @@
         {
           "datasource": {
             "type": "dvelop-odata-datasource",
-            "uid": "PD461F79B494E0B04"
+            "uid": "PD461F79B494E0B12"
           },
           "entitySet": {
             "entityType": "ODataDemo.Product",
@@ -130,7 +130,7 @@
     {
       "datasource": {
         "type": "dvelop-odata-datasource",
-        "uid": "PD461F79B494E0B03"
+        "uid": "PD461F79B494E0B11"
       },
       "fieldConfig": {
         "defaults": {
@@ -186,7 +186,7 @@
         {
           "datasource": {
             "type": "dvelop-odata-datasource",
-            "uid": "PD461F79B494E0B03"
+            "uid": "PD461F79B494E0B11"
           },
           "entitySet": {
             "entityType": "ODataDemo.Product",

@@ -5,6 +5,8 @@ deleteDatasources:
     orgId: 1
   - name: 'Northwind-Reference-V3'
     orgId: 1
+  - name: 'Northwind-Reference-V4'
+    orgId: 1
   - name: 'Reference-V3'
     orgId: 1
   - name: 'Reference-V4'
@@ -19,6 +21,8 @@ datasources:
     url: https://services.odata.org/V2/Northwind/Northwind.svc
     version: 1
     editable: true
+    jsonData:
+      odataVersion: 'V2'
   - name: 'Northwind-Reference-V3'
     uid: PD461F79B494E0B02
     type: dvelop-odata-datasource
@@ -27,16 +31,28 @@ datasources:
     url: https://services.odata.org/V3/Northwind/Northwind.svc
     version: 1
     editable: true
-  - name: 'Reference-V3'
+    jsonData:
+      odataVersion: 'V3'
+  - name: 'Northwind-Reference-V4'
     uid: PD461F79B494E0B03
+    type: dvelop-odata-datasource
+    orgId: 1
+    isDefault: false
+    url: https://services.odata.org/V4/Northwind/Northwind.svc
+    version: 1
+    editable: true
+  - name: 'Reference-V3'
+    uid: PD461F79B494E0B11
     type: dvelop-odata-datasource
     orgId: 1
     isDefault: false
     url: https://services.odata.org/V3/OData/OData.svc
     version: 1
     editable: true
+    jsonData:
+      odataVersion: 'V3'
   - name: 'Reference-V4'
-    uid: PD461F79B494E0B04
+    uid: PD461F79B494E0B12
     type: dvelop-odata-datasource
     orgId: 1
     isDefault: false

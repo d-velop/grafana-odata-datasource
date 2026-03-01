@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"path"
 	"strings"
+	"time"
 
 	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/log"
@@ -55,7 +56,7 @@ func (client *ODataClientImpl) GetMetadata(ctx context.Context) (*http.Response,
 
 func (client *ODataClientImpl) Get(ctx context.Context, entitySet string, properties []property, filterConditions []filterCondition) (*http.Response, error) {
 	requestUrl, err := buildQueryUrl(client.baseUrl, entitySet, properties,
-		filterConditions, client.urlSpaceEncoding)
+		filterConditions, client.urlSpaceEncoding, client.odataVersion)
 	if err != nil {
 		return nil, err
 	}
@@ -64,14 +65,14 @@ func (client *ODataClientImpl) Get(ctx context.Context, entitySet string, proper
 	return client.get(ctx, urlString, "application/json")
 }
 
-func buildQueryUrl(baseUrl string, entitySet string, properties []property, filterConditions []filterCondition, urlSpaceEncoding string) (*url.URL, error) {
+func buildQueryUrl(baseUrl string, entitySet string, properties []property, filterConditions []filterCondition, urlSpaceEncoding string, version string) (*url.URL, error) {
 	requestUrl, err := url.Parse(baseUrl)
 	if err != nil {
 		return nil, err
 	}
 	requestUrl.Path = path.Join(requestUrl.Path, entitySet)
 	params, _ := url.ParseQuery(requestUrl.RawQuery)
-	filterParam := mapFilter(filterConditions)
+	filterParam := mapFilter(filterConditions, version)
 	if len(filterParam) > 0 {
 		params.Add(odata.Filter, filterParam)
 	}
@@ -97,18 +98,71 @@ func mapSelect(properties []property) string {
 	return strings.Join(result[:], ",")
 }
 
-func mapFilter(filterConditions []filterCondition) string {
+func mapFilter(filterConditions []filterCondition, version string) string {
+	isV2V3 := version == "V2" || version == "V3"
 	var filter = ""
 	for index, element := range filterConditions {
-		if element.Property.Type == odata.EdmString {
-			filter += fmt.Sprintf("%s %s '%s'", element.Property.Name, element.Operator, element.Value)
-		} else {
-			filter += fmt.Sprintf("%s %s %s", element.Property.Name, element.Operator, element.Value)
+		name, op, val := element.Property.Name, element.Operator, element.Value
+		switch element.Property.Type {
+		case odata.EdmString:
+			filter += fmt.Sprintf("%s %s '%s'", name, op, val)
+		case odata.EdmDateTime:
+			if isV2V3 {
+				// V2/V3: datetime'yyyy-mm-ddThh:mm:ss' without timezone suffix
+				filter += fmt.Sprintf("%s %s datetime'%s'", name, op, stripTimezoneForV2(val))
+			} else {
+				filter += fmt.Sprintf("%s %s %s", name, op, val)
+			}
+		case odata.EdmDateTimeOffset:
+			if isV2V3 {
+				filter += fmt.Sprintf("%s %s datetimeoffset'%s'", name, op, val)
+			} else {
+				// V4: plain ISO 8601 value, no prefix
+				filter += fmt.Sprintf("%s %s %s", name, op, val)
+			}
+		case odata.EdmInt64:
+			if isV2V3 {
+				filter += fmt.Sprintf("%s %s %sL", name, op, val)
+			} else {
+				filter += fmt.Sprintf("%s %s %s", name, op, val)
+			}
+		case odata.EdmDecimal:
+			if isV2V3 {
+				filter += fmt.Sprintf("%s %s %sM", name, op, val)
+			} else {
+				filter += fmt.Sprintf("%s %s %s", name, op, val)
+			}
+		case odata.EdmSingle:
+			if isV2V3 {
+				filter += fmt.Sprintf("%s %s %sf", name, op, val)
+			} else {
+				filter += fmt.Sprintf("%s %s %s", name, op, val)
+			}
+		case odata.EdmDouble:
+			if isV2V3 {
+				filter += fmt.Sprintf("%s %s %sd", name, op, val)
+			} else {
+				filter += fmt.Sprintf("%s %s %s", name, op, val)
+			}
+		case odata.EdmGuid:
+			if isV2V3 {
+				filter += fmt.Sprintf("%s %s guid'%s'", name, op, val)
+			} else {
+				filter += fmt.Sprintf("%s %s %s", name, op, val)
+			}
+		default:
+			filter += fmt.Sprintf("%s %s %s", name, op, val)
 		}
 		if index < (len(filterConditions) - 1) {
 			filter += " and "
 		}
 	}
-
 	return filter
+}
+
+func stripTimezoneForV2(value string) string {
+	if t, err := time.Parse(time.RFC3339, value); err == nil {
+		return t.UTC().Format("2006-01-02T15:04:05")
+	}
+	return value
 }

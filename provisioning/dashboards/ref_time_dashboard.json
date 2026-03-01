@@ -30,7 +30,7 @@
     {
       "datasource": {
         "type": "dvelop-odata-datasource",
-        "uid": "PD461F79B494E0B04"
+        "uid": "PD461F79B494E0B12"
       },
       "fieldConfig": {
         "defaults": {
@@ -86,7 +86,7 @@
         {
           "datasource": {
             "type": "dvelop-odata-datasource",
-            "uid": "PD461F79B494E0B04"
+            "uid": "PD461F79B494E0B12"
           },
           "entitySet": {
             "entityType": "ODataDemo.Product",
@@ -131,7 +131,7 @@
     {
       "datasource": {
         "type": "dvelop-odata-datasource",
-        "uid": "PD461F79B494E0B03"
+        "uid": "PD461F79B494E0B11"
       },
       "fieldConfig": {
         "defaults": {
@@ -187,7 +187,7 @@
         {
           "datasource": {
             "type": "dvelop-odata-datasource",
-            "uid": "PD461F79B494E0B03"
+            "uid": "PD461F79B494E0B11"
           },
           "entitySet": {
             "entityType": "ODataDemo.Product",
@@ -226,7 +226,7 @@
           }
         }
       ],
-      "title": "Orders table (Reference-V3)",
+      "title": "Products table (Reference-V3)",
       "type": "table"
     },
     {
@@ -355,7 +355,7 @@
           }
         }
       ],
-      "title": "Products table (Northwind-Reference-V3)",
+      "title": "Orders table (Northwind-Reference-V3)",
       "type": "table"
     },
     {
@@ -484,7 +484,7 @@
           }
         }
       ],
-      "title": "Products table (Northwind-Reference-V2)",
+      "title": "Orders table (Northwind-Reference-V2)",
       "type": "table"
     }
   ],
