@@ -85,6 +85,47 @@ Run all backend test by executing the following command:
 mage test
 ```
 
+### Integration Tests
+
+Integration tests run against real OData endpoints to verify that filter expressions, metadata parsing, and response
+handling work correctly across OData versions (V2, V3, V4).
+
+| File                                    | Description                                                             |
+|-----------------------------------------|-------------------------------------------------------------------------|
+| `pkg/plugin/integration_test.go`        | Shared infrastructure: types, helpers, test runner                      |
+| `pkg/plugin/integration_public_test.go` | Public internet services (Northwind, OData.svc, Swiss Parliament, USGS) |
+| `pkg/plugin/integration_local_test.go`  | Local test server (V4 and V2 via OData V2 adapter)                      |
+
+#### Run all integration tests
+
+Requires network access for the public services.
+
+```bash
+mage testIntegration
+```
+
+Or directly via `go test`:
+
+```bash
+go test -tags integration -v -timeout 120s -run TestIntegration ./pkg/plugin/...
+```
+
+#### Run only local tests
+
+Local tests exercise the test server running at `localhost:4004`. Start it first:
+
+```bash
+cd test-server && pnpm start
+```
+
+Then run only the local integration tests:
+
+```bash
+go test -tags integration -v -timeout 60s -run "TestIntegration/Local" ./pkg/plugin/...
+```
+
+If the server is not running, the local tests are skipped automatically with a hint on how to start it.
+
 ### Coverage
 
 To evaluate the backend test coverage execute the following command:

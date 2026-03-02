@@ -108,7 +108,6 @@ func mapFilter(filterConditions []filterCondition, version string) string {
 			filter += fmt.Sprintf("%s %s '%s'", name, op, val)
 		case odata.EdmDateTime:
 			if isV2V3 {
-				// V2/V3: datetime'yyyy-mm-ddThh:mm:ss' without timezone suffix
 				filter += fmt.Sprintf("%s %s datetime'%s'", name, op, stripTimezoneForV2(val))
 			} else {
 				filter += fmt.Sprintf("%s %s %s", name, op, val)
@@ -117,7 +116,6 @@ func mapFilter(filterConditions []filterCondition, version string) string {
 			if isV2V3 {
 				filter += fmt.Sprintf("%s %s datetimeoffset'%s'", name, op, val)
 			} else {
-				// V4: plain ISO 8601 value, no prefix
 				filter += fmt.Sprintf("%s %s %s", name, op, val)
 			}
 		case odata.EdmInt64:
