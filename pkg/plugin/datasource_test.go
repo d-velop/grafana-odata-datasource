@@ -22,9 +22,10 @@ func TestGetClientInstance(t *testing.T) {
 	im.On("Get", context.TODO(), mock.Anything).Return(&is, nil)
 
 	// Act
-	odataClient := ds.getClientInstance(context.TODO(), backend.PluginContext{})
+	odataClient, err := ds.getClientInstance(context.TODO(), backend.PluginContext{})
 
 	// Assert
+	require.NoError(t, err)
 	require.Equal(t, client, odataClient)
 }
 

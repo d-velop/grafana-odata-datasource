@@ -45,7 +45,11 @@ func MapValue(value interface{}, propertyType string) interface{} {
 		boolValue := value.(bool)
 		return &boolValue
 	case EdmSingle, EdmDecimal, EdmDouble, EdmSByte, EdmByte, EdmInt16, EdmInt32, EdmInt64:
-		return mapNumber(value.(float64), propertyType)
+		result, err := mapNumber(value.(float64), propertyType)
+		if err != nil {
+			return nil
+		}
+		return result
 	case EdmDateTimeOffset, EdmDate:
 		if timeValue, err := time.Parse(time.RFC3339Nano, fmt.Sprint(value)); err == nil {
 			return &timeValue
@@ -58,29 +62,29 @@ func MapValue(value interface{}, propertyType string) interface{} {
 	}
 }
 
-func mapNumber(value float64, propertyType string) interface{} {
+func mapNumber(value float64, propertyType string) (interface{}, error) {
 	switch propertyType {
 	case EdmSingle:
 		y := float32(value)
-		return &y
+		return &y, nil
 	case EdmDecimal, EdmDouble:
-		return &value
+		return &value, nil
 	case EdmSByte:
 		y := int8(value)
-		return &y
+		return &y, nil
 	case EdmByte:
 		y := uint8(value)
-		return &y
+		return &y, nil
 	case EdmInt16:
 		y := int16(value)
-		return &y
+		return &y, nil
 	case EdmInt32:
 		y := int32(value)
-		return &y
+		return &y, nil
 	case EdmInt64:
 		y := int64(value)
-		return &y
+		return &y, nil
 	default:
-		panic("unexpected property type")
+		return nil, fmt.Errorf("unexpected property type: %s", propertyType)
 	}
 }

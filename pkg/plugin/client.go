@@ -64,7 +64,10 @@ func buildQueryUrl(baseUrl string, entitySet string, properties []property, filt
 		return nil, err
 	}
 	requestUrl.Path = path.Join(requestUrl.Path, entitySet)
-	params, _ := url.ParseQuery(requestUrl.RawQuery)
+	params, err := url.ParseQuery(requestUrl.RawQuery)
+	if err != nil {
+		return nil, fmt.Errorf("error parsing query: %w", err)
+	}
 	filterParam := mapFilter(filterConditions)
 	if len(filterParam) > 0 {
 		params.Add(odata.Filter, filterParam)

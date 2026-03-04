@@ -72,10 +72,13 @@ func NewODataSource(ctx context.Context, _ backend.DataSourceInstanceSettings) (
 	return ds, nil
 }
 
-func (ds *ODataSource) getClientInstance(ctx context.Context, pluginContext backend.PluginContext) ODataClient {
-	instance, _ := ds.im.Get(ctx, pluginContext)
+func (ds *ODataSource) getClientInstance(ctx context.Context, pluginContext backend.PluginContext) (ODataClient, error) {
+	instance, err := ds.im.Get(ctx, pluginContext)
+	if err != nil {
+		return nil, err
+	}
 	clientInstance := instance.(*ODataSourceInstance).client
-	return clientInstance
+	return clientInstance, nil
 }
 
 func (ds *ODataSource) logTokenStatus(h http.Header) {
@@ -91,7 +94,10 @@ func (ds *ODataSource) logTokenStatus(h http.Header) {
 func (ds *ODataSource) QueryData(ctx context.Context, req *backend.QueryDataRequest) (*backend.QueryDataResponse,
 	error) {
 	ds.logTokenStatus(req.GetHTTPHeaders())
-	clientInstance := ds.getClientInstance(ctx, req.PluginContext)
+	clientInstance, err := ds.getClientInstance(ctx, req.PluginContext)
+	if err != nil {
+		return nil, err
+	}
 	response := backend.NewQueryDataResponse()
 	for _, q := range req.Queries {
 		res := ds.query(ctx, clientInstance, q)
@@ -105,12 +111,19 @@ func (ds *ODataSource) CheckHealth(ctx context.Context, req *backend.CheckHealth
 	ds.logTokenStatus(req.GetHTTPHeaders())
 	var status backend.HealthStatus
 	var message string
-	clientInstance := ds.getClientInstance(ctx, req.PluginContext)
-	var res, err = clientInstance.GetServiceRoot(ctx)
+	clientInstance, err := ds.getClientInstance(ctx, req.PluginContext)
+	if err != nil {
+		return &backend.CheckHealthResult{
+			Status:  backend.HealthStatusError,
+			Message: fmt.Sprintf("Health check failed: %s", err.Error()),
+		}, nil
+	}
+	res, err := clientInstance.GetServiceRoot(ctx)
 	if err != nil {
 		status = backend.HealthStatusError
 		message = fmt.Sprintf("Health check failed: %s", err.Error())
 	} else {
+		defer func() { _ = res.Body.Close() }()
 		if res.StatusCode == 200 {
 			status = backend.HealthStatusOk
 			message = "Data Source is working as expected."
@@ -238,7 +251,10 @@ func (ds *ODataSource) query(ctx context.Context, clientInstance ODataClient, qu
 
 func (ds *ODataSource) getMetadata(ctx context.Context, req *backend.CallResourceRequest,
 	sender backend.CallResourceResponseSender) error {
-	clientInstance := ds.getClientInstance(ctx, req.PluginContext)
+	clientInstance, err := ds.getClientInstance(ctx, req.PluginContext)
+	if err != nil {
+		return err
+	}
 	resp, err := clientInstance.GetMetadata(ctx)
 
 	if err != nil {
