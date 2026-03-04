@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.2.1] 2026-03-04
+
+### Bug Fixes
+- Replace `panic` in `mapNumber` with proper error handling
+- Close response body in `CheckHealth` to prevent resource leak
+- Handle errors from `ds.im.Get()` in `getClientInstance`
+- Handle errors from `url.ParseQuery()` in `buildQueryUrl`
+
 ## [1.2.0] 2026-02-28
 
 ### Features

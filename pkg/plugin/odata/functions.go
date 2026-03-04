@@ -122,7 +122,11 @@ func MapValue(value interface{}, propertyType string) interface{} {
 			fmt.Printf("ERROR: Expected a numeric type but got %T with value %v\n", value, value)
 			return nil
 		}
-		return mapNumber(floatValue, propertyType)
+		result, err := mapNumber(floatValue, propertyType)
+		if err != nil {
+			return nil
+		}
+		return result
 	case EdmDateTimeOffset, EdmDateTime, EdmDate:
 		if timeValue, err := parseTime(fmt.Sprint(value)); err == nil {
 			return &timeValue
@@ -158,30 +162,30 @@ func toFloat64(value interface{}) (float64, error) {
 	}
 }
 
-func mapNumber(value float64, propertyType string) interface{} {
+func mapNumber(value float64, propertyType string) (interface{}, error) {
 	switch propertyType {
 	case EdmSingle:
 		y := float32(value)
-		return &y
+		return &y, nil
 	case EdmDecimal, EdmDouble:
-		return &value
+		return &value, nil
 	case EdmSByte:
 		y := int8(value)
-		return &y
+		return &y, nil
 	case EdmByte:
 		y := uint8(value)
-		return &y
+		return &y, nil
 	case EdmInt16:
 		y := int16(value)
-		return &y
+		return &y, nil
 	case EdmInt32:
 		y := int32(value)
-		return &y
+		return &y, nil
 	case EdmInt64:
 		y := int64(value)
-		return &y
+		return &y, nil
 	default:
-		panic("unexpected property type")
+		return nil, fmt.Errorf("unexpected property type: %s", propertyType)
 	}
 }
 
