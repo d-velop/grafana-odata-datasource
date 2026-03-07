@@ -26,6 +26,10 @@ type callResourceResponseSenderMock struct {
 	csr *backend.CallResourceResponse
 }
 
+func (client *clientMock) ODataVersion() string {
+	return "Auto"
+}
+
 func (client *clientMock) GetServiceRoot(_ context.Context) (*http.Response, error) {
 	return &http.Response{StatusCode: client.statusCode,
 		Body: io.NopCloser(bytes.NewReader(client.body))}, client.err

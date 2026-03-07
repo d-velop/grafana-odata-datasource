@@ -14,11 +14,13 @@ import (
 func TestMapFilter(t *testing.T) {
 	tables := []struct {
 		name             string
+		version          string
 		filterConditions []filterCondition
 		expected         string
 	}{
+		// --- V4 / default behavior ---
 		{
-			name: "Time filter only",
+			name: "V4: DateTimeOffset filter",
 			filterConditions: someFilterConditions(
 				withFilterCondition(timeProp, "ge", aOneDayTimeRange().From.Format(time.RFC3339)),
 				withFilterCondition(timeProp, "le", aOneDayTimeRange().To.Format(time.RFC3339)),
@@ -26,7 +28,7 @@ func TestMapFilter(t *testing.T) {
 			expected: "time ge 2022-04-21T12:30:50Z and time le 2022-04-21T12:30:50Z and int32 eq 5",
 		},
 		{
-			name: "Time filter and int and string filter",
+			name: "V4: DateTimeOffset and string filter",
 			filterConditions: someFilterConditions(
 				withFilterCondition(timeProp, "ge", aOneDayTimeRange().From.Format(time.RFC3339)),
 				withFilterCondition(timeProp, "le", aOneDayTimeRange().To.Format(time.RFC3339)),
@@ -35,7 +37,7 @@ func TestMapFilter(t *testing.T) {
 			expected: "time ge 2022-04-21T12:30:50Z and time le 2022-04-21T12:30:50Z and int32 eq 5 and string eq 'Hello'",
 		},
 		{
-			name: "Time filter and string filter",
+			name: "V4: DateTimeOffset and empty string filter",
 			filterConditions: someFilterConditions(
 				withFilterCondition(timeProp, "ge", aOneDayTimeRange().From.Format(time.RFC3339)),
 				withFilterCondition(timeProp, "le", aOneDayTimeRange().To.Format(time.RFC3339)),
@@ -43,16 +45,67 @@ func TestMapFilter(t *testing.T) {
 			expected: "time ge 2022-04-21T12:30:50Z and time le 2022-04-21T12:30:50Z and string eq ''",
 		},
 		{
-			name:             "String filter only",
+			name:             "V4: String filter only",
 			filterConditions: someFilterConditions(withFilterCondition(stringProp, "eq", "")),
 			expected:         "string eq ''",
+		},
+		// --- V2 behavior ---
+		{
+			name:    "V2: DateTimeOffset wraps with datetimeoffset prefix",
+			version: "V2",
+			filterConditions: someFilterConditions(
+				withFilterCondition(timeProp, "ge", "2022-04-21T12:30:50Z"),
+				withFilterCondition(timeProp, "le", "2022-04-21T12:30:50Z")),
+			expected: "time ge datetimeoffset'2022-04-21T12:30:50Z' and time le datetimeoffset'2022-04-21T12:30:50Z'",
+		},
+		{
+			name:    "V2: DateTime wraps with datetime prefix and strips timezone",
+			version: "V2",
+			filterConditions: someFilterConditions(
+				withFilterCondition(func(p *property) { p.Name = "ts"; p.Type = odata.EdmDateTime }, "ge", "2022-04-21T12:30:50Z")),
+			expected: "ts ge datetime'2022-04-21T12:30:50'",
+		},
+		{
+			name:    "V2: Int64 gets L suffix",
+			version: "V2",
+			filterConditions: someFilterConditions(
+				withFilterCondition(func(p *property) { p.Name = "count"; p.Type = odata.EdmInt64 }, "eq", "42")),
+			expected: "count eq 42L",
+		},
+		{
+			name:    "V2: Decimal gets M suffix",
+			version: "V2",
+			filterConditions: someFilterConditions(
+				withFilterCondition(func(p *property) { p.Name = "amount"; p.Type = odata.EdmDecimal }, "eq", "12.34")),
+			expected: "amount eq 12.34M",
+		},
+		{
+			name:    "V2: Single gets f suffix",
+			version: "V2",
+			filterConditions: someFilterConditions(
+				withFilterCondition(func(p *property) { p.Name = "discount"; p.Type = odata.EdmSingle }, "gt", "0")),
+			expected: "discount gt 0f",
+		},
+		{
+			name:    "V2: Double gets d suffix",
+			version: "V2",
+			filterConditions: someFilterConditions(
+				withFilterCondition(func(p *property) { p.Name = "ratio"; p.Type = odata.EdmDouble }, "gt", "1.5")),
+			expected: "ratio gt 1.5d",
+		},
+		{
+			name:    "V2: Guid gets guid prefix",
+			version: "V2",
+			filterConditions: someFilterConditions(
+				withFilterCondition(func(p *property) { p.Name = "id"; p.Type = odata.EdmGuid }, "eq", "12345678-1234-1234-1234-123456789abc")),
+			expected: "id eq guid'12345678-1234-1234-1234-123456789abc'",
 		},
 	}
 
 	for _, table := range tables {
 		t.Run(table.name, func(t *testing.T) {
 			// Act
-			var filterString = mapFilter(table.filterConditions)
+			var filterString = mapFilter(table.filterConditions, table.version)
 
 			// Assert
 			assert.Equal(t, table.expected, filterString)
@@ -87,7 +140,7 @@ func TestBuildQueryUrl(t *testing.T) {
 	for _, table := range tables {
 		t.Run(table.name, func(t *testing.T) {
 			// Act
-			var builtUrl, err = buildQueryUrl(table.baseUrl, table.entitySet, table.properties, table.filterConditions, "+")
+			var builtUrl, err = buildQueryUrl(table.baseUrl, table.entitySet, table.properties, table.filterConditions, "+", "")
 
 			// Assert
 			assert.NoError(t, err)

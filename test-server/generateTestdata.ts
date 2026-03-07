@@ -1,5 +1,5 @@
 const fs = require('fs');
-const {GenerateTemperatures, GenerateRooms} = require("./mock/Testdata");
+const {GenerateTemperatures, GenerateRooms, GenerateTestPrimitives} = require("./mock/Testdata");
 
 function writeToCSV(name: string, dataGenerator: () => any[]) {
   const dataArray = dataGenerator();
@@ -10,3 +10,4 @@ function writeToCSV(name: string, dataGenerator: () => any[]) {
 
 writeToCSV('Temperatures', GenerateTemperatures);
 writeToCSV('Rooms', GenerateRooms);
+writeToCSV('TestPrimitives', GenerateTestPrimitives);
