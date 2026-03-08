@@ -34,7 +34,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.11.1",
     "@grafana/eslint-config": "^9.0.0",
-    "@grafana/plugin-e2e": "^3.4.0",
+    "@grafana/plugin-e2e": "^3.4.2",
     "@grafana/tsconfig": "^2.0.1",
     "@openfeature/core": "^1.9.2",
     "@openfeature/web-sdk": "^1.7.3",
