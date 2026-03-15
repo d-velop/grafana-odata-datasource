@@ -33,8 +33,8 @@ importers:
         specifier: ^1.19.0
         version: 1.19.0
       jose:
-        specifier: ^6.2.0
-        version: 6.2.0
+        specifier: ^6.2.1
+        version: 6.2.1
       morgan:
         specifier: ^1.10.1
         version: 1.10.1
@@ -541,8 +541,8 @@ packages:
   is-promise@4.0.0:
     resolution: {integrity: sha512-hvpoI6korhJMnej285dSg6nu1+e6uxs7zG3BYAm5byqDsgJNWwxzM6z6iZiAgQR4TJ30JmBTOwqZUw3WlyH3AQ==}
 
-  jose@6.2.0:
-    resolution: {integrity: sha512-xsfE1TcSCbUdo6U07tR0mvhg0flGxU8tPLbF03mirl2ukGQENhUg4ubGYQnhVH0b5stLlPM+WOqDkEl1R1y5sQ==}
+  jose@6.2.1:
+    resolution: {integrity: sha512-jUaKr1yrbfaImV7R2TN/b3IcZzsw38/chqMpo2XJ7i2F8AfM/lA4G1goC3JVEwg0H7UldTmSt3P68nt31W7/mw==}
 
   js-yaml@4.1.1:
     resolution: {integrity: sha512-qQKT4zQxXl8lLwBtHMWwaTcGfFOZviOJet3Oy/xmGk2gZH677CJM9EvtfdSkgWcATZhj/55JZ0rmy3myCT5lsA==}
@@ -1411,7 +1411,7 @@ snapshots:
 
   is-promise@4.0.0: {}
 
-  jose@6.2.0: {}
+  jose@6.2.1: {}
 
   js-yaml@4.1.1:
     dependencies:
@@ -1503,7 +1503,7 @@ snapshots:
 
   openid-client@6.8.2:
     dependencies:
-      jose: 6.2.0
+      jose: 6.2.1
       oauth4webapi: 3.8.5
 
   parseurl@1.3.3: {}
