@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@cap-js/sqlite": "^2.2.0",
-    "@eslint/js": "^9.39.4",
+    "@eslint/js": "^10.0.1",
     "@sap/cds": "^9.8.4",
     "@types/express": "^5.0.6",
     "@types/express-session": "^1.18.2",
