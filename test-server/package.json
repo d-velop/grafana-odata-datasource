@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "ts-node": "^10.9.2",
-    "@sap/cds-dk": "^9.8.2"
+    "@sap/cds-dk": "^9.8.3"
   },
   "engines": {
     "node": ">=24"
