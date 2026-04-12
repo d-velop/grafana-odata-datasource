@@ -37,13 +37,13 @@ importers:
     devDependencies:
       '@axe-core/playwright':
         specifier: ^4.11.1
-        version: 4.11.1(playwright-core@1.58.2)
+        version: 4.11.1(playwright-core@1.59.1)
       '@grafana/eslint-config':
         specifier: ^9.0.0
         version: 9.0.0(@stylistic/eslint-plugin-ts@4.4.1(eslint@9.39.3)(typescript@5.9.3))(@typescript-eslint/eslint-plugin@8.56.1(@typescript-eslint/parser@8.56.1(eslint@9.39.3)(typescript@5.9.3))(eslint@9.39.3)(typescript@5.9.3))(@typescript-eslint/parser@8.56.1(eslint@9.39.3)(typescript@5.9.3))(eslint-config-prettier@10.1.8(eslint@9.39.3))(eslint-plugin-jsdoc@62.7.1(eslint@9.39.3))(eslint-plugin-react-hooks@7.0.1(eslint@9.39.3))(eslint-plugin-react@7.37.5(eslint@9.39.3))(eslint@9.39.3)(typescript@5.9.3)
       '@grafana/plugin-e2e':
         specifier: ^3.4.11
-        version: 3.4.11(@axe-core/playwright@4.11.1(playwright-core@1.58.2))(@playwright/test@1.58.2)
+        version: 3.4.11(@axe-core/playwright@4.11.1(playwright-core@1.59.1))(@playwright/test@1.58.2)
       '@grafana/tsconfig':
         specifier: ^2.0.1
         version: 2.0.1
@@ -141,8 +141,8 @@ importers:
         specifier: ^30.3.0
         version: 30.3.0
       playwright-core:
-        specifier: ^1.58.2
-        version: 1.58.2
+        specifier: ^1.59.1
+        version: 1.59.1
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -3780,6 +3780,11 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  playwright-core@1.59.1:
+    resolution: {integrity: sha512-HBV/RJg81z5BiiZ9yPzIiClYV/QMsDCKUyogwH9p3MCP6IYjUFu/MActgYAvK0oWyV9NlwM3GLBjADyWgydVyg==}
+    engines: {node: '>=18'}
+    hasBin: true
+
   playwright@1.58.2:
     resolution: {integrity: sha512-vA30H8Nvkq/cPBnNw4Q8TWz1EJyqgpuinBcHET0YVJVFldr8JDNiU9LaWAE1KqSkRYazuaBhTpB5ZzShOezQ6A==}
     engines: {node: '>=18'}
@@ -4977,10 +4982,10 @@ snapshots:
       '@csstools/css-tokenizer': 3.0.4
       lru-cache: 10.4.3
 
-  '@axe-core/playwright@4.11.1(playwright-core@1.58.2)':
+  '@axe-core/playwright@4.11.1(playwright-core@1.59.1)':
     dependencies:
       axe-core: 4.11.1
-      playwright-core: 1.58.2
+      playwright-core: 1.59.1
 
   '@babel/code-frame@7.29.0':
     dependencies:
@@ -5498,7 +5503,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@grafana/plugin-e2e@3.4.11(@axe-core/playwright@4.11.1(playwright-core@1.58.2))(@playwright/test@1.58.2)':
+  '@grafana/plugin-e2e@3.4.11(@axe-core/playwright@4.11.1(playwright-core@1.59.1))(@playwright/test@1.58.2)':
     dependencies:
       '@grafana/e2e-selectors': 13.0.0-23624974663
       '@playwright/test': 1.58.2
@@ -5506,7 +5511,7 @@ snapshots:
       uuid: 13.0.0
       yaml: 2.8.3
     optionalDependencies:
-      '@axe-core/playwright': 4.11.1(playwright-core@1.58.2)
+      '@axe-core/playwright': 4.11.1(playwright-core@1.59.1)
 
   '@grafana/runtime@12.4.2(@openfeature/web-sdk@1.7.3(@openfeature/core@1.9.2))(@types/react@18.3.28)(eslint@9.39.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)':
     dependencies:
@@ -9310,6 +9315,8 @@ snapshots:
       find-up: 4.1.0
 
   playwright-core@1.58.2: {}
+
+  playwright-core@1.59.1: {}
 
   playwright@1.58.2:
     dependencies:

@@ -67,7 +67,7 @@
     "imports-loader": "^5.0.0",
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.3.0",
-    "playwright-core": "^1.58.2",
+    "playwright-core": "^1.59.1",
     "prettier": "^3.8.1",
     "replace-in-file-webpack-plugin": "^1.0.6",
     "sass": "^1.98.0",
