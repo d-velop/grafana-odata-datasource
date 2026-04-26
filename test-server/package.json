@@ -10,7 +10,7 @@
   "dependencies": {
     "@cap-js/sqlite": "^2.2.1",
     "@eslint/js": "^10.0.1",
-    "@sap/cds": "^9.8.5",
+    "@sap/cds": "^9.9.0",
     "@types/express": "^5.0.6",
     "@types/express-session": "^1.19.0",
     "@types/uuid": "^11.0.0",
