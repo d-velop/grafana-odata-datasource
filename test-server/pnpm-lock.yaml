@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@cap-js/sqlite':
-        specifier: ^2.2.0
-        version: 2.2.0(@sap/cds@9.8.5(@eslint/js@10.0.1))
+        specifier: ^2.2.1
+        version: 2.2.1(@sap/cds@9.8.5(@eslint/js@10.0.1))
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1
@@ -68,8 +68,8 @@ packages:
     peerDependencies:
       '@sap/cds': '>=7.6'
 
-  '@cap-js/db-service@2.9.0':
-    resolution: {integrity: sha512-WCXhoqezaF6A5I2l0MNZeHKXXtHRNEq7Rp0R89/uccOHQIx0DuU0U9NuJJPV/1G5RGk2QKQ9VBo/KYn+MZuuNQ==}
+  '@cap-js/db-service@2.10.0':
+    resolution: {integrity: sha512-zlwCFg4vd0tXd69e30lxsh7DE4EIU8Lem3Zrg8+ugsXvShyhaxb1YEcsbdFpj5e6BO0aetWD7UJOpeBzD21gmg==}
     peerDependencies:
       '@sap/cds': '>=9.8'
 
@@ -78,8 +78,8 @@ packages:
     peerDependencies:
       '@sap/cds': '>=7.6'
 
-  '@cap-js/sqlite@2.2.0':
-    resolution: {integrity: sha512-FPj+uVU/14vtGUl2P/Q8y7XhZbsLgrCav2O5PjHPXnupegjby4sMJkgVNxVHnkyKPFgO/W8uEsq9r5TU9VPx8w==}
+  '@cap-js/sqlite@2.2.1':
+    resolution: {integrity: sha512-dNdUcARTSOJePCABlXqYDzB2dKOOGmGnZqXLncBpEnT5TzzGrGPKuR2AjCoYFnXWTIQSSB3jaeeQIsFFnBs1Xw==}
     peerDependencies:
       '@sap/cds': '>=9.8'
       sql.js: ^1.13.0
@@ -267,8 +267,8 @@ packages:
     resolution: {integrity: sha512-NF+epuEdnUYVlGuhaxbbq+dvJttwLnGY+YixlXlME5KpQ5W3CnXA5cVTneY3SPbPDRkcjMbifrwmFYcClgOZeg==}
     engines: {node: '>= 0.8'}
 
-  better-sqlite3@12.8.0:
-    resolution: {integrity: sha512-RxD2Vd96sQDjQr20kdP+F+dK/1OUNiVOl200vKBZY8u0vTwysfolF6Hq+3ZK2+h8My9YvZhHsF+RSGZW2VYrPQ==}
+  better-sqlite3@12.9.0:
+    resolution: {integrity: sha512-wqUv4Gm3toFpHDQmaKD4QhZm3g1DjUBI0yzS4UBl6lElUmXFYdTQmmEDpAFa5o8FiFiymURypEnfVHzILKaxqQ==}
     engines: {node: 20.x || 22.x || 23.x || 24.x || 25.x}
 
   bindings@1.5.0:
@@ -865,7 +865,7 @@ snapshots:
     dependencies:
       '@sap/cds': 9.8.5(@eslint/js@10.0.1)
 
-  '@cap-js/db-service@2.9.0(@sap/cds@9.8.5(@eslint/js@10.0.1))':
+  '@cap-js/db-service@2.10.0(@sap/cds@9.8.5(@eslint/js@10.0.1))':
     dependencies:
       '@sap/cds': 9.8.5(@eslint/js@10.0.1)
       generic-pool: 3.9.0
@@ -875,11 +875,11 @@ snapshots:
       '@sap/cds': 9.8.5(@eslint/js@10.0.1)
       pluralize: 8.0.0
 
-  '@cap-js/sqlite@2.2.0(@sap/cds@9.8.5(@eslint/js@10.0.1))':
+  '@cap-js/sqlite@2.2.1(@sap/cds@9.8.5(@eslint/js@10.0.1))':
     dependencies:
-      '@cap-js/db-service': 2.9.0(@sap/cds@9.8.5(@eslint/js@10.0.1))
+      '@cap-js/db-service': 2.10.0(@sap/cds@9.8.5(@eslint/js@10.0.1))
       '@sap/cds': 9.8.5(@eslint/js@10.0.1)
-      better-sqlite3: 12.8.0
+      better-sqlite3: 12.9.0
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -930,7 +930,7 @@ snapshots:
       xml-js: 1.6.11
       yaml: 2.8.3
     optionalDependencies:
-      '@cap-js/sqlite': 2.2.0(@sap/cds@9.8.5(@eslint/js@10.0.1))
+      '@cap-js/sqlite': 2.2.1(@sap/cds@9.8.5(@eslint/js@10.0.1))
     transitivePeerDependencies:
       - '@eslint/js'
       - '@sap/hana-client'
@@ -1072,7 +1072,7 @@ snapshots:
     dependencies:
       safe-buffer: 5.1.2
 
-  better-sqlite3@12.8.0:
+  better-sqlite3@12.9.0:
     dependencies:
       bindings: 1.5.0
       prebuild-install: 7.1.3
