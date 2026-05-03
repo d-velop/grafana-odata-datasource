@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@cap-js/sqlite':
-        specifier: ^2.2.1
-        version: 2.2.1(@sap/cds@9.9.0(@eslint/js@10.0.1))
+        specifier: ^2.4.0
+        version: 2.4.0(@sap/cds@9.9.0(@eslint/js@10.0.1))
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1
@@ -68,8 +68,8 @@ packages:
     peerDependencies:
       '@sap/cds': '>=7.6'
 
-  '@cap-js/db-service@2.10.0':
-    resolution: {integrity: sha512-zlwCFg4vd0tXd69e30lxsh7DE4EIU8Lem3Zrg8+ugsXvShyhaxb1YEcsbdFpj5e6BO0aetWD7UJOpeBzD21gmg==}
+  '@cap-js/db-service@2.11.0':
+    resolution: {integrity: sha512-sl33LcxZYAJgMCQZDw4lMGe4kWYq6685Xc6ze4qcoM+rd6aqiyVsSC6C7XH5yerXs7cVHhRC+Dgo8AsaapFzlQ==}
     peerDependencies:
       '@sap/cds': '>=9.8'
 
@@ -78,8 +78,8 @@ packages:
     peerDependencies:
       '@sap/cds': '>=7.6'
 
-  '@cap-js/sqlite@2.2.1':
-    resolution: {integrity: sha512-dNdUcARTSOJePCABlXqYDzB2dKOOGmGnZqXLncBpEnT5TzzGrGPKuR2AjCoYFnXWTIQSSB3jaeeQIsFFnBs1Xw==}
+  '@cap-js/sqlite@2.4.0':
+    resolution: {integrity: sha512-Ao+AzIN6BWHNpLbGxAzF79OezFNHzDG2srwiBABs0FYxIxEGkc2hg6ETo79pTTt66gcWtx7pWh/N9xk2M6SFBQ==}
     peerDependencies:
       '@sap/cds': '>=9.8'
       sql.js: ^1.13.0
@@ -589,8 +589,8 @@ packages:
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
-  node-abi@3.89.0:
-    resolution: {integrity: sha512-6u9UwL0HlAl21+agMN3YAMXcKByMqwGx+pq+P76vii5f7hTPtKDp08/H9py6DY+cfDw7kQNTGEj/rly3IgbNQA==}
+  node-abi@3.90.0:
+    resolution: {integrity: sha512-pZNQT7UnYlMwMBy5N1lV5X/YLTbZM5ncytN3xL7CHEzhDN8uVe0u55yaPUJICIJjaCW8NrM5BFdqr7HLweStNA==}
     engines: {node: '>=10'}
 
   node-cache@5.1.2:
@@ -865,7 +865,7 @@ snapshots:
     dependencies:
       '@sap/cds': 9.9.0(@eslint/js@10.0.1)
 
-  '@cap-js/db-service@2.10.0(@sap/cds@9.9.0(@eslint/js@10.0.1))':
+  '@cap-js/db-service@2.11.0(@sap/cds@9.9.0(@eslint/js@10.0.1))':
     dependencies:
       '@sap/cds': 9.9.0(@eslint/js@10.0.1)
       generic-pool: 3.9.0
@@ -875,9 +875,9 @@ snapshots:
       '@sap/cds': 9.9.0(@eslint/js@10.0.1)
       pluralize: 8.0.0
 
-  '@cap-js/sqlite@2.2.1(@sap/cds@9.9.0(@eslint/js@10.0.1))':
+  '@cap-js/sqlite@2.4.0(@sap/cds@9.9.0(@eslint/js@10.0.1))':
     dependencies:
-      '@cap-js/db-service': 2.10.0(@sap/cds@9.9.0(@eslint/js@10.0.1))
+      '@cap-js/db-service': 2.11.0(@sap/cds@9.9.0(@eslint/js@10.0.1))
       '@sap/cds': 9.9.0(@eslint/js@10.0.1)
       better-sqlite3: 12.9.0
 
@@ -930,7 +930,7 @@ snapshots:
       xml-js: 1.6.11
       yaml: 2.8.3
     optionalDependencies:
-      '@cap-js/sqlite': 2.2.1(@sap/cds@9.9.0(@eslint/js@10.0.1))
+      '@cap-js/sqlite': 2.4.0(@sap/cds@9.9.0(@eslint/js@10.0.1))
     transitivePeerDependencies:
       - '@eslint/js'
       - '@sap/hana-client'
@@ -1394,7 +1394,7 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  node-abi@3.89.0:
+  node-abi@3.90.0:
     dependencies:
       semver: 7.7.4
 
@@ -1441,7 +1441,7 @@ snapshots:
       minimist: 1.2.8
       mkdirp-classic: 0.5.3
       napi-build-utils: 2.0.0
-      node-abi: 3.89.0
+      node-abi: 3.90.0
       pump: 3.0.4
       rc: 1.2.8
       simple-get: 4.0.1
