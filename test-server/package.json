@@ -21,7 +21,7 @@
     "openid-client": "^6.8.4",
     "prettier": "^3.8.3",
     "typescript": "5.9.3",
-    "uuid": "^13.0.0",
+    "uuid": "^14.0.0",
     "xmlbuilder2": "^4.0.3"
   },
   "devDependencies": {
