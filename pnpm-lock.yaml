@@ -21,7 +21,7 @@ importers:
         version: 12.4.2(eslint@9.39.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
       '@grafana/runtime':
         specifier: ^12.4.2
-        version: 12.4.2(@openfeature/web-sdk@1.7.3(@openfeature/core@1.9.2))(@types/react@18.3.28)(eslint@9.39.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
+        version: 12.4.2(@openfeature/web-sdk@1.7.3(@openfeature/core@1.10.0))(@types/react@18.3.28)(eslint@9.39.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
       '@grafana/schema':
         specifier: ^12.4.2
         version: 12.4.2
@@ -48,11 +48,11 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       '@openfeature/core':
-        specifier: ^1.9.2
-        version: 1.9.2
+        specifier: ^1.10.0
+        version: 1.10.0
       '@openfeature/web-sdk':
         specifier: ^1.7.3
-        version: 1.7.3(@openfeature/core@1.9.2)
+        version: 1.7.3(@openfeature/core@1.10.0)
       '@playwright/test':
         specifier: ^1.59.1
         version: 1.59.1
@@ -816,8 +816,8 @@ packages:
   '@napi-rs/wasm-runtime@0.2.12':
     resolution: {integrity: sha512-ZVWUcfwY4E/yPitQJl481FjFo3K22D6qF0DuFH6Y/nbnE11GY5uguDxZMGXPQ8WQ0128MXQD7TnfHyK4oWoIJQ==}
 
-  '@openfeature/core@1.9.2':
-    resolution: {integrity: sha512-0lX0xYTflLrjiYNlareYmdV98xEddR5+PhcuoGvH+BMIqpZ2icAC7us9Uv86KRVqofXvpAUwpP32wgqmtUFs8Q==}
+  '@openfeature/core@1.10.0':
+    resolution: {integrity: sha512-C3ynxtPYhe5qVJgQIqCNxZXeRXo4t1Eo86uiROr8+sD6F2OjEJGIp6VOGxz+r6jkad2s8Br9BnUJOvskhai/3A==}
 
   '@openfeature/ofrep-core@2.1.0':
     resolution: {integrity: sha512-UVRb7IS4c9i2kQrSO1yKLIMFBjEBLgHFaOhhcSXc4E2Q93SjUPspcoWMx+Qf5yyjuW6i93d6ynSQ3+KzB3evTw==}
@@ -5516,16 +5516,16 @@ snapshots:
     optionalDependencies:
       '@axe-core/playwright': 4.11.2(playwright-core@1.59.1)
 
-  '@grafana/runtime@12.4.2(@openfeature/web-sdk@1.7.3(@openfeature/core@1.9.2))(@types/react@18.3.28)(eslint@9.39.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)':
+  '@grafana/runtime@12.4.2(@openfeature/web-sdk@1.7.3(@openfeature/core@1.10.0))(@types/react@18.3.28)(eslint@9.39.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)':
     dependencies:
       '@grafana/data': 12.4.2(eslint@9.39.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
       '@grafana/e2e-selectors': 12.4.2
       '@grafana/faro-web-sdk': 1.19.0
       '@grafana/schema': 12.4.2
       '@grafana/ui': 12.4.2(@types/react@18.3.28)(eslint@9.39.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
-      '@openfeature/core': 1.9.2
-      '@openfeature/ofrep-web-provider': 0.3.6(@openfeature/core@1.9.2)(@openfeature/web-sdk@1.7.3(@openfeature/core@1.9.2))
-      '@openfeature/react-sdk': 1.2.1(@openfeature/web-sdk@1.7.3(@openfeature/core@1.9.2))(react@18.3.1)
+      '@openfeature/core': 1.10.0
+      '@openfeature/ofrep-web-provider': 0.3.6(@openfeature/core@1.10.0)(@openfeature/web-sdk@1.7.3(@openfeature/core@1.10.0))
+      '@openfeature/react-sdk': 1.2.1(@openfeature/web-sdk@1.7.3(@openfeature/core@1.10.0))(react@18.3.1)
       '@types/systemjs': 6.15.3
       history: 4.10.1
       lodash: 4.18.1
@@ -5962,27 +5962,27 @@ snapshots:
       '@tybys/wasm-util': 0.10.1
     optional: true
 
-  '@openfeature/core@1.9.2': {}
+  '@openfeature/core@1.10.0': {}
 
-  '@openfeature/ofrep-core@2.1.0(@openfeature/core@1.9.2)':
+  '@openfeature/ofrep-core@2.1.0(@openfeature/core@1.10.0)':
     dependencies:
-      '@openfeature/core': 1.9.2
+      '@openfeature/core': 1.10.0
 
-  '@openfeature/ofrep-web-provider@0.3.6(@openfeature/core@1.9.2)(@openfeature/web-sdk@1.7.3(@openfeature/core@1.9.2))':
+  '@openfeature/ofrep-web-provider@0.3.6(@openfeature/core@1.10.0)(@openfeature/web-sdk@1.7.3(@openfeature/core@1.10.0))':
     dependencies:
-      '@openfeature/ofrep-core': 2.1.0(@openfeature/core@1.9.2)
-      '@openfeature/web-sdk': 1.7.3(@openfeature/core@1.9.2)
+      '@openfeature/ofrep-core': 2.1.0(@openfeature/core@1.10.0)
+      '@openfeature/web-sdk': 1.7.3(@openfeature/core@1.10.0)
     transitivePeerDependencies:
       - '@openfeature/core'
 
-  '@openfeature/react-sdk@1.2.1(@openfeature/web-sdk@1.7.3(@openfeature/core@1.9.2))(react@18.3.1)':
+  '@openfeature/react-sdk@1.2.1(@openfeature/web-sdk@1.7.3(@openfeature/core@1.10.0))(react@18.3.1)':
     dependencies:
-      '@openfeature/web-sdk': 1.7.3(@openfeature/core@1.9.2)
+      '@openfeature/web-sdk': 1.7.3(@openfeature/core@1.10.0)
       react: 18.3.1
 
-  '@openfeature/web-sdk@1.7.3(@openfeature/core@1.9.2)':
+  '@openfeature/web-sdk@1.7.3(@openfeature/core@1.10.0)':
     dependencies:
-      '@openfeature/core': 1.9.2
+      '@openfeature/core': 1.10.0
 
   '@opentelemetry/api-logs@0.202.0':
     dependencies:
