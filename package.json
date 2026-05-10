@@ -37,7 +37,7 @@
     "@grafana/plugin-e2e": "^3.7.0",
     "@grafana/tsconfig": "^2.1.0",
     "@openfeature/core": "^1.10.0",
-    "@openfeature/web-sdk": "^1.7.3",
+    "@openfeature/web-sdk": "^1.8.0",
     "@playwright/test": "^1.59.1",
     "@stylistic/eslint-plugin-ts": "^4.4.1",
     "@swc/core": "^1.15.33",
