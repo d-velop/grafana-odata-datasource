@@ -55,8 +55,8 @@ importers:
         version: 4.0.3
     devDependencies:
       '@sap/cds-dk':
-        specifier: ^9.9.0
-        version: 9.9.0(@eslint/js@10.0.1)
+        specifier: ^9.9.1
+        version: 9.9.1(@eslint/js@10.0.1)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@25.3.3)(typescript@5.9.3)
@@ -131,8 +131,8 @@ packages:
     engines: {node: '>=20'}
     hasBin: true
 
-  '@sap/cds-dk@9.9.0':
-    resolution: {integrity: sha512-gl2BOLhkyw9yFlNnX4ukl6dNEYDX7hVg+7QFUqlFTxcBU+tdQlFT8szk3NK77DkJkj1Xe+LZLJSe0crTtA32mw==}
+  '@sap/cds-dk@9.9.1':
+    resolution: {integrity: sha512-cZoHI/ZhEVffmLo2k9Y/HMR5X+aGCpk60PwJJcZgoat8Kwk6dDl3mUDERhZORQUhp9FwOiyWmNujmNCV8YWWCg==}
     hasBin: true
 
   '@sap/cds-fiori@2.3.0':
@@ -850,11 +850,6 @@ packages:
     resolution: {integrity: sha512-bx8Q1STctnNaaDymWnkfQLKofs0mGNN7rLLapJlGuV3VlvegD7Ls4ggMjE3aUSWItCCzU0PEv45lI87iSigiCA==}
     engines: {node: '>=20.0'}
 
-  yaml@2.8.3:
-    resolution: {integrity: sha512-AvbaCLOO2Otw/lW5bmh9d/WEdcDFdQp2Z2ZUH3pX9U2ihyUY0nvLv7J6TrWowklRGPYbB/IuIMfYgxaCPg5Bpg==}
-    engines: {node: '>= 14.6'}
-    hasBin: true
-
   yaml@2.8.4:
     resolution: {integrity: sha512-ml/JPOj9fOQK8RNnWojA67GbZ0ApXAUlN2UQclwv2eVgTgn7O9gg9o7paZWKMp4g0H3nTLtS9LVzhkpOFIKzog==}
     engines: {node: '>= 14.6'}
@@ -920,7 +915,7 @@ snapshots:
 
   '@sap/cds-compiler@6.9.0': {}
 
-  '@sap/cds-dk@9.9.0(@eslint/js@10.0.1)':
+  '@sap/cds-dk@9.9.1(@eslint/js@10.0.1)':
     dependencies:
       '@cap-js/asyncapi': 1.0.3(@sap/cds@9.9.1(@eslint/js@10.0.1))
       '@cap-js/openapi': 1.4.0(@sap/cds@9.9.1(@eslint/js@10.0.1))
@@ -933,7 +928,7 @@ snapshots:
       mustache: 4.2.0
       ws: 8.20.0
       xml-js: 1.6.11
-      yaml: 2.8.3
+      yaml: 2.8.4
     optionalDependencies:
       '@cap-js/sqlite': 2.4.0(@sap/cds@9.9.1(@eslint/js@10.0.1))
     transitivePeerDependencies:
@@ -1678,8 +1673,6 @@ snapshots:
       '@oozcitak/infra': 2.0.2
       '@oozcitak/util': 10.0.0
       js-yaml: 4.1.1
-
-  yaml@2.8.3: {}
 
   yaml@2.8.4: {}
 
