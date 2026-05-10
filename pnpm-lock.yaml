@@ -23,8 +23,8 @@ importers:
         specifier: ^13.0.1
         version: 13.0.1(@react-spectrum/provider@3.11.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.28)(eslint@9.39.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
       '@grafana/schema':
-        specifier: ^12.4.2
-        version: 12.4.2
+        specifier: ^13.0.1
+        version: 13.0.1
       '@grafana/ui':
         specifier: ^13.0.1
         version: 13.0.1(@react-spectrum/provider@3.11.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.28)(eslint@9.39.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
