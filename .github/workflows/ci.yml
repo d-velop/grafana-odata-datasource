@@ -155,6 +155,7 @@ jobs:
   playwright-tests:
     needs: [resolve-versions, build]
     timeout-minutes: 15
+    continue-on-error: ${{ matrix.GRAFANA_IMAGE.VERSION == 'nightly' }}
     permissions:
       contents: read
       id-token: write
