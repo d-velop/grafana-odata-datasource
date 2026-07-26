@@ -20,7 +20,7 @@
     "morgan": "^1.11.0",
     "openid-client": "^6.8.4",
     "prettier": "^3.9.6",
-    "typescript": "5.9.3",
+    "typescript": "7.0.2",
     "uuid": "^14.0.1",
     "xmlbuilder2": "^4.0.3"
   },
