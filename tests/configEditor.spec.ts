@@ -4,7 +4,7 @@ import { ODataOptions } from "../src/types";
 test('smoke: should render config editor', async ({ createDataSourceConfigPage, readProvisionedDataSource, page }) => {
   const ds = await readProvisionedDataSource({ fileName: 'datasources.yml' });
   await createDataSourceConfigPage({ type: ds.type });
-  await expect(page.getByTestId('data-testid Data source settings page name input field')).toBeVisible()
+  await expect(page.getByPlaceholder('http://localhost:5000/odata')).toBeVisible()
 });
 
 test('"Save & test" should be successful when configuration is valid', async ({
