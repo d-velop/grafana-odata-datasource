@@ -31,7 +31,7 @@ jobs:
       # understand which version to install.
       - uses: pnpm/action-setup@v6.0.9
       - name: Setup Node.js environment
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '24'
           cache: 'pnpm'
@@ -185,7 +185,7 @@ jobs:
       # understand which version to install.
       - uses: pnpm/action-setup@v6.0.9
       - name: Setup Node.js environment
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '24'
           cache: 'pnpm'
