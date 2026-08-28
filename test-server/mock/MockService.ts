@@ -27,15 +27,29 @@ export let addMockService = async (app: Application) => {
       }
     }));
 
-    const config = await client.discovery(
-      new URL(issuer),
-      'test-server',
-      '1fakeTestServerSecret00000000000',
-      null,
-      {
-        execute: [client.allowInsecureRequests],
+    const discoverWithRetry = async () => {
+      const maxAttempts = 30;
+      for (let attempt = 1; ; attempt++) {
+        try {
+          return await client.discovery(
+            new URL(issuer),
+            'test-server',
+            '1fakeTestServerSecret00000000000',
+            null,
+            {
+              execute: [client.allowInsecureRequests],
+            }
+          );
+        } catch (err) {
+          if (attempt >= maxAttempts) {
+            throw err;
+          }
+          console.log(`OIDC discovery of ${issuer} not ready (attempt ${attempt}/${maxAttempts}), retrying in 2s: ${(err as Error)?.message}`);
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+        }
       }
-    );
+    };
+    const config = await discoverWithRetry();
     console.log('Discovered issuer %O', config.serverMetadata());
 
     app.get('/login',
