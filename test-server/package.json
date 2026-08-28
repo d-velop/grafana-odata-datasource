@@ -8,17 +8,17 @@
   "author": "d.velop AG",
   "license": "Apache-2.0",
   "dependencies": {
-    "@cap-js/sqlite": "^2.4.0",
+    "@cap-js/sqlite": "^3.0.2",
     "@eslint/js": "^10.0.1",
-    "@sap/cds": "^9.9.1",
+    "@sap/cds": "^10.0.6",
     "@types/express": "^5.0.6",
     "@types/express-session": "^1.19.0",
-    "@types/uuid": "^11.0.0",
+    "better-sqlite3": "^12.10.0",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
-    "jose": "^6.2.9",
+    "jose": "^6.2.10",
     "morgan": "^1.11.0",
-    "openid-client": "^6.8.6",
+    "openid-client": "^6.8.7",
     "prettier": "^3.9.6",
     "typescript": "5.9.3",
     "uuid": "^14.0.2",
@@ -26,15 +26,12 @@
   },
   "devDependencies": {
     "ts-node": "^10.9.2",
-    "@sap/cds-dk": "^9.9.2"
+    "@sap/cds-dk": "^10.0.7"
   },
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "pnpm@10.30.3",
-  "pnpm": {
-    "onlyBuiltDependencies": ["better-sqlite3"]
-  },
+  "packageManager": "pnpm@11.24.0",
   "cds": {
     "requires": {
       "db": {

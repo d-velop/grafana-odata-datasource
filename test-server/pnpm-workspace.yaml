@@ -1,0 +1,4 @@
+nodeLinker: hoisted
+engineStrict: true
+allowBuilds:
+  better-sqlite3: true

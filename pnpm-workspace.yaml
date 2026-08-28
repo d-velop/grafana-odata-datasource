@@ -1,0 +1,15 @@
+resolutionMode: highest
+publicHoistPattern:
+  - '*eslint*'
+  - '*prettier*'
+  - '@types/*'
+  - '*terser-webpack-plugin*'
+overrides:
+  'serialize-javascript@<=7.0.2': '>=7.0.3'
+  'immutable@5': '^5.1.5'
+  'dompurify@3': '^3.3.2'
+allowBuilds:
+  '@parcel/watcher': false
+  '@swc/core': false
+  protobufjs: false
+  unrs-resolver: false
