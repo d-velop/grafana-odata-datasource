@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@cap-js/sqlite':
-        specifier: ^3.0.2
-        version: 3.0.2(@sap/cds@10.1.0(@eslint/js@10.0.1))(better-sqlite3@12.11.1)(generic-pool@3.9.0)
+        specifier: ^3.1.1
+        version: 3.1.1(@sap/cds@10.1.0(@eslint/js@10.0.1))(better-sqlite3@12.11.1)(generic-pool@3.9.0)
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1
@@ -63,8 +63,8 @@ importers:
 
 packages:
 
-  '@cap-js/db-service@3.0.1':
-    resolution: {integrity: sha512-sWy+EYyfY7YzJspKcGqln4gWNVffcRwd/vm47T+tMa85+LWtOsmJgdfH8i1KVCR3o8zaywmPwSflnnSOKoZJkg==}
+  '@cap-js/db-service@3.1.1':
+    resolution: {integrity: sha512-N1vgMkiDR0IrwwCGFr1e4CcSUsoHFsxiryMC9EYpUPR7mQnw6kfvWzYEwB3/9QXp1nmauV2RoETN6WFqBdwXZg==}
     peerDependencies:
       '@sap/cds': ^10
       generic-pool: ^3.9.0
@@ -72,11 +72,11 @@ packages:
       generic-pool:
         optional: true
 
-  '@cap-js/sqlite@3.0.2':
-    resolution: {integrity: sha512-C+wiMzRxgmNF919ZcIjXPlAGlgunXUzPAldp5WMZ4fmb+komfADMmdUzYqS1LklnBXBkdxrKlP30giNTutPwpg==}
+  '@cap-js/sqlite@3.1.1':
+    resolution: {integrity: sha512-FHkenWLi7p8VMNg9Sa1CVqa7HZhAiY0RQkANfjP+torubFDd4fiTH98bLyLZ3Xo+vjhJYsE5Ztta8rmnUBzwPA==}
     peerDependencies:
       '@sap/cds': ^10
-      better-sqlite3: ^12.0.0
+      better-sqlite3: ^12.0.0 || ^13.0.0
       sql.js: ^1.13.0
     peerDependenciesMeta:
       better-sqlite3:
@@ -808,15 +808,15 @@ packages:
 
 snapshots:
 
-  '@cap-js/db-service@3.0.1(@sap/cds@10.1.0(@eslint/js@10.0.1))(generic-pool@3.9.0)':
+  '@cap-js/db-service@3.1.1(@sap/cds@10.1.0(@eslint/js@10.0.1))(generic-pool@3.9.0)':
     dependencies:
       '@sap/cds': 10.1.0(@eslint/js@10.0.1)
     optionalDependencies:
       generic-pool: 3.9.0
 
-  '@cap-js/sqlite@3.0.2(@sap/cds@10.1.0(@eslint/js@10.0.1))(better-sqlite3@12.11.1)(generic-pool@3.9.0)':
+  '@cap-js/sqlite@3.1.1(@sap/cds@10.1.0(@eslint/js@10.0.1))(better-sqlite3@12.11.1)(generic-pool@3.9.0)':
     dependencies:
-      '@cap-js/db-service': 3.0.1(@sap/cds@10.1.0(@eslint/js@10.0.1))(generic-pool@3.9.0)
+      '@cap-js/db-service': 3.1.1(@sap/cds@10.1.0(@eslint/js@10.0.1))(generic-pool@3.9.0)
       '@sap/cds': 10.1.0(@eslint/js@10.0.1)
     optionalDependencies:
       better-sqlite3: 12.11.1
