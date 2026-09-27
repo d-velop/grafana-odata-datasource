@@ -45,6 +45,20 @@ test('should query entity set filtered by property', async ({ panelEditPage, pag
   await expect(panelEditPage.panel.data).toHaveText(['Room 42']);
 });
 
+test('should warn about ignored incomplete filter condition', async ({ panelEditPage, page }) => {
+  const row = panelEditPage.getQueryEditorRow('A');
+  await choose(page, panelEditPage, 'Entity set', 'Rooms');
+  await row.getByRole('button', { name: '+ Select' }).click();
+  await choose(page, panelEditPage, 'Select property', 'name');
+  await row.getByRole('button', { name: '+ Filter condition' }).click();
+  const response = queryResponseContaining(page, '"operator":""');
+  await choose(page, panelEditPage, 'Filter property', 'name');
+
+  await expect(response).toBeOK();
+  await row.getByText('1 warning', { exact: true }).hover();
+  await expect(page.getByRole('tooltip')).toHaveText('1 filter condition was ignored because it is incomplete.');
+});
+
 test('should query entity set within dashboard time range', async ({ panelEditPage, page }) => {
   const row = panelEditPage.getQueryEditorRow('A');
   await choose(page, panelEditPage, 'Entity set', 'Temperatures');

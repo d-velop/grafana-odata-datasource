@@ -9,6 +9,7 @@ import (
 
 	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
+	"github.com/grafana/grafana-plugin-sdk-go/data"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -174,6 +175,23 @@ func TestQuery(t *testing.T) {
 			query:             aDataQuery("baseFrame", withQueryModel(withProperties(func(p *property) {}))),
 			mockODataResponse: anOdataResponse(),
 			expected:          aDataResponse(),
+		},
+		{
+			name: "success warns about ignored filter conditions",
+			query: aDataQuery("defaultTestFrame", withQueryModel(
+				withFilterConditions(int32Eq5, withFilterCondition(int32Prop, "", "5"), withFilterCondition(int32Prop, "eq", "")),
+				withProperties(int32Prop))),
+			mockODataResponse: anOdataResponse(
+				withEntity(withProp("int32", 5.0)),
+			),
+			expected: aDataResponse(withBaseFrame("defaultTestFrame",
+				withNotice(data.Notice{
+					Severity: data.NoticeSeverityWarning,
+					Text:     "2 filter conditions were ignored because they are incomplete.",
+				}),
+				withField("int32", []*int32{}),
+				withRow(withRowValue(int32(5))),
+			)),
 		},
 		{
 			name:              "success minimal",

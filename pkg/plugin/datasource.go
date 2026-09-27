@@ -162,7 +162,9 @@ func (ds *ODataSource) query(ctx context.Context, clientInstance ODataClient, qu
 		return response
 	}
 	qm.Properties = CompleteProperties(qm.Properties)
+	filterConditionCount := len(qm.FilterConditions)
 	qm.FilterConditions = CompleteFilterConditions(qm.FilterConditions)
+	ignoredFilterConditions := filterConditionCount - len(qm.FilterConditions)
 
 	// Prevent empty queries from being executed
 	if qm.TimeProperty == nil && len(qm.Properties) == 0 {
@@ -175,6 +177,9 @@ func (ds *ODataSource) query(ctx context.Context, clientInstance ODataClient, qu
 		frame.Meta = &data.FrameMeta{}
 	}
 	frame.Meta.PreferredVisualization = data.VisTypeTable
+	if ignoredFilterConditions > 0 {
+		frame.AppendNotices(IgnoredFilterConditionsNotice(ignoredFilterConditions))
+	}
 
 	if qm.TimeProperty != nil {
 		log.DefaultLogger.Debug("Time property configured", "name", qm.TimeProperty.Name)

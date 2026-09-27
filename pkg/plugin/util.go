@@ -1,10 +1,12 @@
 package plugin
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/d-velop/grafana-odata-datasource/pkg/plugin/odata"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
+	"github.com/grafana/grafana-plugin-sdk-go/data"
 )
 
 func TimeRangeToFilter(timeRange backend.TimeRange, timeProperty *property) []filterCondition {
@@ -48,4 +50,12 @@ func CompleteFilterConditions(conditions []filterCondition) []filterCondition {
 		result = append(result, c)
 	}
 	return result
+}
+
+func IgnoredFilterConditionsNotice(count int) data.Notice {
+	text := "1 filter condition was ignored because it is incomplete."
+	if count > 1 {
+		text = fmt.Sprintf("%d filter conditions were ignored because they are incomplete.", count)
+	}
+	return data.Notice{Severity: data.NoticeSeverityWarning, Text: text}
 }

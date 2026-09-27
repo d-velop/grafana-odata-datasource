@@ -185,6 +185,12 @@ func withTimeField(name string, withLabels bool) func(n *data.Frame) {
 	}
 }
 
+func withNotice(notice data.Notice) func(n *data.Frame) {
+	return func(frame *data.Frame) {
+		frame.AppendNotices(notice)
+	}
+}
+
 func withField(name string, values interface{}) func(n *data.Frame) {
 	return func(frame *data.Frame) {
 		frame.Fields = append(frame.Fields, data.NewField(name, nil, values))

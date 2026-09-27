@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
+	"github.com/grafana/grafana-plugin-sdk-go/data"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -120,6 +121,36 @@ func TestCompleteFilterConditions(t *testing.T) {
 
 			// Assert
 			assert.Equal(t, table.expected, result)
+		})
+	}
+}
+
+func TestIgnoredFilterConditionsNotice(t *testing.T) {
+	tables := []struct {
+		name     string
+		count    int
+		expected string
+	}{
+		{
+			name:     "One ignored condition",
+			count:    1,
+			expected: "1 filter condition was ignored because it is incomplete.",
+		},
+		{
+			name:     "Several ignored conditions",
+			count:    3,
+			expected: "3 filter conditions were ignored because they are incomplete.",
+		},
+	}
+
+	for _, table := range tables {
+		t.Run(table.name, func(t *testing.T) {
+			// Act
+			result := IgnoredFilterConditionsNotice(table.count)
+
+			// Assert
+			assert.Equal(t, data.NoticeSeverityWarning, result.Severity)
+			assert.Equal(t, table.expected, result.Text)
 		})
 	}
 }
