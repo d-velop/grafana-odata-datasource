@@ -131,7 +131,7 @@ export class QueryEditor extends PureComponent<Props, State> {
 
   addProperty = () => {
     const properties = [...(this.props.query.properties ?? []), { name: '', type: '' }];
-    this.update({ ...this.props.query, properties });
+    this.props.onChange({ ...this.props.query, properties });
   };
 
   removeProperty = (index: number) => {
@@ -145,7 +145,7 @@ export class QueryEditor extends PureComponent<Props, State> {
       ...(this.props.query.filterConditions ?? []),
       { property: { name: '', type: '' }, operator: '', value: '' },
     ];
-    this.update({ ...this.props.query, filterConditions });
+    this.props.onChange({ ...this.props.query, filterConditions });
   };
 
   removeFilterCondition = (index: number) => {

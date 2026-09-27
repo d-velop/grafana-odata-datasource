@@ -161,6 +161,8 @@ func (ds *ODataSource) query(ctx context.Context, clientInstance ODataClient, qu
 		response.Error = fmt.Errorf("error unmarshalling query json: %w", err)
 		return response
 	}
+	qm.Properties = CompleteProperties(qm.Properties)
+	qm.FilterConditions = CompleteFilterConditions(qm.FilterConditions)
 
 	// Prevent empty queries from being executed
 	if qm.TimeProperty == nil && len(qm.Properties) == 0 {

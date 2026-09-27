@@ -159,6 +159,23 @@ func TestQuery(t *testing.T) {
 			)),
 		},
 		{
+			name:  "success ignores property without name",
+			query: aDataQuery("defaultTestFrame", withQueryModel(withProperties(int32Prop, func(p *property) {}))),
+			mockODataResponse: anOdataResponse(
+				withEntity(withProp("int32", 10.0)),
+			),
+			expected: aDataResponse(withBaseFrame("defaultTestFrame",
+				withField("int32", []*int32{}),
+				withRow(withRowValue(int32(10))),
+			)),
+		},
+		{
+			name:              "success only property without name",
+			query:             aDataQuery("baseFrame", withQueryModel(withProperties(func(p *property) {}))),
+			mockODataResponse: anOdataResponse(),
+			expected:          aDataResponse(),
+		},
+		{
 			name:              "success minimal",
 			query:             aDataQuery("baseFrame", withQueryModel()),
 			mockODataResponse: anOdataResponse(),
