@@ -19,7 +19,7 @@
     "jose": "^6.2.12",
     "morgan": "^1.12.1",
     "openid-client": "^6.8.8",
-    "prettier": "^3.9.7",
+    "prettier": "^3.9.9",
     "typescript": "5.9.3",
     "uuid": "^14.0.2",
     "xmlbuilder2": "^4.0.3"
