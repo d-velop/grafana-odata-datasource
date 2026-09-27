@@ -202,6 +202,7 @@ export class QueryEditor extends PureComponent<Props, State> {
             value={allProperties.find((item) => item.value?.name === this.props.query.properties?.[index].name)}
             isClearable={true}
             placeholder="(Property)"
+            aria-label="Select property"
             onChange={(item) => this.onPropertyChange(item, index)}
             options={allProperties}
             isSearchable={false}
@@ -223,6 +224,7 @@ export class QueryEditor extends PureComponent<Props, State> {
               )}
               isClearable={true}
               placeholder="(Property)"
+              aria-label="Filter property"
               onChange={(item) => this.onFilterPropertyChange(item, index)}
               options={allProperties}
               isSearchable={false}
@@ -235,6 +237,7 @@ export class QueryEditor extends PureComponent<Props, State> {
               }
               isClearable={true}
               placeholder="(Operator)"
+              aria-label="Filter operator"
               onChange={(item) => this.onFilterOperatorChange(item, index)}
               options={filterOperators}
               isSearchable={false}
@@ -244,6 +247,7 @@ export class QueryEditor extends PureComponent<Props, State> {
               value={filterCondition.value}
               type="text"
               placeholder="(value)"
+              aria-label="Filter value"
               onChange={(item) => this.onFilterValueChange(item.currentTarget.value, index)}
               onBlur={this.props.onRunQuery}
             />
@@ -264,6 +268,7 @@ export class QueryEditor extends PureComponent<Props, State> {
               value={entitySets.find((o) => o.value?.name === this.props.query.entitySet?.name)}
               isClearable={true}
               placeholder="(Entity set)"
+              aria-label="Entity set"
               onChange={this.onEntitySetChange}
               options={entitySets}
               isSearchable={false}
@@ -275,6 +280,7 @@ export class QueryEditor extends PureComponent<Props, State> {
               value={timeProperties.find((o) => o.value?.name === this.props.query.timeProperty?.name)}
               isClearable={true}
               placeholder="(Property)"
+              aria-label="Time property"
               onChange={this.onTimePropertyChange}
               options={timeProperties}
               isSearchable={false}
