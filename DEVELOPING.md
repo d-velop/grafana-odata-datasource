@@ -145,6 +145,24 @@ For more information see: [test-server/README.md](test-server/README.md).
 > Note: To test the feature within Grafana, you can use the provisioned datasource `OData-Mock`, which has the feature
 > enabled. See [datasources.yml](provisioning/datasources/datasources.yml) for details.
 
+### E2E tests for Forward OAuth Identity
+
+The OAuth flow is covered by a separate Playwright suite in [integration/keycloak/tests](integration/keycloak/tests).
+It is not part of the CI pipeline and has to be run manually against the Keycloak setup:
+
+```bash
+pnpm run build
+mage -v
+pnpm run server:withKeycloak
+pnpm run e2e:keycloak
+```
+
+The suite signs in to Grafana via Keycloak and checks that the `OData-Mock` data source works with the forwarded token.
+As a counter-check it verifies that `OData-Mock` rejects requests from a local Grafana login without a Keycloak token.
+
+The test browser resolves `dockerhost` to `127.0.0.1` by itself, so the `/etc/hosts` entry is not required for this
+suite. Keycloak needs port `8080` on the host to be free.
+
 ## Update create-plugin versions
 To update the plugin to use a newer version of the `create-plugin` tool, follow the instructions here:
 <https://grafana.com/developers/plugin-tools/migration-guides/update-create-plugin-versions>.

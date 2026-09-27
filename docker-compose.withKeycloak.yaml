@@ -31,6 +31,9 @@ services:
       - "dockerhost:host-gateway"
     volumes:
       - ./integration/keycloak/grafana.ini:/etc/grafana/grafana.ini
+    depends_on:
+      test-server:
+        condition: service_healthy
   test-server:
     build: test-server
     ports:
@@ -42,3 +45,10 @@ services:
     depends_on:
       keycloak:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:4004/odata/v4/test/$$metadata"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 120s
+      start_interval: 2s

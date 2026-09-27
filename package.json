@@ -24,6 +24,7 @@
     "lint": "eslint --cache .",
     "lint:fix": "pnpm run lint --fix && prettier --write --list-different .",
     "e2e": "playwright test",
+    "e2e:keycloak": "playwright test -c playwright.keycloak.config.ts",
     "server": "docker compose up --build",
     "server:withKeycloak": "docker compose -f docker-compose.withKeycloak.yaml up --build",
     "checkCompatibility": "npx @grafana/levitate@latest is-compatible --path src/module.ts --target @grafana/data,@grafana/ui,@grafana/runtime",
