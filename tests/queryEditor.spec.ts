@@ -29,6 +29,13 @@ test('should list entity sets from service metadata', async ({ panelEditPage, pa
   await expect(page.getByRole('option', { name: 'Rooms', exact: true })).toBeVisible();
 });
 
+test('should narrow entity sets by typed text', async ({ panelEditPage, page }) => {
+  await openSelect(page, panelEditPage, 'Entity set');
+  await page.keyboard.type('Roo');
+  await expect(page.getByRole('option', { name: 'Rooms', exact: true })).toBeVisible();
+  await expect(page.getByRole('option', { name: 'Temperatures', exact: true })).toHaveCount(0);
+});
+
 test('should query entity set filtered by property', async ({ panelEditPage, page }) => {
   const row = panelEditPage.getQueryEditorRow('A');
   await choose(page, panelEditPage, 'Entity set', 'Rooms');

@@ -205,7 +205,6 @@ export class QueryEditor extends PureComponent<Props, State> {
             aria-label="Select property"
             onChange={(item) => this.onPropertyChange(item, index)}
             options={allProperties}
-            isSearchable={false}
           />
           <Button variant={'secondary'} onClick={() => this.removeProperty(index)}>
             -
@@ -227,7 +226,6 @@ export class QueryEditor extends PureComponent<Props, State> {
               aria-label="Filter property"
               onChange={(item) => this.onFilterPropertyChange(item, index)}
               options={allProperties}
-              isSearchable={false}
             />
             <Select
               value={
@@ -240,7 +238,6 @@ export class QueryEditor extends PureComponent<Props, State> {
               aria-label="Filter operator"
               onChange={(item) => this.onFilterOperatorChange(item, index)}
               options={filterOperators}
-              isSearchable={false}
             />
             <Input
               required={true}
@@ -271,7 +268,6 @@ export class QueryEditor extends PureComponent<Props, State> {
               aria-label="Entity set"
               onChange={this.onEntitySetChange}
               options={entitySets}
-              isSearchable={false}
             />
             <InlineFormLabel width={8} tooltip="Time property">
               Time property
@@ -283,7 +279,6 @@ export class QueryEditor extends PureComponent<Props, State> {
               aria-label="Time property"
               onChange={this.onTimePropertyChange}
               options={timeProperties}
-              isSearchable={false}
             />
           </div>
         </div>
