@@ -148,18 +148,18 @@ Use the version from `grafanaDependency` in `plugin.json`.
 
 ```bash
 # terminal 1 - replace <min-supported-version> with the grafanaDependency version
-GRAFANA_VERSION=<min-supported-version> npm run server
+GRAFANA_VERSION=<min-supported-version> pnpm run server
 
 # terminal 2
-npm run e2e
+pnpm run e2e
 ```
 
 **Latest dev image** (forwards compatibility):
 
 ```bash
 # terminal 1 - use the latest dev image tag from https://hub.docker.com/r/grafana/grafana-dev/tags
-GRAFANA_IMAGE=grafana-dev GRAFANA_VERSION=<latest-dev-tag> npm run server
+GRAFANA_IMAGE=grafana-dev GRAFANA_VERSION=<latest-dev-tag> pnpm run server
 
 # terminal 2
-npm run e2e
+pnpm run e2e
 ```
