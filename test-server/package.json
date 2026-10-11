@@ -14,24 +14,24 @@
     "@types/express": "^5.0.6",
     "@types/express-session": "^1.19.0",
     "better-sqlite3": "^13.0.3",
-    "express": "^5.2.1",
+    "express": "^5.3.0",
     "express-session": "^1.19.0",
     "jose": "^6.2.12",
     "morgan": "^1.12.1",
     "openid-client": "^6.8.8",
-    "prettier": "^3.9.9",
+    "prettier": "^3.9.10",
     "typescript": "5.9.3",
-    "uuid": "^14.0.2",
+    "uuid": "^14.0.3",
     "xmlbuilder2": "^4.0.3"
   },
   "devDependencies": {
-    "ts-node": "^10.9.2",
-    "@sap/cds-dk": "^10.1.2"
+    "@sap/cds-dk": "^10.1.2",
+    "ts-node": "^10.9.2"
   },
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "pnpm@11.24.0",
+  "packageManager": "pnpm@11.28.2",
   "cds": {
     "requires": {
       "db": {
