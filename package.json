@@ -100,5 +100,5 @@
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
-  "packageManager": "pnpm@11.24.0"
+  "packageManager": "pnpm@11.28.2"
 }

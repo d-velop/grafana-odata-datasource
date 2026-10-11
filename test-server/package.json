@@ -31,7 +31,7 @@
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "pnpm@11.24.0",
+  "packageManager": "pnpm@11.28.2",
   "cds": {
     "requires": {
       "db": {

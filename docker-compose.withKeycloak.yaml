@@ -1,7 +1,7 @@
 # This docker compose file is intended to be used for testing the `oauthPassThru` (Forward OAuth Identity) feature of the plugin
 services:
   keycloak:
-    image: quay.io/keycloak/keycloak:26.0.4
+    image: quay.io/keycloak/keycloak:26.8.0
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./integration/keycloak/realm.json:/opt/keycloak/data/import/realm.json
