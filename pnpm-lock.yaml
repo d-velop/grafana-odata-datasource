@@ -42,8 +42,8 @@ importers:
         specifier: ^9.0.0
         version: 9.0.0(@stylistic/eslint-plugin-ts@4.4.1(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3))(@typescript-eslint/eslint-plugin@8.68.0(@typescript-eslint/parser@8.68.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3))(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3))(@typescript-eslint/parser@8.68.0(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3))(eslint-config-prettier@10.1.8(eslint@9.39.5(supports-color@8.1.1)))(eslint-plugin-jsdoc@64.2.1(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1))(eslint-plugin-react-hooks@7.1.1(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1))(eslint-plugin-react@7.37.5(eslint@9.39.5(supports-color@8.1.1)))(eslint@9.39.5(supports-color@8.1.1))(typescript@5.9.3)
       '@grafana/plugin-e2e':
-        specifier: ^3.14.0
-        version: 3.14.0(@axe-core/playwright@4.13.0(playwright-core@1.62.1))(@playwright/test@1.62.1)
+        specifier: ^3.15.0
+        version: 3.15.0(@axe-core/playwright@4.13.0(playwright-core@1.62.1))(@playwright/test@1.62.1)
       '@grafana/sign-plugin':
         specifier: ^3.3.3
         version: 3.3.3(supports-color@8.1.1)
@@ -605,9 +605,6 @@ packages:
       react: '>=19'
       react-dom: '>=19'
 
-  '@grafana/e2e-selectors@13.2.0-30594044109':
-    resolution: {integrity: sha512-CRN0CTsSkAC3qQvufbR7duUzSX2Jfgc/g5ap+eSrjcFcS+vAVUDGfQVLK6y5ojN+B0gATNIbmVlCGngQxmm+eA==}
-
   '@grafana/e2e-selectors@13.2.3':
     resolution: {integrity: sha512-K/loC4FXn5xl6hc2ebrK2bj5LDqXQV+vFtqFLKtkrNqUOSFM9zkcuHraMfZQwPYFzDCGHg1aA6RlfHMZp408+A==}
 
@@ -635,8 +632,8 @@ packages:
     peerDependencies:
       react: '>=19'
 
-  '@grafana/plugin-e2e@3.14.0':
-    resolution: {integrity: sha512-hbfyAp5Bh1/F8SlzicFumTgDS2Br6XEs7dPpk/SA7MHvF64ZSwxQSsmurEPapaUOO+PfQKkHLLJRIJX9ZP+Tug==}
+  '@grafana/plugin-e2e@3.15.0':
+    resolution: {integrity: sha512-iHMfiYbxAFvQLnMObpMLU6saFxsKkXX5PMca5QxYs53S4BkP8KyS3hz9UUUGnWybvBToLWyJACrz7Vs4YVu9Fw==}
     engines: {node: '>=20 <=24'}
     peerDependencies:
       '@axe-core/playwright': ^4.11.1
@@ -5506,10 +5503,6 @@ snapshots:
       - supports-color
       - typescript
 
-  '@grafana/e2e-selectors@13.2.0-30594044109':
-    dependencies:
-      semver: 7.8.5
-
   '@grafana/e2e-selectors@13.2.3':
     dependencies:
       semver: 7.8.5
@@ -5555,9 +5548,8 @@ snapshots:
       - supports-color
       - typescript
 
-  '@grafana/plugin-e2e@3.14.0(@axe-core/playwright@4.13.0(playwright-core@1.62.1))(@playwright/test@1.62.1)':
+  '@grafana/plugin-e2e@3.15.0(@axe-core/playwright@4.13.0(playwright-core@1.62.1))(@playwright/test@1.62.1)':
     dependencies:
-      '@grafana/e2e-selectors': 13.2.0-30594044109
       '@playwright/test': 1.62.1
       yaml: 2.9.0
     optionalDependencies:
