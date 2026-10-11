@@ -17,10 +17,15 @@ async function choose(page: Page, panelEditPage: PanelEditPage, select: string, 
   await page.getByRole('option', { name: option, exact: true }).click();
 }
 
-test.beforeEach(async ({ panelEditPage, readProvisionedDataSource }) => {
+test.beforeEach(async ({ panelEditPage, readProvisionedDataSource, selectors }) => {
   const ds = await readProvisionedDataSource({ fileName: 'datasources.yml', name: 'OData-Test' });
   await panelEditPage.datasource.set(ds.name);
-  await panelEditPage.setVisualization('Table');
+  const tableItem = panelEditPage.getByGrafanaSelector(selectors.components.PluginVisualization.item('Table'));
+  if (await tableItem.isVisible()) {
+    await tableItem.click();
+  } else {
+    await panelEditPage.setVisualization('Table');
+  }
 });
 
 test('should list entity sets from service metadata', async ({ panelEditPage, page }) => {
