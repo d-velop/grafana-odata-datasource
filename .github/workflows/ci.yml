@@ -157,8 +157,6 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: read
-      id-token: write
-      pull-requests: write
     strategy:
       fail-fast: false
       matrix:
@@ -211,14 +209,6 @@ jobs:
         continue-on-error: ${{ matrix.GRAFANA_IMAGE.VERSION == 'nightly' }}
         run: pnpm run e2e
 
-      - name: Upload e2e test summary
-        uses: grafana/plugin-actions/playwright-gh-pages/upload-report-artifacts@upload-report-artifacts/v1.0.2
-        if: ${{ always() && !cancelled() }}
-        with:
-          upload-report: false
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          test-outcome: ${{ steps.run-tests.outcome }}
-
       - name: Docker logs
         if: ${{ always() && steps.run-tests.outcome == 'failure' }}
         run: |
@@ -235,25 +225,3 @@ jobs:
       #     name: ${{ matrix.GRAFANA_IMAGE.NAME }}-v${{ matrix.GRAFANA_IMAGE.VERSION }}-${{github.run_id}}-server-log
       #     path: grafana-server.log
       #     retention-days: 5
-
-  publish-report:
-    if: ${{ always() && !cancelled() }}
-    permissions:
-      contents: write
-      id-token: write
-      pull-requests: write
-    needs: [playwright-tests]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          # required for playwright-gh-pages
-          # persist-credentials: true
-          persist-credentials: false
-      - name: Clear duplicated git auth header
-        run: |
-          git config --global --unset-all http.https://github.com/.extraheader || true
-      - name: Publish report
-        uses: grafana/plugin-actions/playwright-gh-pages/deploy-report-pages@deploy-report-pages/v1.1.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
