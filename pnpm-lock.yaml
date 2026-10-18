@@ -42,8 +42,8 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0(@stylistic/eslint-plugin@5.10.0(eslint@9.39.5(supports-color@8.1.1)))(@typescript-eslint/eslint-plugin@8.71.2(@typescript-eslint/parser@8.71.2(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3))(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3))(@typescript-eslint/parser@8.71.2(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3))(eslint-config-prettier@10.1.8(eslint@9.39.5(supports-color@8.1.1)))(eslint-plugin-jsdoc@65.3.1(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3))(eslint-plugin-react-hooks@7.1.1(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1))(eslint-plugin-react@7.37.5(eslint@9.39.5(supports-color@8.1.1)))(eslint@9.39.5(supports-color@8.1.1))(typescript@5.9.3)
       '@grafana/plugin-e2e':
-        specifier: ^3.15.0
-        version: 3.15.0(@axe-core/playwright@4.13.0(playwright-core@1.64.0))(@playwright/test@1.64.0)
+        specifier: ^3.15.1
+        version: 3.15.1(@axe-core/playwright@4.13.0(playwright-core@1.64.0))(@playwright/test@1.64.0)
       '@grafana/sign-plugin':
         specifier: ^3.3.3
         version: 3.3.3(supports-color@8.1.1)
@@ -657,8 +657,8 @@ packages:
     peerDependencies:
       react: '>=19'
 
-  '@grafana/plugin-e2e@3.15.0':
-    resolution: {integrity: sha512-iHMfiYbxAFvQLnMObpMLU6saFxsKkXX5PMca5QxYs53S4BkP8KyS3hz9UUUGnWybvBToLWyJACrz7Vs4YVu9Fw==}
+  '@grafana/plugin-e2e@3.15.1':
+    resolution: {integrity: sha512-6/52uDUJHIj1swJsbodFptXoH5DtFK88124sJx73tHdkvQ7rKx8Pu+R37ms8b0T4dtAImsNM41hV6INXqltsrA==}
     engines: {node: '>=20 <=24'}
     peerDependencies:
       '@axe-core/playwright': ^4.11.1
@@ -5642,7 +5642,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@grafana/plugin-e2e@3.15.0(@axe-core/playwright@4.13.0(playwright-core@1.64.0))(@playwright/test@1.64.0)':
+  '@grafana/plugin-e2e@3.15.1(@axe-core/playwright@4.13.0(playwright-core@1.64.0))(@playwright/test@1.64.0)':
     dependencies:
       '@playwright/test': 1.64.0
       yaml: 2.9.1
