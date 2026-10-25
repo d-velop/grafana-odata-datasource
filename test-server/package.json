@@ -25,7 +25,7 @@
     "xmlbuilder2": "^4.0.3"
   },
   "devDependencies": {
-    "@sap/cds-dk": "^10.1.2",
+    "@sap/cds-dk": "^10.2.0",
     "ts-node": "^10.9.2"
   },
   "engines": {
