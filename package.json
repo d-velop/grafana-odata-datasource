@@ -71,7 +71,7 @@
     "jest": "^30.5.2",
     "jest-canvas-mock": "^2.5.8",
     "jest-environment-jsdom": "^30.5.2",
-    "playwright-core": "^1.64.0",
+    "playwright-core": "^1.64.1",
     "prettier": "^3.9.10",
     "replace-in-file-webpack-plugin": "^1.0.6",
     "sass": "^1.105.2",
