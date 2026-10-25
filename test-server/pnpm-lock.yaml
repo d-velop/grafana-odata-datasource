@@ -55,8 +55,8 @@ importers:
         version: 4.0.3
     devDependencies:
       '@sap/cds-dk':
-        specifier: ^10.1.2
-        version: 10.1.2
+        specifier: ^10.2.0
+        version: 10.2.0
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@26.6.5)(typescript@5.9.3)
@@ -128,8 +128,8 @@ packages:
     engines: {node: '>=22'}
     hasBin: true
 
-  '@sap/cds-dk@10.1.2':
-    resolution: {integrity: sha512-pp06zUiizaIxNf5cNxNLGvpWNyahGeEBqPS3BDQ6eLbycc8i77jHS3Ewam9owHoAcsXwGF3oZsRJFqssOsLQJg==}
+  '@sap/cds-dk@10.2.0':
+    resolution: {integrity: sha512-ZFbl6ItNLvRPzxu+7j/mgCoXMFQAQVhyRUWIVSrCDn1VwN/9rz7B47e9Uz+UVliXwG35nIkYa1HJOxLp4Yawow==}
     hasBin: true
     bundledDependencies:
       - '@cap-js/asyncapi'
@@ -137,6 +137,7 @@ packages:
       - '@cap-js/openapi'
       - '@cap-js/sqlite'
       - '@eslint/js'
+      - '@isaacs/fs-minipass'
       - '@sap/cds'
       - '@sap/cds-compiler'
       - '@sap/cds-fiori'
@@ -152,6 +153,7 @@ packages:
       - bytes
       - call-bind-apply-helpers
       - call-bound
+      - chownr
       - clone
       - content-disposition
       - content-type
@@ -198,6 +200,8 @@ packages:
       - mime-db
       - mime-types
       - minimist
+      - minipass
+      - minizlib
       - ms
       - mustache
       - negotiator
@@ -227,6 +231,7 @@ packages:
       - side-channel-weakmap
       - source-map
       - statuses
+      - tar
       - to-regex-range
       - toidentifier
       - type-is
@@ -238,6 +243,7 @@ packages:
       - wrappy
       - ws
       - xml-js
+      - yallist
       - yaml
 
   '@sap/cds-fiori@2.3.0':
@@ -747,7 +753,7 @@ snapshots:
 
   '@sap/cds-compiler@7.1.1': {}
 
-  '@sap/cds-dk@10.1.2': {}
+  '@sap/cds-dk@10.2.0': {}
 
   '@sap/cds-fiori@2.3.0(@sap/cds@10.1.1(@eslint/js@10.0.1))':
     dependencies:
