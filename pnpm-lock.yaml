@@ -37,13 +37,13 @@ importers:
     devDependencies:
       '@axe-core/playwright':
         specifier: ^4.14.0
-        version: 4.14.0(playwright-core@1.65.0)
+        version: 4.14.0(playwright-core@1.65.1)
       '@grafana/eslint-config':
         specifier: ^10.0.0
         version: 10.0.0(@stylistic/eslint-plugin@5.10.0(eslint@9.39.5(supports-color@8.1.1)))(@typescript-eslint/eslint-plugin@8.72.2(@typescript-eslint/parser@8.72.2(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3))(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3))(@typescript-eslint/parser@8.72.2(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3))(eslint-config-prettier@10.1.8(eslint@9.39.5(supports-color@8.1.1)))(eslint-plugin-jsdoc@65.4.5(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1)(typescript@5.9.3))(eslint-plugin-react-hooks@7.1.1(eslint@9.39.5(supports-color@8.1.1))(supports-color@8.1.1))(eslint-plugin-react@7.37.5(eslint@9.39.5(supports-color@8.1.1)))(eslint@9.39.5(supports-color@8.1.1))(typescript@5.9.3)
       '@grafana/plugin-e2e':
         specifier: ^4.0.0
-        version: 4.0.0(@axe-core/playwright@4.14.0(playwright-core@1.65.0))(@playwright/test@1.64.1)
+        version: 4.0.0(@axe-core/playwright@4.14.0(playwright-core@1.65.1))(@playwright/test@1.64.1)
       '@grafana/sign-plugin':
         specifier: ^4.0.0
         version: 4.0.0
@@ -150,8 +150,8 @@ importers:
         specifier: ^30.5.2
         version: 30.5.2(supports-color@8.1.1)
       playwright-core:
-        specifier: ^1.65.0
-        version: 1.65.0
+        specifier: ^1.65.1
+        version: 1.65.1
       prettier:
         specifier: ^3.10.1
         version: 3.10.1
@@ -3675,8 +3675,8 @@ packages:
     engines: {node: '>=20'}
     hasBin: true
 
-  playwright-core@1.65.0:
-    resolution: {integrity: sha512-vNSKgH6YqtN7cdT/L334zo0a+YwkrpicyrHJlWWPIm/Q+Nn2SWInil01oT0mbu96U4GgoRtCYQD9CzJQgju+lA==}
+  playwright-core@1.65.1:
+    resolution: {integrity: sha512-hqPpz7blSMPxWVdoeE1yiBSzXsKiVOd2k+kjCvmUywD2GPO2Dd9HfcWnq9NN0GHbNZDFgZ9JfBFr+X5/BLo0qw==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -4894,10 +4894,10 @@ snapshots:
       '@csstools/css-tokenizer': 3.0.4
       lru-cache: 10.4.3
 
-  '@axe-core/playwright@4.14.0(playwright-core@1.65.0)':
+  '@axe-core/playwright@4.14.0(playwright-core@1.65.1)':
     dependencies:
       axe-core: 4.14.1
-      playwright-core: 1.65.0
+      playwright-core: 1.65.1
 
   '@babel/code-frame@7.29.7':
     dependencies:
@@ -5575,12 +5575,12 @@ snapshots:
       - supports-color
       - typescript
 
-  '@grafana/plugin-e2e@4.0.0(@axe-core/playwright@4.14.0(playwright-core@1.65.0))(@playwright/test@1.64.1)':
+  '@grafana/plugin-e2e@4.0.0(@axe-core/playwright@4.14.0(playwright-core@1.65.1))(@playwright/test@1.64.1)':
     dependencies:
       '@playwright/test': 1.64.1
       yaml: 2.9.1
     optionalDependencies:
-      '@axe-core/playwright': 4.14.0(playwright-core@1.65.0)
+      '@axe-core/playwright': 4.14.0(playwright-core@1.65.1)
 
   '@grafana/react-data-grid@7.0.0-beta.60(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
@@ -9090,7 +9090,7 @@ snapshots:
 
   playwright-core@1.64.1: {}
 
-  playwright-core@1.65.0: {}
+  playwright-core@1.65.1: {}
 
   playwright@1.64.1:
     dependencies:
